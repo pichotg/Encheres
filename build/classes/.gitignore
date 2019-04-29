@@ -1,4 +1,4 @@
 /bo/
 /jdbc/
 /servlets/
-/dal/
+*.class
