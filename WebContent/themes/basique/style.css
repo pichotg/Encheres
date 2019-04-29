@@ -1,0 +1,140 @@
+@charset "ISO-8859-1";
+
+html { 
+	--maCouleur: rgb(51, 102, 102);
+}
+/* comportement par défaut du corps de la page */
+body {
+	font-family: "Arial";
+	color: var(--maCouleur);
+}
+.identification{
+	font-size: small;
+}
+/* délimitation après le titre principal */
+#header {
+	background-color: var(--maCouleur);
+	color: var(--maCouleur);
+	width: 100%;
+	height: 3px;
+}
+
+/* menu */
+.menu {
+	float: right;
+	border-style: solid;
+	border-color: var(--maCouleur);
+	border-width: 1px;
+}
+/* comportement des liens du menu au passage */
+.menu a:hover {
+	color: white;
+	background-color: var(--maCouleur);
+}
+.menu a{
+	color: var(--maCouleur);
+}
+
+.menu form{
+	margin-top:10px;
+	max-width: 100%;
+}
+
+aside{
+	padding : 10px;
+	margin : 10px;
+	width: 16%;
+}
+.connexion{
+	width: 17%;
+}
+.connexion input{
+	float : right;
+}
+
+.connexion div{
+	padding: 5px;
+	font-weight: bold;
+}
+/* bloc de toutes les formations*/
+.formations{
+	width: 70%;
+}
+
+/* chaque formatiuon dans le bloc*/
+.formation{
+	border : dashed white 1px;
+	border-color: var(--maCouleur);
+	margin : 10px;
+}
+.formation h2{
+	color : white;
+	margin-left : 10px;
+}
+.formation li, p{
+	margin-left: 10px;
+	
+}
+.modif{
+	margin: 5px;
+}
+.ajout{
+	display:block;
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 300px;
+}
+.fond_titre{
+	background-color: var(--maCouleur);
+}
+.input{
+	margin : 5px;
+	display: inline-block
+}
+#connexion{
+	margin : 5px;
+	float:left;
+}
+label{
+	margin : 5px;
+	display: inline-block
+}
+textarea{
+	max-width: 90%;
+}
+label textarea{
+ vertical-align: top;
+}
+.alerte{
+	color: red;
+}
+
+#mesFormations{
+	display : inline-block;
+	margin-left: 10px;
+	margin-right: 100px;
+}
+#mesFormations label{
+	margin:0px;
+	margin-bottom: 2px;
+}
+
+#mesFormations select{
+	width: 150px;
+}
+
+/* délimitation avant le pied de page */
+#footer {
+	background-color: var(--maCouleur);
+	color: var(--maCouleur);
+	width: 100%;
+	border: none;
+	border-bottom: dashed white 1px;
+}
+
+/* Texte contenu dans le pied de page*/
+.footer {
+	text-align: center;
+	font-size: small;
+}
