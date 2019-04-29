@@ -4,11 +4,31 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet"
-	href="../themes/basique/style.css">
+<link rel="stylesheet" href="../themes/basique/style.css">
 <title>Connexion</title>
 </head>
 <body>
+
+	<div id="page">
+		<h1>ENI-Enchères</h1>
+		<form class="connexion" action="<%=request.getContextPath()%>/stagiaire/ValiderAccesStagiaire" method="post">
+		<div class="bloc_identifiant">
+			<label for="identifiant">Identifiant</label>
+			<input class="champtexte" type="text" id="identifiant" name="identifiant" value=""/>
+		</div>
+		<div class="bloc_motdepasse">
+			<label for="motdepasse">Mot de passe</label>
+			<input class="champtexte" type="text"  id="motdepasse" name="motdepasse" value="<"/>
+		</div>
+		<div class="bloc_connexion">
+			<input type="submit" id="seconnecter" value="Se connecter" />
+		</div>
+		</form>
+	</div>
+
+	<%-- <div id="entete">
+		<h1>TP Web - Accueil</h1>
+	</div>
 	<p class="identification">
 		
 		<%
@@ -17,7 +37,7 @@
 		else
 			out.print("Vous n'êtes pas connecté");
 	%>
-	</p>
+	</p> --%>
 
 	<%@ include file="index.html"%>
 </body>
