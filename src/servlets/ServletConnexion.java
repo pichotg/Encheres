@@ -11,18 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
-import jdbc.IdentificationDAOJdbc;
+import dal.UtilisateurDAO;
 
+/**
+ * Servlet qui servira � se connecter au site.
+ * @author adeloffre2018
+ *
+ */
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int DIX_MINUTES = 10 * 60;
+	private static final int SE_SOUVENIR = 30 * 24 * 60 * 60; // On se souvient de l'utilisateur pendant 30 jours.
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
 			doProcess(request, response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -39,31 +44,22 @@ public class ServletConnexion extends HttpServlet {
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
-		String typeUtilisateur = request.getParameter("typeUtilisateur");
-		IdentificationDAOJdbc DAOIdentification;
-		String eMail = request.getParameter("id");
-		String motDePasse = request.getParameter("pwd");
-		Utilisateur personne;
+		UtilisateurDAO DAOIdentification;
+		String identifiant = request.getParameter("identifiant");
+		String motDePasse = request.getParameter("motdepasse");
+		Utilisateur utilisateur;
 		Cookie ck = null;
 		HttpSession session;
 
-		DAOIdentification = new IdentificationDAOJdbc();
-		personne  = DAOIdentification.verifIdentification(eMail, motDePasse);
+		DAOIdentification = new UtilisateurDAO();
+		utilisateur  = DAOIdentification.verifIdentification(identifiant, motDePasse);
 		ck = new Cookie("connexion", "NULL");
 		session = request.getSession();
 			
 		
-		if ( personne != null) {
-			if("stagiaire".equals(typeUtilisateur))
-			{
-				// on garde dans le cookie le fait que c'est un stagiaire
-				ck.setValue("STG");
-			}
-			else if("animateur".equals(typeUtilisateur)) {
-				// ou un animateur
-				ck.setValue("ANIM");
-			}
+		if ( utilisateur != null) {
 			// le cookie est valide 10 minutes
+			ck.setValue("OK");
 			ck.setMaxAge(DIX_MINUTES);
 
 		} else {
@@ -73,8 +69,6 @@ public class ServletConnexion extends HttpServlet {
 		// On ajoute le cookie
 		response.addCookie(ck);
 		// On ajoute la personne connecté à la session
-		session.setAttribute("UtilisateurConnecte", personne);
-		// On redirige vers la bonne page
-		response.sendRedirect(typeUtilisateur);
+		session.setAttribute("UtilisateurConnecte", utilisateur);
 	}
 }

@@ -11,14 +11,14 @@
 
 	<div id="page">
 		<h1>ENI-Enchères</h1>
-		<form class="connexion" action="<%=request.getContextPath()%>/stagiaire/ValiderAccesStagiaire" method="post">
+		<form class="connexion" action="<%=request.getContextPath()%>/connexion" method="post">
 		<div class="bloc_identifiant">
 			<label for="identifiant">Identifiant</label>
 			<input class="champtexte" type="text" id="identifiant" name="identifiant" value=""/>
 		</div>
 		<div class="bloc_motdepasse">
 			<label for="motdepasse">Mot de passe</label>
-			<input class="champtexte" type="text"  id="motdepasse" name="motdepasse" value="<"/>
+			<input class="champtexte" type="text"  id="motdepasse" name="motdepasse" value=""/>
 		</div>
 		<div class="bloc_connexion">
 			<input type="submit" id="seconnecter" value="Se connecter" />
