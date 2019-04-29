@@ -9,6 +9,8 @@ import jdbc.JDBCTools;
 
 
 public class EnchereDAO {
+	
+	private static final String INSERT_ENCHERE = "insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 
 	public static void ajouter(Enchere enchere) throws SQLException, ClassNotFoundException{
 		Connection cnx=null;
@@ -16,7 +18,7 @@ public class EnchereDAO {
 
 		try {
 			cnx = JDBCTools.getConnection();
-			rqt=cnx.prepareStatement("insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)");
+			rqt=cnx.prepareStatement(INSERT_ENCHERE);
 			rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
 			rqt.setInt(2, enchere.getNoArticle().getNoArticle());
 			rqt.setDate(3, enchere.getDateEnchere());
