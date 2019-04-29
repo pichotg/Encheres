@@ -27,4 +27,6 @@ public class EnchereDAO {
 			if (cnx!=null) cnx.close();
 		}
 	}
+	
+	
 }
