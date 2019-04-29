@@ -96,4 +96,5 @@ public class ArticleVendu implements Serializable {
 		this.etatVente = etatVente;
 	}
 	
+	
 }
