@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -9,9 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import bo.Personne;
-import dal.DAO;
-import jdbc.IdentificationDAOJdbcImpl;
+import bo.Utilisateur;
+import jdbc.IdentificationDAOJdbc;
 
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,26 +19,36 @@ public class ServletConnexion extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doProcess(request, response);
+		try {
+			doProcess(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doProcess(request, response);
+		try {
+			doProcess(request, response);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, SQLException {
 		String typeUtilisateur = request.getParameter("typeUtilisateur");
-		DAO<Personne> DAOIdentification;
+		IdentificationDAOJdbc DAOIdentification;
 		String eMail = request.getParameter("id");
 		String motDePasse = request.getParameter("pwd");
-		Personne personne;
+		Utilisateur personne;
 		Cookie ck = null;
 		HttpSession session;
 
-		DAOIdentification = new IdentificationDAOJdbcImpl();
-		personne  = ((IdentificationDAOJdbcImpl) DAOIdentification).verifIdentification(eMail, motDePasse, typeUtilisateur);
+		DAOIdentification = new IdentificationDAOJdbc();
+		personne  = DAOIdentification.verifIdentification(eMail, motDePasse);
 		ck = new Cookie("connexion", "NULL");
 		session = request.getSession();
 			
