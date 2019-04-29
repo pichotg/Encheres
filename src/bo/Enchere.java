@@ -48,6 +48,10 @@ public class Enchere {
 		return montant_enchere;
 	}
 
+	public void setMontant_enchere(int montant_enchere) {
+		this.montant_enchere = montant_enchere;
+	}
+
 	
 	
 	
