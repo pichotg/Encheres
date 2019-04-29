@@ -11,7 +11,7 @@ public class IdentificationDAO{
 	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? AND motDePasse = ?";
 	private static final String MAJ_MDP = "UPDATE UTILISATEURS SET motDePasse = ? WHERE pseudo = ?";
 
-	public IdentificationDAOJdbc() {
+	public IdentificationDAO() {
 		super();
 	}
 
