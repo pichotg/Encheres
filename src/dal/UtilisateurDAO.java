@@ -7,11 +7,12 @@ import java.sql.SQLException;
 import bo.Utilisateur;
 import jdbc.JDBCTools;
 
-public class IdentificationDAO{
-	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? AND motDePasse = ?";
-	private static final String MAJ_MDP = "UPDATE UTILISATEURS SET motDePasse = ? WHERE pseudo = ?";
+public class UtilisateurDAO{
+	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where (pseudo = ? OR email = ? ) AND mot_de_passe = ?";
+	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";
+	private static final String MAJ_MDP = "UPDATE UTILISATEURS SET motDePasse = ? WHERE (pseudo = ? OR email = ? )";
 
-	public IdentificationDAO() {
+	public UtilisateurDAO() {
 		super();
 	}
 
@@ -26,7 +27,8 @@ public class IdentificationDAO{
 			preparedStatement = conSelect.prepareStatement(VERIF_UTILISATEUR);
 			
 			preparedStatement.setString(1, pseudo);
-			preparedStatement.setString(2, motDePasse);
+			preparedStatement.setString(2, pseudo);
+			preparedStatement.setString(3, motDePasse);
 			rs = preparedStatement.executeQuery();
 
 			if(rs.next()) {
@@ -62,6 +64,7 @@ public class IdentificationDAO{
 
 			preparedStatement.setString(1, newMDP);
 			preparedStatement.setString(2, pseudo);
+			preparedStatement.setString(3, pseudo);
 
 			preparedStatement.executeUpdate();
 
