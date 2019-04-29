@@ -6,6 +6,10 @@ import java.util.Date;
 
 public class ArticleVendu implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int noArticle;
 	private String nomArticle;
 	private String description;
@@ -15,6 +19,7 @@ public class ArticleVendu implements Serializable {
 	private int prixVente;
 	private String etatVente;
 	private Utilisateur utilisateur;
+	private String categorie;
 	
 	public ArticleVendu() {
 		super();
@@ -22,18 +27,19 @@ public class ArticleVendu implements Serializable {
 
 
 
-	public ArticleVendu(int noArticle, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente, String etatVente, Utilisateur utilisateur) {
+	public ArticleVendu(int noArticle, String nomArticle,String etatVente, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente,  Utilisateur utilisateur,String categorie) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
+		this.etatVente = etatVente;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
-		this.etatVente = etatVente;
 		this.utilisateur = utilisateur;
+		this.categorie = categorie;
 	}
 
 	public int getNoArticle() {
@@ -106,6 +112,14 @@ public class ArticleVendu implements Serializable {
 
 	public void setUtilisateur(Utilisateur utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+
+	public String getCategorie() {
+		return categorie;
+	}
+	
+	public void setCategorie(String categorie) {
+		this.categorie = categorie;
 	}
 	
 }
