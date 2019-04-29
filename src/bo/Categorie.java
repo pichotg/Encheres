@@ -20,4 +20,22 @@ public enum Categorie {
 	public String toString(){
 		return name;
 	}
+
+	public int getNoCategorie() {
+		return noCategorie;
+	}
+
+	public void setNoCategorie(int noCategorie) {
+		this.noCategorie = noCategorie;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 }
