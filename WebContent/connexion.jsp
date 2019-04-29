@@ -6,7 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet"
 	href="../themes/basique/style.css">
-<title>Login</title>
+<title>Connexion</title>
 </head>
 <body>
 	<p class="identification">
