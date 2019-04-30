@@ -5,6 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" href="../themes/basique/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 <title>CreerCompte</title>
 </head>
 <body>
@@ -16,25 +17,25 @@
 		<div id="contenu">
 		<form class="compte" action="<%=request.getContextPath()%>/creerCompte" method="post">
 			<label for="pseudo">Pseudo :</label> 
-			<input class="champtexte" type="text" id="pseudo" name="pseudo" /> 
+			<input required="required" class="champtexte" type="text" id="pseudo" name="pseudo" /> 
 			<label for="nom">Nom :</label> 
-			<input class="champtexte" type="text" id="nom" name="nom" /><br />
+			<input required="required" class="champtexte" type="text" id="nom" name="nom" /><br />
 			<label for="prenom">Prénom :</label> 
-			<input class="champtexte" type="text" id="prenom" name="prenom" /> 
+			<input required="required" class="champtexte" type="text" id="prenom" name="prenom" /> 
 			<label for="email">Email:</label> 
-			<input class="champtexte" type="text" id="email" name="email" /><br /> 
+			<input required="required" class="champtexte" type="text" id="email" name="email" /><br /> 
 			<label for="telephone">Téléphone :</label> 
-			<input class="champtexte" type="text" id="telephone" name="telephone" /> 
+			<input required="required" class="champtexte" type="text" id="telephone" name="telephone" /> 
 			<label for="rue">Rue :</label> 
-			<input class="champtexte" type="text" id="rue" name="rue" /><br />
+			<input required="required" class="champtexte" type="text" id="rue" name="rue" /><br />
 			<label for="codePostal">Code Postal :</label> 
-			<input class="champtexte" type="text" id="codePostal" name="codePostal" /> 
+			<input required="required" class="champtexte" type="text" id="codePostal" name="codePostal" /> 
 			<label for="Ville">Ville :</label> 
-			<input class="champtexte" type="text" id="ville" name="Ville" /> <br/>
+			<input required="required" class="champtexte" type="text" id="ville" name="Ville" /> <br/>
 			<label for="motDePasse">Mot de passe :</label> 
-			<input class="champtexte" type="password" id="motDePasse" name="motDePasse" /> 
+			<input required="required" class="champtexte" type="password" id="motDePasse" name="motDePasse" /> 
 			<label for="confirmation">Confirmation :</label> 
-			<input class="champtexte" type="password" id="confirmation" name="confirmation" /><br/>
+			<input required="required" class="champtexte" type="password" id="confirmation" name="confirmation" /><br/>
 			<input type="submit" id="creer" name="creer" value="Creer" />
 			<input type="submit" id="annuler" name="annuler" value="Annuler" />
 		</form>
