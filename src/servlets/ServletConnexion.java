@@ -21,7 +21,7 @@ import dal.UtilisateurDAO;
  */
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final int DIX_MINUTES = 10 * 60;
+	private static final int CINQ_MINUTES = 5 * 60;
 	private static final int SE_SOUVENIR = 30 * 24 * 60 * 60; // On se souvient de l'utilisateur pendant 30 jours.
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -61,7 +61,7 @@ public class ServletConnexion extends HttpServlet {
 			// le cookie est valide 10 minutes
 			ck.setValue("OK");
 			// Si on n'a pas coché se souvenir de moi
-			ck.setMaxAge(DIX_MINUTES);
+			ck.setMaxAge(CINQ_MINUTES);
 			// Si on a coché , il faudra mettre SE_SOUVENIR pour être mémorisé 30 jours
 			request.setAttribute("Utilisateur", utilisateur);
 
