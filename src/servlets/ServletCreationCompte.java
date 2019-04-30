@@ -61,8 +61,8 @@ public class ServletCreationCompte extends HttpServlet {
 		if (bsucces) {
 			response.sendRedirect("index.html");
 		}else {
-			//TODO:
-			//already exist => redirect mot de passe oublier ?
+			// TODO: redirect mot de passe oublier ?
+			request.setAttribute("error", "alreadyExist");
 		}
 		
 	}
