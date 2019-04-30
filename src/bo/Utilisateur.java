@@ -116,7 +116,7 @@ public class Utilisateur {
 		return motDePasse;
 	}
 	
-	public String getAddresse() {
+	public String getAdresse() {
 		return String.format("%s\br%s %s", this.getRue(),this.getCodePostal(), this.getVille());
 	}
 
