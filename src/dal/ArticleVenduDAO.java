@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bo.ArticleVendu;
+import bo.Utilisateur;
 import jdbc.JDBCTools;
 
 public class ArticleVenduDAO {
@@ -32,7 +33,7 @@ public class ArticleVenduDAO {
 		rqt.setDate(3, new java.sql.Date(articleVendu.getDateFinEncheres().getTime()));
 		rqt.setInt(5, articleVendu.getMiseAPrix());
 		rqt.setInt(6, articleVendu.getUtilisateur().noUtilisateur);
-		rqt.setString(7, articleVendu.getCategorie());
+		rqt.setInt(7, articleVendu.getCategorie());
 		rqt.setString(8, "EV");
 		rqt.executeUpdate();
 	}finally{
@@ -55,20 +56,27 @@ public class ArticleVenduDAO {
 			cnx=JDBCTools.getConnection();
 			rqt=cnx.createStatement();			
 			rs=rqt.executeQuery(LISTE_ARTICLE);
+			int identifiantUtilisateur = -1;
+			Utilisateur ut = null;
+			UtilisateurDAO utDAO = new UtilisateurDAO();
 			ArticleVendu articleVendu;
 			while (rs.next()){
+				identifiantUtilisateur = rs.getInt("no_utilisateur");
+				ut = utDAO.getUtilisateurById(identifiantUtilisateur);
 				articleVendu = new ArticleVendu(
 									rs.getInt("no_article"),
 									rs.getString("nom_article"),
-									rs.getString("description"),
 									rs.getString("etat_vente"),
+									rs.getString("description"),
 									rs.getDate("date_debut_encheres"), 
 									rs.getDate("date_fin_encheres"),
 									rs.getInt("prix_initial"),
 									rs.getInt("prix_vente"),
-									rs.getString("no_utilisateur"),
+									null,
 									rs.getInt("no_categorie")
 						);
+				// On set l'utilisateur
+				articleVendu.setUtilisateur(ut);
 				listeArticles.add(articleVendu);				
 			}
 		}finally{

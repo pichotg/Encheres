@@ -19,7 +19,7 @@ public class ArticleVendu implements Serializable {
 	private int prixVente;
 	private String etatVente;
 	private Utilisateur utilisateur;
-	private String categorie;
+	private int categorie;
 	
 	public ArticleVendu() {
 		super();
@@ -28,7 +28,7 @@ public class ArticleVendu implements Serializable {
 
 
 	public ArticleVendu(int noArticle, String nomArticle,String etatVente, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente,  Utilisateur utilisateur,String categorie) {
+			Date dateFinEncheres, int miseAPrix, int prixVente,  Utilisateur utilisateur,int categorie) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -114,11 +114,11 @@ public class ArticleVendu implements Serializable {
 		this.utilisateur = utilisateur;
 	}
 
-	public String getCategorie() {
+	public int getCategorie() {
 		return categorie;
 	}
 	
-	public void setCategorie(String categorie) {
+	public void setCategorie(int categorie) {
 		this.categorie = categorie;
 	}
 	
