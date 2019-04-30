@@ -9,34 +9,36 @@
 </head>
 <body>
 	<div id="page">
+	<div id="entete">
 		<h1>ENI-Enchères</h1>
+		<h2>Mon Profil</h2>
+		</div>
+		<div id="contenu">
 		<form class="compte" action="" method="post">
 			<label for="pseudo">Pseudo :</label> 
-			<input class="champtexte" type="text" id="pseudo" name="pseudo" value="" /> 
+			<input class="champtexte" type="text" id="pseudo" name="pseudo" /> 
 			<label for="nom">Nom :</label> 
-			<input class="champtexte" type="text" id="nom" name="nom" value="" /><br />
+			<input class="champtexte" type="text" id="nom" name="nom" /><br />
 			<label for="prenom">Prénom :</label> 
-			<input class="champtexte" type="text" id="prenom" name="prenom" value="" /> 
+			<input class="champtexte" type="text" id="prenom" name="prenom" /> 
 			<label for="email">Email:</label> 
-			<input class="champtexte" type="text" id="email" name="email"	value="" /><br /> 
+			<input class="champtexte" type="text" id="email" name="email" /><br /> 
 			<label for="telephone">Téléphone :</label> 
-			<input class="champtexte" type="text" id="telephone" name="telephone" value="" /> 
+			<input class="champtexte" type="text" id="telephone" name="telephone" /> 
 			<label for="rue">Rue :</label> 
-			<input class="champtexte" type="text" id="rue" name="rue" value="" /><br />
+			<input class="champtexte" type="text" id="rue" name="rue" /><br />
 			<label for="codePostal">Code Postal :</label> 
-			<input class="champtexte" type="text" id="codePostal" name="codePostal" value="" /> 
+			<input class="champtexte" type="text" id="codePostal" name="codePostal" /> 
 			<label for="Ville">Ville :</label> 
-			<input class="champtexte" type="text" id="Ville" name="Ville" value="" /> <br/>
-			<label for="motDePasseActuel">Mot de passe :</label> 
-			<input class="champtexte" type="text" id="motDePasseActuel" name="motDePasseActuel" value="" /><br/>
-			<label for="nouvMDP">Nouveau mot de passe :</label> 
-			<input class="champtexte" type="text" id="nouvMDP" name="nouvMDP" value="" />
+			<input class="champtexte" type="text" id="Ville" name="Ville" /> <br/>
+			<label for="motDePasse">Mot de passe :</label> 
+			<input class="champtexte" type="text" id="motDePasse" name="motDePasse" /> 
 			<label for="confirmation">Confirmation :</label> 
-			<input class="champtexte" type="text" id="confirmation" name="confirmation" value="" /><br/><br/>
-			<label >Crédit : </label> <br/><br/>
-			<input type="submit" id="enregistrer" name="enregistrer" value="Enregistrer" />
-			<input type="submit" id="supprimer" name="supprimer" value="Supprimer mon compte" />
+			<input class="champtexte" type="text" id="confirmation" name="confirmation" /><br/>
+			<input type="submit" id="creer" name="creer" value="Creer" />
+			<input type="submit" id="annuler" name="annuler" value="Annuler" />
 		</form>
+		</div>
 	</div>
 </body>
 </html>
