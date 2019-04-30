@@ -8,6 +8,19 @@
 <title>Vente</title>
 </head>
 <body>
-	
+	<div id="page">
+		<h1>ENI-Enchères</h1>
+		<h2>Detail Vente</h2>
+		<label for="nom"><% %></label><br/>
+		<label for="description">Description : <% %></label><br/>
+		<label for="categorie">Catégorie  <% %></label><br/>
+		<label for="meilleurOffre">Meilleur Offre : <% %></label><br/>
+		<label for="miseAPrix">Mise à prix : <% %></label><br/>
+		<label for="fin">Fin de l'enchère : <% %></label><br/>
+		<label for="retrait">Retrait : <% %></label><br/>
+		<label for="vendeur">Vendeur : <% %></label><br/>
+		<label for="maProposition">Ma proposition : </label><select id="maProposition" name="maProposition"></select>
+		<input type="submit" id="enrechir" name="enrechir" value="Encherir">
+	</div>
 </body>
 </html>
