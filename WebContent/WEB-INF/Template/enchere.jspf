@@ -1,0 +1,7 @@
+<div class="enchere">
+		<label for="nom">Description : ${enchere.noArticle.prixVente}</label><br/>
+		<label for="prix">Mise à prix :  ${enchere.noArticle.prixVente}</label><br/>
+		<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
+		<label for="retrait">Retrait : ${enchere.noUtilisateur.getAddresse()}</label><br/>
+		<label for="vendeur" >Vendeur : ${enchere.noUtilisateur.pseudo}</label><br/>
+</div>
