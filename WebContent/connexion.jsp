@@ -25,19 +25,6 @@
 		</div>
 		</form>
 	</div>
-
-	<%-- <div id="entete">
-		<h1>TP Web - Accueil</h1>
-	</div>
-	<p class="identification">
-		
-		<%
-		if(!request.getParameter("id").trim().equals(""))
-			out.print("Connecté en tant que : " + request.getParameter("id"));
-		else
-			out.print("Vous n'êtes pas connecté");
-	%>
-	</p> --%>
 </body>
 </html>
 
