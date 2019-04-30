@@ -1,5 +1,8 @@
+*.class
+.classpath
+.settings
 /bo/
 /jdbc/
 /servlets/
 /build/*
-*.class
+build/classes/servlets/ServletConnexion.class
