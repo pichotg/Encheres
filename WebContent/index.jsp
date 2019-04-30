@@ -1,5 +1,11 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bo.Utilisateur"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,16 +14,18 @@
 <link rel="stylesheet" href="./themes/basique/style.css">
 </head>
 <body>
-<h1>ENI - Enchères</h1>
+<h1>ENI - EnchÃ¨res</h1>
 	<hr id="header">
 	<aside class="menu">
-	<%if (){}
-		
-		%>
-		<p><a href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a></p><br>
+	<c:if test="${utilisateur.id != null}">
+	<p><a href="<%=request.getContextPath()%>/deconnexion">DÃ©connexion</a></p><br>
+	</c:if>
+	<c:if test="${utilisateur.id == -1}">
+	<p><a href="<%=request.getContextPath()%>/connexion">Connexion / inscription</a></p><br>
+	</c:if>
 	</aside>
 
-	<h2>Liste des enchères</h2>
+	<h2>Liste des enchÃ¨res</h2>
 	<p>Filtres :</p>
 	<form class="recherche" action="filtre" method="post">
 		<div class="nomArticleContient">
@@ -25,12 +33,12 @@
 			<input class="champtexte" type="text" id="contient" name="contient" value="" />
 		</div>
 		<div class ="categorie">
-		<label for="categorie">Catégorie</label>
+		<label for="categorie">CatÃ©gorie</label>
 		<select name="categorie">
 			<option></option>
 			<option>Informatique</option>
 			<option>Ameublement</option>
-			<option>Vêtement</option>
+			<option>VÃªtement</option>
 			<option>Sport&Loisirs</option>
 		</select>
 		</div>
