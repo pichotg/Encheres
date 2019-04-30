@@ -38,8 +38,6 @@
 			out.print("Vous n'êtes pas connecté");
 	%>
 	</p> --%>
-
-	
 </body>
 </html>
 

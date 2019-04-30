@@ -74,3 +74,4 @@ public class ServletConnexion extends HttpServlet {
 		this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
 	}
 }
+
