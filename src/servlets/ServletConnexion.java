@@ -71,6 +71,6 @@ public class ServletConnexion extends HttpServlet {
 		}
 		// On ajoute le cookie
 		response.addCookie(ck);
-		this.getServletContext().getRequestDispatcher("/WEB-INF/index.html").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
 	}
 }

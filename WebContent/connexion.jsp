@@ -18,7 +18,7 @@
 		</div>
 		<div class="bloc_motdepasse">
 			<label for="motdepasse">Mot de passe</label>
-			<input class="champtexte" type="text"  id="motdepasse" name="motdepasse" value=""/>
+			<input class="champtexte" type="password"  id="motdepasse" name="motdepasse" value=""/>
 		</div>
 		<div class="bloc_connexion">
 			<input type="submit" id="seconnecter" value="Se connecter" />
@@ -39,7 +39,7 @@
 	%>
 	</p> --%>
 
-	<%@ include file="index.html"%>
+	
 </body>
 </html>
 

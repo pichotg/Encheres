@@ -14,7 +14,7 @@
 		<h2>Mon Profil</h2>
 		</div>
 		<div id="contenu">
-		<form class="compte" action="" method="post">
+		<form class="compte" action="<%=request.getContextPath()%>/creerCompte" method="post">
 			<label for="pseudo">Pseudo :</label> 
 			<input class="champtexte" type="text" id="pseudo" name="pseudo" /> 
 			<label for="nom">Nom :</label> 
@@ -32,9 +32,9 @@
 			<label for="Ville">Ville :</label> 
 			<input class="champtexte" type="text" id="Ville" name="Ville" /> <br/>
 			<label for="motDePasse">Mot de passe :</label> 
-			<input class="champtexte" type="text" id="motDePasse" name="motDePasse" /> 
+			<input class="champtexte" type="password" id="motDePasse" name="motDePasse" /> 
 			<label for="confirmation">Confirmation :</label> 
-			<input class="champtexte" type="text" id="confirmation" name="confirmation" /><br/>
+			<input class="champtexte" type="password" id="confirmation" name="confirmation" /><br/>
 			<input type="submit" id="creer" name="creer" value="Creer" />
 			<input type="submit" id="annuler" name="annuler" value="Annuler" />
 		</form>
