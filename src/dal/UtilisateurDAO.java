@@ -22,6 +22,12 @@ public class UtilisateurDAO {
 		super();
 	}
 
+	/**
+	 * @param pseudoOrEmail
+	 * @param motDePasse
+	 * @return Utilisateur 
+	 * @throws SQLException
+	 */
 	public Utilisateur verifIdentification(String pseudoOrEmail, String motDePasse) throws SQLException {
 		Utilisateur utilisateur = null;
 		PreparedStatement preparedStatement = null;
@@ -60,6 +66,11 @@ public class UtilisateurDAO {
 		return utilisateur;
 	}
 	
+	/**
+	 * return all user from BDD
+	 * @return ArrayList<Utilisateur>
+	 * @throws SQLException
+	 */
 	public ArrayList<Utilisateur> getAllUtilisateur() throws SQLException {
 		ArrayList<Utilisateur> listUser = new ArrayList<Utilisateur>();
 		PreparedStatement preparedStatement = null;
@@ -93,27 +104,31 @@ public class UtilisateurDAO {
 
 		return listUser;
 	}
-
-	public void updateUtilisateur(Utilisateur newutilisateur) throws SQLException {
+	/**
+	 * Update all info
+	 * @param Utilisateur
+	 * @throws SQLException
+	 */
+	public void updateUtilisateur(Utilisateur user) throws SQLException {
 		Connection conUpdate = null;
 		PreparedStatement preparedStatement = null;
 		try {
 			conUpdate = JDBCTools.getConnection();
 			preparedStatement = conUpdate.prepareStatement(MAJ_ALL);
 			//Set
-			preparedStatement.setString(1, newutilisateur.getPseudo());
-			preparedStatement.setString(2, newutilisateur.getNom());
-			preparedStatement.setString(3, newutilisateur.getPrenom());
-			preparedStatement.setString(4, newutilisateur.getEmail());
-			preparedStatement.setString(5, newutilisateur.getTelephone());
-			preparedStatement.setString(6, newutilisateur.getRue());
-			preparedStatement.setString(7, newutilisateur.getCodePostal());
-			preparedStatement.setString(8, newutilisateur.getVille());
-			preparedStatement.setString(9, newutilisateur.getMotDePasse());
-			preparedStatement.setInt(10, newutilisateur.getCredit());
-			preparedStatement.setBoolean(11, newutilisateur.getAdministrateur());
+			preparedStatement.setString(1, user.getPseudo());
+			preparedStatement.setString(2, user.getNom());
+			preparedStatement.setString(3, user.getPrenom());
+			preparedStatement.setString(4, user.getEmail());
+			preparedStatement.setString(5, user.getTelephone());
+			preparedStatement.setString(6, user.getRue());
+			preparedStatement.setString(7, user.getCodePostal());
+			preparedStatement.setString(8, user.getVille());
+			preparedStatement.setString(9, user.getMotDePasse());
+			preparedStatement.setInt(10, user.getCredit());
+			preparedStatement.setBoolean(11, user.getAdministrateur());
 			//where
-			preparedStatement.setInt(12, newutilisateur.getNoUtilisateur());
+			preparedStatement.setInt(12, user.getNoUtilisateur());
 
 			preparedStatement.executeUpdate();
 
@@ -130,6 +145,12 @@ public class UtilisateurDAO {
 		}
 	}
 
+	/**
+	 * Check if user already exist, before insert
+	 * @param newutilisateur
+	 * @return true if User already exist else false
+	 * @throws SQLException
+	 */
 	public boolean verifExistUtilisateur(Utilisateur newutilisateur) throws SQLException {
 		PreparedStatement preparedStatement = null;
 		Connection conSelect = null;
@@ -161,6 +182,12 @@ public class UtilisateurDAO {
 		return true;
 	}
 
+	/**
+	 * Insert new user in BDD
+	 * @param newutilisateur
+	 * @return false if User already exist or error else true => Succes
+	 * @throws SQLException
+	 */
 	public boolean insertUtilisateur(Utilisateur newutilisateur) throws SQLException {
 		PreparedStatement preparedStatement = null;
 		Connection conInsert = null;
@@ -198,6 +225,12 @@ public class UtilisateurDAO {
 		}
 	}
 	
+	/**
+	 * Get Utilisateur by no_utilisateur
+	 * @param id
+	 * @return Utilisateur
+	 * @throws SQLException
+	 */
 	public Utilisateur getUtilisateurById(int id) throws SQLException {
 		Utilisateur utilisateur = null;
 		PreparedStatement preparedStatement = null;
