@@ -11,6 +11,8 @@ import bo.Utilisateur;
 import jdbc.JDBCTools;
 
 public class UtilisateurDAO {
+	
+	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS where no_utilisateur = ?";
 	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where (pseudo = ? OR email = ? ) AND mot_de_passe = ?";
 	private static final String SELECT_ALL_UTILISATEUR = "SELECT * FROM UTILISATEURS";
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS where no_utilisateur = ?";
@@ -265,4 +267,31 @@ public class UtilisateurDAO {
 		return utilisateur;
 		
 	}
+	
+	/**
+	 * Delete Utilisateur 
+	 * @param Utilisateur user
+	 */
+	public void deleteUtilisateur(Utilisateur user) {
+
+		try {
+			Connection conDelete = JDBCTools.getConnection();
+
+			PreparedStatement preparedStatement = conDelete.prepareStatement(DELETE_UTILISATEUR);
+
+			preparedStatement.setInt(1, user.getNoUtilisateur());
+
+			if (preparedStatement.executeUpdate() == 0) {
+				System.err.println("Suppression impossible : Cette utilisateur n'est pas pr�sente en base.");
+			}
+			preparedStatement.close();
+			conDelete.close();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+
+		}
+	}
+
 }
