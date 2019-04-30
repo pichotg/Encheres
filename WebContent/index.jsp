@@ -1,10 +1,13 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="bo.Utilisateur"%>
+<%@page import="bo.Enchere"%>
+<%@page import="bo.ArticleVendu"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -44,5 +47,14 @@
 		</div>
 		<input type="submit" id="rechercher" value="rechercher" />
 	</form>
+	<c:forEach var="enchere" items="${listeEncheres}">
+		<div class="enchere">
+			<label for="nom">Description : ${enchere.noArticle.prixVente}</label><br/>
+			<label for="prix">Mise à prix :  ${enchere.noArticle.prixVente}</label><br/>
+			<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
+			<label for="retrait">Retrait : ${enchere.noUtilisateur.getAddresse()}</label><br/>
+			<label for="vendeur" >Vendeur : ${enchere.noUtilisateur.pseudo}</label><br/>
+		</div>
+	</c:forEach>
 </body>
 </html>
