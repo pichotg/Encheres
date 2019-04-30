@@ -8,6 +8,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+<div id="page">
+		<h1>ENI-Enchères</h1>
+		<label for="pseudo"> <% %></label><br/>
+		<label for="nom"> <% %></label><br/>
+		<label for="prenom">  <% %></label><br/>
+		<label for="email"> <% %></label><br/>
+		<label for="telephone"> <% %></label><br/>
+		<label for="rue"> <% %></label><br/>
+		<label for="codePostal"> <% %></label><br/>
+		<label for="ville"> <% %></label><br/>
+</div>
 </body>
 </html>

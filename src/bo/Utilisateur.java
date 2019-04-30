@@ -1,5 +1,7 @@
 package bo;
 
+import java.util.ArrayList;
+
 public class Utilisateur {
 	public int noUtilisateur;
 	public String pseudo;
@@ -13,6 +15,9 @@ public class Utilisateur {
 	public String motDePasse;
 	public int credit;
 	public Boolean administrateur;
+	public ArrayList <ArticleVendu> lesArticles;
+	public ArrayList <Enchere> lesEncheres;
+	
 		
 	public Utilisateur() {
 		super();
