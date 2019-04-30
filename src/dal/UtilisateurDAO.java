@@ -269,7 +269,7 @@ public class UtilisateurDAO {
 	}
 	
 	/**
-	 * Delete Utilisateur 
+	 * Delete Utilisateur TODO: delete FK
 	 * @param Utilisateur user
 	 */
 	public void deleteUtilisateur(Utilisateur user) {
