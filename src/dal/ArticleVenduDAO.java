@@ -77,6 +77,7 @@ public class ArticleVenduDAO {
 						);
 				// On set l'utilisateur
 				articleVendu.setUtilisateur(ut);
+				// On ajout l'article à la liste
 				listeArticles.add(articleVendu);				
 			}
 		}finally{

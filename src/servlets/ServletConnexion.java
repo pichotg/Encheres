@@ -15,6 +15,7 @@ import dal.UtilisateurDAO;
 
 /**
  * Servlet qui servira à se connecter au site.
+ * 
  * @author adeloffre2018
  *
  */
@@ -47,20 +48,22 @@ public class ServletConnexion extends HttpServlet {
 		UtilisateurDAO DAOIdentification;
 		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");
-		Utilisateur utilisateur;
+		Utilisateur utilisateur = null;
+
 		Cookie ck = null;
-		HttpSession session;
 
 		DAOIdentification = new UtilisateurDAO();
-		utilisateur  = DAOIdentification.verifIdentification(identifiant, motDePasse);
+		utilisateur = DAOIdentification.verifIdentification(identifiant, motDePasse);
 		ck = new Cookie("connexion", "NULL");
-		session = request.getSession();
-			
-		
-		if ( utilisateur != null) {
+
+
+		if (utilisateur != null) {
 			// le cookie est valide 10 minutes
 			ck.setValue("OK");
+			// Si on n'a pas coché se souvenir de moi
 			ck.setMaxAge(DIX_MINUTES);
+			// Si on a coché , il faudra mettre SE_SOUVENIR pour être mémorisé 30 jours
+			request.setAttribute("Utilisateur", utilisateur);
 
 		} else {
 			// Les identifiants sont incorrects, on passe le cookie Ã  NOK
@@ -68,7 +71,6 @@ public class ServletConnexion extends HttpServlet {
 		}
 		// On ajoute le cookie
 		response.addCookie(ck);
-		// On ajoute la personne connectÃ© Ã  la session
-		session.setAttribute("UtilisateurConnecte", utilisateur);
+		this.getServletContext().getRequestDispatcher("/WEB-INF/index.html").forward(request, response);
 	}
 }
