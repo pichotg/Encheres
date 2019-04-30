@@ -59,7 +59,4 @@ public class Enchere {
 		}
 		return bool;
 	}
-
-
-
 }
