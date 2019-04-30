@@ -115,6 +115,10 @@ public class Utilisateur {
 	public String getMotDePasse() {
 		return motDePasse;
 	}
+	
+	public String getAddresse() {
+		return String.format("%s\br%s %s", this.getRue(),this.getCodePostal(), this.getVille());
+	}
 
 	public void setMotDePasse(String motDePasse) {
 		this.motDePasse = motDePasse;
