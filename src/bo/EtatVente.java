@@ -1,18 +1,15 @@
 package bo;
 
-public enum EtatVenteEnchere {
+public enum EtatVente {
 
 	VEC("vec","Vente en cours"),
 	VND("vnd","Vente non débutée"),
-	VET("vet","vente terminée"),
-	ENO("eno","enchère ouverte"),
-	ENC("enc","enchère en cours"),
-	ENR("enr","enchère terminée");
+	VET("vet","vente terminée");
 	
 	private String nom;
 	private String description;
 	//Constructeur
-	EtatVenteEnchere(String nom, String description){
+	EtatVente(String nom, String description){
 		this.nom = nom;
 		this.description = description;
 	}
