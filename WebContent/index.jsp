@@ -17,10 +17,10 @@
 <h1>ENI - Enchères</h1>
 	<hr id="header">
 	<aside class="menu">
-	<c:if test="${utilisateur.id != null}">
+	<c:if test="${utilisateur.noUtilisateur != null}">
 	<p><a href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a></p><br>
 	</c:if>
-	<c:if test="${utilisateur.id == -1}">
+	<c:if test="${utilisateur.noUtilisateur == -1}">
 	<p><a href="<%=request.getContextPath()%>/connexion">Connexion / inscription</a></p><br>
 	</c:if>
 	</aside>

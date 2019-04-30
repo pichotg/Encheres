@@ -63,15 +63,15 @@ public class ServletConnexion extends HttpServlet {
 			// Si on n'a pas coché se souvenir de moi
 			ck.setMaxAge(CINQ_MINUTES);
 			// Si on a coché , il faudra mettre SE_SOUVENIR pour être mémorisé 30 jours
-			request.setAttribute("Utilisateur", utilisateur);
-
+			request.setAttribute("utilisateur", utilisateur);
+			System.out.println(utilisateur.getNoUtilisateur());
 		} else {
 			// Les identifiants sont incorrects, on passe le cookie Ã  NOK
 			ck.setValue("NOK");
 		}
 		// On ajoute le cookie
 		response.addCookie(ck);
-		this.getServletContext().getRequestDispatcher("/index.html").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 }
 
