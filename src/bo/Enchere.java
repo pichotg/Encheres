@@ -7,7 +7,7 @@ public class Enchere {
 	public Utilisateur noUtilisateur;
 	public Date dateEnchere;
 	public int montant_enchere;
-	
+
 	public Enchere() {
 		super();
 	}
@@ -52,7 +52,14 @@ public class Enchere {
 		this.montant_enchere = montant_enchere;
 	}
 
-	
-	
-	
+	public Boolean achatPossible() {
+		Boolean bool = false;
+		if (this.getMontant_enchere() <= this.noUtilisateur.getCredit()) {
+			bool = true;
+		}
+		return bool;
+	}
+
+
+
 }
