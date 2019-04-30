@@ -13,7 +13,7 @@ import jdbc.JDBCTools;
 public class UtilisateurDAO {
 	
 	private static final String DELETE_UTILISATEUR = "DELETE FROM UTILISATEURS where no_utilisateur = ?";
-	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where (pseudo = ? OR email = ? ) AND mot_de_passe = ?";
+	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where (pseudo = ? OR email = ?) AND mot_de_passe = ?";
 	private static final String SELECT_ALL_UTILISATEUR = "SELECT * FROM UTILISATEURS";
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS where no_utilisateur = ?";
 	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";

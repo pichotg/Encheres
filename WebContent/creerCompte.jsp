@@ -30,7 +30,7 @@
 			<label for="codePostal">Code Postal :</label> 
 			<input class="champtexte" type="text" id="codePostal" name="codePostal" /> 
 			<label for="Ville">Ville :</label> 
-			<input class="champtexte" type="text" id="Ville" name="Ville" /> <br/>
+			<input class="champtexte" type="text" id="ville" name="Ville" /> <br/>
 			<label for="motDePasse">Mot de passe :</label> 
 			<input class="champtexte" type="password" id="motDePasse" name="motDePasse" /> 
 			<label for="confirmation">Confirmation :</label> 
