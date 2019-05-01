@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bo.ArticleVendu;
+import bo.Categorie;
 import bo.Utilisateur;
 import jdbc.JDBCTools;
 
@@ -17,6 +18,7 @@ public class ArticleVenduDAO {
 	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vnd'";
 	private static final String LISTE_MES_VENTES_TERMINEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_fin_encheres < (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vet'";
 	private static final String SELECT_BY_ID = "select * from ARTICLES_VENDUS where no_article = ?";
+	private static final String FILTRAGE_VENTE_EN_COURS = "select * from ARTICLES_VENDUS where no_categorie = ? and nom_article like ?";
 
 	/**
 	 * Mise en vente d'un article
@@ -142,7 +144,7 @@ public class ArticleVenduDAO {
 	}
 
 	/**
-	 * Get Utilisateur by no_utilisateur
+	 * Get Article by no_article
 	 * 
 	 * @param id
 	 * @return Utilisateur
@@ -183,4 +185,45 @@ public class ArticleVenduDAO {
 		return article;
 	}
 
+	public ArrayList<ArticleVendu> filtrageVenteEnCours(String contient, String categorie)
+			throws SQLException, ClassNotFoundException {
+
+		ArrayList<ArticleVendu> articles = new ArrayList<>();
+		Connection conFiltre = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+
+		try {
+			conFiltre = JDBCTools.getConnection();
+			preparedStatement = conFiltre.prepareStatement(FILTRAGE_VENTE_EN_COURS);
+
+			preparedStatement.setInt(1, Categorie.valueOf(categorie).getNoCategorie());
+			preparedStatement.setString(2, "%" + contient.trim() + "%");
+
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				int identifiantUtilisateur = rs.getInt("no_utilisateur");
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				Utilisateur ut = utDAO.getUtilisateurById(identifiantUtilisateur);
+				ArticleVendu articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+						rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
+						rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
+						rs.getInt("no_categorie"));
+				// On set l'utilisateur
+				articleVendu.setUtilisateur(ut);
+				// On ajout l'article à la liste
+				articles.add(articleVendu);
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (conFiltre != null)
+				conFiltre.close();
+		}
+
+		return articles;
+	}
 }
