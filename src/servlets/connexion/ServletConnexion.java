@@ -1,4 +1,4 @@
-package servlets;
+package servlets.connexion;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,7 +8,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
@@ -56,7 +55,6 @@ public class ServletConnexion extends HttpServlet {
 		utilisateur = DAOIdentification.verifIdentification(identifiant, motDePasse);
 		ck = new Cookie("connexion", "NULL");
 
-
 		if (utilisateur != null) {
 			// le cookie est valide 10 minutes
 			ck.setValue("OK");
@@ -74,4 +72,3 @@ public class ServletConnexion extends HttpServlet {
 		this.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 }
-

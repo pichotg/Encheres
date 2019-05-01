@@ -1,7 +1,6 @@
 package dal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.List;
 
 import bo.ArticleVendu;
 import bo.Enchere;
-import bo.Formation;
 import bo.Utilisateur;
 import jdbc.JDBCTools;
 
@@ -80,7 +78,7 @@ public class EnchereDAO {
 		return bool;
 	}
 
-	public List<Enchere> selectAll() {
+	public List<Enchere> selectAll() throws SQLException {
 		List<Enchere> encheres = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
 		Connection conSelectAll = null;

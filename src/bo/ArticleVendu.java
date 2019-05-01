@@ -3,11 +3,16 @@ package bo;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * Cette classe décrit l'objet métier Article Vendu
+ * 
+ * @author adeloffre
+ *
+ */
 public class ArticleVendu implements Serializable {
 
 	/**
-	 * 
+	 * propriétés
 	 */
 	private static final long serialVersionUID = 1L;
 	private int noArticle;
@@ -20,15 +25,13 @@ public class ArticleVendu implements Serializable {
 	private String etatVente;
 	private Utilisateur utilisateur;
 	private int categorie;
-	
+
 	public ArticleVendu() {
 		super();
 	}
 
-
-
-	public ArticleVendu(int noArticle, String nomArticle,String etatVente, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente,  Utilisateur utilisateur,int categorie) {
+	public ArticleVendu(int noArticle, String nomArticle, String etatVente, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, int categorie) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -117,9 +120,9 @@ public class ArticleVendu implements Serializable {
 	public int getCategorie() {
 		return categorie;
 	}
-	
+
 	public void setCategorie(int categorie) {
 		this.categorie = categorie;
 	}
-	
+
 }

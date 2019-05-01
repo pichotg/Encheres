@@ -1,4 +1,4 @@
-package servlets;
+package servlets.connexion;
 
 import java.io.IOException;
 
