@@ -56,7 +56,7 @@
 			<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
 			<label for="retrait">Retrait : ${enchere.noUtilisateur.rue}<br/>
 			${enchere.noUtilisateur.codePostal} ${enchere.noUtilisateur.ville}</label><br/>
-			<label for="vendeur" >Vendeur : ${enchere.noUtilisateur.pseudo}</label><br/>
+			<label for="vendeur" >Vendeur : <a target ="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noUtilisateur.noUtilisateur}">${enchere.noUtilisateur.pseudo}</a></label><br/>
 		</div>
 		</section>
 	</c:forEach>

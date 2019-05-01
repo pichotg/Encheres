@@ -29,12 +29,20 @@
     <servlet-name>ServletFiltre</servlet-name>
     <url-pattern>/filtre</url-pattern>
   </servlet-mapping>
-    <servlet>
+  <servlet>
     <servlet-name>ServletListeAccueil</servlet-name>
     <servlet-class>servlets.article.ServletListeAccueil</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletListeAccueil</servlet-name>
     <url-pattern>/index.jsp</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletProfil</servlet-name>
+    <servlet-class>servlets.utilisateur.ServletProfil</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletProfil</servlet-name>
+    <url-pattern>/profil/*</url-pattern>
   </servlet-mapping>
 </web-app>
