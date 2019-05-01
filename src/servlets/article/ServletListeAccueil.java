@@ -42,7 +42,9 @@ public class ServletListeAccueil extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		this.getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(request, response);
+		request.setAttribute("listeEncheres", encheres);
+
+		this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
 	}
 
 	/**

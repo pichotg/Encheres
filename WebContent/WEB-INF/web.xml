@@ -30,11 +30,11 @@
     <url-pattern>/filtre</url-pattern>
   </servlet-mapping>
     <servlet>
-    <servlet-name>ServletInit</servlet-name>
+    <servlet-name>ServletListeAccueil</servlet-name>
     <servlet-class>servlets.article.ServletListeAccueil</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ServletInit</servlet-name>
+    <servlet-name>ServletListeAccueil</servlet-name>
     <url-pattern>/index.jsp</url-pattern>
   </servlet-mapping>
 </web-app>

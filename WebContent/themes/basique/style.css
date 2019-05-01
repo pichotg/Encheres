@@ -56,22 +56,22 @@ aside{
 	padding: 5px;
 	font-weight: bold;
 }
-/* bloc de toutes les formations*/
-.formations{
+/* bloc de toutes les encheres*/
+.encheres{
 	width: 70%;
 }
 
 /* chaque formatiuon dans le bloc*/
-.formation{
+.enchere{
 	border : dashed white 1px;
 	border-color: var(--maCouleur);
 	margin : 10px;
 }
-.formation h2{
+.enchere h2{
 	color : white;
 	margin-left : 10px;
 }
-.formation li, p{
+.enchere li, p{
 	margin-left: 10px;
 	
 }
