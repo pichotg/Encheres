@@ -30,7 +30,7 @@
 
 	<h2>Liste des enchères</h2>
 	<p>Filtres :</p>
-	<form class="recherche" action="filtre" method="post">
+	<form class="recherche" action="<%=request.getContextPath()%>/filtre" method="post">
 		<div class="nomArticleContient">
 			<label for="contient">Le nom de l'article contient</label>
 			<input class="champtexte" type="text" id="contient" name="contient" value="" />
