@@ -1,5 +1,8 @@
 # TrocEncheres
 
+# MERCI DE LANCER CETTE COMMANDE AVANT DE COMMENCER QUOI QUE CE SOIT JEUDI : 
+git rm -r --cached *.class
+
 CONFIGURATION GIT : 
 
 Lancer GIT BASH
