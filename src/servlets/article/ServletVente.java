@@ -2,6 +2,9 @@ package servlets.article;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,24 +41,41 @@ public class ServletVente extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm:ss");
+
 		String nomArticle = request.getParameter("article");
 		String description = request.getParameter("description");
 		int categorie = Integer.parseInt(request.getParameter("categorie"));
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-		Date debut = request.getParameter("debut");
-		Date fin = request.getParameter("fin");
+		Date debut = null, fin = null;
+		try {
+			debut = (Date) sdf.parse(request.getParameter("debut"));
+			fin = (Date) sdf.parse(request.getParameter("fin"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
 		String rue = request.getParameter("rue");
 		String codePostal = request.getParameter("codePostal");
 		String ville = request.getParameter("ville");
 		int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
 		String etatVente = "VND";
-		
-		ArticleVendu unArticle = new ArticleVendu(nomArticle,description,);
+
+		ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut, fin, miseAPrix,
+				prixVente, null, categorie);
 		ArticleVenduDAO DAOarticleVente = new ArticleVenduDAO();
-		DAOarticleVente.venteArticle(unArticle);
+		try {
+			ArticleVenduDAO.venteArticle(unArticle);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
