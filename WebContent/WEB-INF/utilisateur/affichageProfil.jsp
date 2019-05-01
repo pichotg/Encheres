@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="../themes/basique/style.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/basique/style.css">
 <title>Détail du profil</title>
 </head>
 <body>
