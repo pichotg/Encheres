@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
@@ -48,6 +49,7 @@ public class ServletConnexion extends HttpServlet {
 		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");
 		Utilisateur utilisateur = null;
+		HttpSession session = request.getSession();
 
 		Cookie ck = null;
 
@@ -61,7 +63,7 @@ public class ServletConnexion extends HttpServlet {
 			// Si on n'a pas coché se souvenir de moi
 			ck.setMaxAge(CINQ_MINUTES);
 			// Si on a coché , il faudra mettre SE_SOUVENIR pour être mémorisé 30 jours
-			request.setAttribute("utilisateur", utilisateur);
+			session.setAttribute("utilisateur", utilisateur);
 			System.out.println(utilisateur.getNoUtilisateur());
 		} else {
 			// Les identifiants sont incorrects, on passe le cookie Ã  NOK

@@ -12,7 +12,23 @@
  <h1>Mon Profil</h1>
  <div id="profil">
 	<h2>${user.pseudo}</h2>
-	<c:if test="${'Modifier' == param.ActionModif}">
+	<c:if test="${'consulter' == action}">
+	<form action="">
+		<label for="pseudo"> ${user.pseudo} </label><br/>
+		<label for="nom"> ${user.nom}</label><br/>
+		<label for="prenom"> ${user.prenom}</label><br/>
+		<label for="email"> ${user.email}</label><br/>
+		<label for="telephone"> ${user.telephone}</label><br/>
+		<label for="rue">  ${user.rue}</label><br/>
+		<label for="codePostal"> ${user.codePostal}</label><br/>
+		<label for="ville">  ${user.ville}</label><br/>
+		<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
+		<input class="modif" type="submit" value="Modifier" name="modifier">
+		</c:if>
+	</form>
+	</c:if>
+	
+	<c:if test="${'modifier' == action}">
 	<form action="">
 		<label for="pseudo"> ${user.pseudo} </label><br/>
 		<label for="nom"> ${user.nom}</label><br/>
