@@ -13,6 +13,7 @@ import dal.UtilisateurDAO;
 
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static String isEnable = "disabled";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,7 +37,7 @@ public class ServletModifierProfil extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		request.setAttribute("modifier", "disabled");
+		request.setAttribute("modifier", isEnable);
 		request.setAttribute("user", user);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
 	}
@@ -48,7 +49,8 @@ public class ServletModifierProfil extends HttpServlet {
 		
 		if("Modifier".equals(request.getParameter("modifier")))
 		{
-			request.setAttribute("modifier", "");
+			isEnable = "";
+			request.setAttribute("modifier", isEnable);
 			doGet(request, response);
 		}
 		if("enregistrer".equals(request.getParameter("action")))
@@ -69,7 +71,8 @@ public class ServletModifierProfil extends HttpServlet {
 					Integer.parseInt(request.getParameter("etatUtilisateur")));
 			try {
 				utDAO.updateUtilisateur(utUpdate);
-				request.setAttribute("modifier", "disabled");
+				isEnable = "disabled";
+				request.setAttribute("modifier", isEnable);
 				doGet(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -77,7 +80,8 @@ public class ServletModifierProfil extends HttpServlet {
 		}
 		if("annuler".equals(request.getParameter("action")))
 		{
-			request.setAttribute("modifier", "disabled");
+			isEnable = "disabled";
+			request.setAttribute("modifier", isEnable);
 			doGet(request, response);
 		}
 		
