@@ -7,7 +7,7 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>ServletConnexion</servlet-name>
-    <servlet-class>servlets.ServletConnexion</servlet-class>
+    <servlet-class>servlets.connexion.ServletConnexion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletConnexion</servlet-name>
@@ -15,7 +15,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>ServletDeconnexion</servlet-name>
-    <servlet-class>servlets.ServletDeconnexion</servlet-class>
+    <servlet-class>servlets.connexion.ServletDeconnexion</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ServletDeconnexion</servlet-name>
