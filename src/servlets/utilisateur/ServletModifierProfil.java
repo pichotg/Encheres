@@ -55,8 +55,7 @@ public class ServletModifierProfil extends HttpServlet {
 		{
 			HttpSession session = request.getSession();
 			UtilisateurDAO utDAO = new UtilisateurDAO();
-			Utilisateur utCourant = (Utilisateur) session.getAttribute("utilisateur");
-			Utilisateur utUpdate = new Utilisateur(request.getParameter("noUtilisateur"), 
+			Utilisateur utUpdate = new Utilisateur(Integer.parseInt(request.getParameter("noUtilisateur")), 
 					request.getParameter("pseudo"), 
 					request.getParameter("nom"), 
 					request.getParameter("prenom"), 
@@ -64,11 +63,11 @@ public class ServletModifierProfil extends HttpServlet {
 					request.getParameter("telephone"), 
 					request.getParameter("rue"), 
 					request.getParameter("codePostal"), 
-					ville, 
-					motDePasse, 
-					credit, 
-					administrateur, 
-					etatUtilisateur)
+					request.getParameter("ville"), 
+					request.getParameter("motDePasse"), 
+					Integer.parseInt(request.getParameter("credit")), 
+					Integer.parseInt(request.getParameter("administrateur")), 
+					Integer.parseInt(request.getParameter("etatUtilisateur")));
 		}
 		if("annuler".equals(request.getParameter("action")))
 		{

@@ -18,7 +18,7 @@ public class UtilisateurDAO {
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS where no_utilisateur = ?";
 	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String MAJ_ALL = "UPDATE UTILISATEURS SET pseudo = ?,nom = ?,prenom = ?, email = ?, telephone = ?,rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ? WHERE no_utilisateur = ?";
+	private static final String MAJ_ALL = "UPDATE UTILISATEURS SET pseudo = ?,nom = ?,prenom = ?, email = ?, telephone = ?,rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ?, etat_utilisateur = ? WHERE no_utilisateur = ?";
 
 	public UtilisateurDAO() {
 		super();
@@ -129,8 +129,9 @@ public class UtilisateurDAO {
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, user.getCredit());
 			preparedStatement.setInt(11, user.getAdministrateur());
+			preparedStatement.setInt(12, user.getEtatUtilisateur());
 			//where
-			preparedStatement.setInt(12, user.getNoUtilisateur());
+			preparedStatement.setInt(13, user.getNoUtilisateur());
 
 			preparedStatement.executeUpdate();
 
@@ -212,6 +213,8 @@ public class UtilisateurDAO {
 				preparedStatement.setString(9, newutilisateur.getMotDePasse());
 				preparedStatement.setInt(10, newutilisateur.getCredit());
 				preparedStatement.setInt(11, newutilisateur.getAdministrateur());
+				preparedStatement.setInt(12, newutilisateur.getEtatUtilisateur());
+				
 				
 				preparedStatement.executeUpdate();
 				breturn = true;
