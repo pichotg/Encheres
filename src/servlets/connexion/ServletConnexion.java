@@ -71,6 +71,6 @@ public class ServletConnexion extends HttpServlet {
 		}
 		// On ajoute le cookie
 		response.addCookie(ck);
-		this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
+		this.getServletContext().getRequestDispatcher("/filtre").forward(request, response);
 	}
 }
