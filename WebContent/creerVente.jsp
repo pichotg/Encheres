@@ -22,9 +22,9 @@
 			<label for="description">Description :</label> 
 			<input class="champtexte" type="text" id="description" name="description" /><br />
 			<label for="categorie">Categorie :</label> 
-			 <select class="champtexte" id="categorie" name="entry" > 
-			<c:forEach items="<%=Categorie.values()%>" var="entry">
-    			<option value="${entry.noCategorie}">${entry.name}</option>
+			 <select class="champtexte" id="categorie" name="categorie" > 
+			<c:forEach items="<%=Categorie.values()%>" var="categorie">
+    			<option value="${categorie.noCategorie}">${categorie.name}</option>
 			</c:forEach></select>
 			<label for="photo">Photo de l'article:</label> 
 			<input class="champtexte" type="file" id="photo" name="photo" /><br /> 
