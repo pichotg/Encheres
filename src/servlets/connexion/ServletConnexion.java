@@ -58,7 +58,7 @@ public class ServletConnexion extends HttpServlet {
 			// Si on n'a pas coch� se souvenir de moi
 			ck.setMaxAge(CINQ_MINUTES);
 			// Si on a coch� , il faudra mettre SE_SOUVENIR pour �tre m�moris� 30 jours
-			request.setAttribute("utilisateur", utilisateur);
+			session.setAttribute("utilisateur", utilisateur);
 			System.out.println(utilisateur.getNoUtilisateur());
 			// On ajoute le cookie
 			response.addCookie(ck);

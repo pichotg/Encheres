@@ -36,7 +36,7 @@ public class ServletListeAccueil extends HttpServlet {
 		enchereDAO = new EnchereDAO();
 
 		try {
-			encheres = enchereDAO.selectAll();
+			encheres = enchereDAO.selectEncheresEnCours();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
