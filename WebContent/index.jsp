@@ -15,6 +15,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>index</title>
 <link rel="stylesheet" href="./themes/basique/style.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
 <h1>ENI - Enchères</h1>
@@ -25,7 +26,7 @@
 	</c:if>
 	<c:if test="${utilisateur.noUtilisateur == -1 or utilisateur.noUtilisateur == null}">
 	<p><a href="<%=request.getContextPath()%>/connexion.jsp">Connexion</a></p><br>
-	<p><a href="<%=request.getContextPath()%>/creerCompte">Inscription</a></p><br>
+	<p><a href="<%=request.getContextPath()%>/creerCompte.jsp">Inscription</a></p><br>
 	</c:if>
 	</aside>
 

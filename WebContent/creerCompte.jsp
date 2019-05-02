@@ -1,30 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+	
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<!-- <link rel="stylesheet" href="../themes/basique/style.css"> -->
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="stylesheet" href="../themes/basique/style.css">
 <title>CreerCompte</title>
 </head>
 <body>
 	<div id="page">
 	<div id="entete">
-		<h1>ENI-Enchères</h1>
+		<h1>ENI-Enchï¿½res</h1>
 		<h2>Mon Profil</h2>
 		</div>
+		<c:if test="${'alreadyExist' == error}">
+			<p>alreadyExist</p>
+		</c:if>
 		<div id="contenu">
 		<form class="compte" action="<%=request.getContextPath()%>/creerCompte" method="post">
 			<label for="pseudo">Pseudo :</label> 
 			<input required="required" class="champtexte" type="text" id="pseudo" name="pseudo" /> 
 			<label for="nom">Nom :</label> 
 			<input required="required" class="champtexte" type="text" id="nom" name="nom" /><br />
-			<label for="prenom">Prénom :</label> 
+			<label for="prenom">Prï¿½nom :</label> 
 			<input required="required" class="champtexte" type="text" id="prenom" name="prenom" /> 
 			<label for="email">Email:</label> 
 			<input required="required" class="champtexte" type="text" id="email" name="email" /><br /> 
-			<label for="telephone">Téléphone :</label> 
+			<label for="telephone">Tï¿½lï¿½phone :</label> 
 			<input required="required" class="champtexte" type="text" id="telephone" name="telephone" /> 
 			<label for="rue">Rue :</label> 
 			<input required="required" class="champtexte" type="text" id="rue" name="rue" /><br />

@@ -13,7 +13,7 @@ import bo.Utilisateur;
 import dal.UtilisateurDAO;
 
 /**
- * Servlet qui servira à se connecter au site.
+ * Servlet qui servira ï¿½ se connecter au site.
  * 
  * @author adeloffre2018
  *
@@ -25,11 +25,6 @@ public class ServletConnexion extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			doProcess(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,17 +53,19 @@ public class ServletConnexion extends HttpServlet {
 		if (utilisateur != null) {
 			// le cookie est valide 10 minutes
 			ck.setValue("OK");
-			// Si on n'a pas coché se souvenir de moi
+			// Si on n'a pas cochï¿½ se souvenir de moi
 			ck.setMaxAge(CINQ_MINUTES);
-			// Si on a coché , il faudra mettre SE_SOUVENIR pour être mémorisé 30 jours
+			// Si on a cochï¿½ , il faudra mettre SE_SOUVENIR pour ï¿½tre mï¿½morisï¿½ 30 jours
 			request.setAttribute("utilisateur", utilisateur);
 			System.out.println(utilisateur.getNoUtilisateur());
+			// On ajoute le cookie
+			response.addCookie(ck);
+			this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
 		} else {
 			// Les identifiants sont incorrects, on passe le cookie Ã  NOK
-			ck.setValue("NOK");
+			request.setAttribute("error", "connexionerror");
+			this.getServletContext().getRequestDispatcher("/connexion.jsp").forward(request, response);
 		}
-		// On ajoute le cookie
-		response.addCookie(ck);
-		this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
+
 	}
 }
