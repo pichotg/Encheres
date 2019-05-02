@@ -4,12 +4,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="../themes/basique/style.css">
 <title>Connexion</title>
 </head>
 <body>
 
 	<div id="page">
+		<c:if test="${'connexionerror' == error}">
+			<p>connexionerror</p>
+		</c:if>
 		<h1>ENI-Enchères</h1>
 		<form class="connexion" action="<%=request.getContextPath()%>/connexion" method="post">
 		<div class="bloc_identifiant">

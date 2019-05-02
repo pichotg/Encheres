@@ -117,7 +117,7 @@ public class Utilisateur {
 	}
 	
 	public String getAdresse() {
-		return String.format("%s\br%s %s", this.getRue(),this.getCodePostal(), this.getVille());
+		return String.format("%s \n %s %s", this.getRue(),this.getCodePostal(), this.getVille());
 	}
 
 	public void setMotDePasse(String motDePasse) {

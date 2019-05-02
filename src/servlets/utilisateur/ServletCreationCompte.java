@@ -63,6 +63,7 @@ public class ServletCreationCompte extends HttpServlet {
 		}else {
 			// TODO: redirect mot de passe oublier ?
 			request.setAttribute("error", "alreadyExist");
+			this.getServletContext().getRequestDispatcher("/creerCompte.jsp").forward(request, response);
 		}
 		
 	}
