@@ -39,7 +39,14 @@ public class EnchereDAO {
 			+ " where a.no_categorie = ? and a.nom_article like ? ";
 	private static final String FILTRAGE_SANS_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
 			+ " left join ENCHERES e on e.no_article = a.no_article where a.nom_article like ? ";
-
+	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
+	
+/**
+ * Ajout d'une enchère
+ * @param enchere
+ * @throws SQLException
+ * @throws ClassNotFoundException
+ */
 	public static void ajouter(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
@@ -52,7 +59,12 @@ public class EnchereDAO {
 					rqt.setInt(2, enchere.getNoArticle().getNoArticle());
 					rqt.setDate(3, enchere.getDateEnchere());
 					rqt.setInt(4, enchere.getMontant_enchere());
-					rqt.executeUpdate();
+					if(enchere.getMontant_enchere() > verifEnchereSup(enchere) ) {
+						rqt.executeUpdate();
+					}else {
+						throw new SQLException("Votre enchère doit être supérieure à l'enchère actuelle");
+					}
+					
 				} finally {
 					if (rqt != null)
 						rqt.close();
@@ -77,7 +89,13 @@ public class EnchereDAO {
 			}
 		}
 	}
-
+/**
+ * Verifie si uen enchere existe déjà sinon insert de celle ci
+ * @param enchere
+ * @return
+ * @throws SQLException
+ * @throws ClassNotFoundException
+ */
 	public static Boolean verifPremiereEnchere(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
@@ -104,7 +122,37 @@ public class EnchereDAO {
 		}
 		return bool;
 	}
-
+/**
+ * Vérifie si l'enchere est bien supérieure aux enchères existantes
+ * @param enchere
+ * @return
+ * @throws SQLException
+ * @throws ClassNotFoundException
+ */
+	public static int verifEnchereSup(Enchere enchere) throws SQLException, ClassNotFoundException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		int enchereMax = 0;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(SELECT_ENCHERE_MAX);
+			rqt.setInt(1, enchere.getNoArticle().getNoArticle());
+			rs = rqt.executeQuery();
+			if (rs.next()) {
+				
+				enchereMax = rs.getInt("enchereMax");	
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		return enchereMax;
+	}
 	/**
 	 * Methode pour retourner les encheres en cours
 	 * 

@@ -13,7 +13,7 @@ import bo.Utilisateur;
 import jdbc.JDBCTools;
 
 public class ArticleVenduDAO {
-	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie,etat_vente) VALUES(?,?,?,?,?,?,?,?)";
+	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie,etat_vente,path_image) VALUES(?,?,?,?,?,?,?,?,?)";
 	private static final String LISTE_MES_VENTES_EN_COURS = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres > (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vec'";
 	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vnd'";
 	private static final String LISTE_MES_VENTES_TERMINEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_fin_encheres < (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vet'";
@@ -41,6 +41,7 @@ public class ArticleVenduDAO {
 			rqt.setInt(6, articleVendu.getUtilisateur().getNoUtilisateur());
 			rqt.setInt(7, articleVendu.getCategorie());
 			rqt.setString(8, EtatVente.VND.getNom());
+			rqt.setString(9, articleVendu.getPathImage());
 			rqt.executeUpdate();
 		} finally {
 			if (rqt != null)
