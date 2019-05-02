@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="bo.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html>
 <head>
@@ -17,7 +22,10 @@
 			<label for="description">Description :</label> 
 			<input class="champtexte" type="text" id="description" name="description" /><br />
 			<label for="categorie">Categorie :</label> 
-			<select class="champtexte" id="categorie" name="categorie"> </select><br />
+			 <select class="champtexte" id="categorie" name="entry" > 
+			<c:forEach items="<%=Categorie.values()%>" var="entry">
+    			<option value="${entry.noCategorie}">${entry.name}</option>
+			</c:forEach></select>
 			<label for="photo">Photo de l'article:</label> 
 			<input class="champtexte" type="file" id="photo" name="photo" /><br /> 
 			<label for="miseAPrix">Mise à prix :</label> 
