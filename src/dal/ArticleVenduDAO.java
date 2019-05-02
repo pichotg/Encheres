@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bo.ArticleVendu;
+import bo.EtatVente;
 import bo.Utilisateur;
 import jdbc.JDBCTools;
 
@@ -39,7 +40,7 @@ public class ArticleVenduDAO {
 			rqt.setInt(5, articleVendu.getMiseAPrix());
 			rqt.setInt(6, articleVendu.getUtilisateur().getNoUtilisateur());
 			rqt.setInt(7, articleVendu.getCategorie());
-			rqt.setString(8, "vnd");
+			rqt.setString(8, EtatVente.VND.getNom());
 			rqt.executeUpdate();
 		} finally {
 			if (rqt != null)
