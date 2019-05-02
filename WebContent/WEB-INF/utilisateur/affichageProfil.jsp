@@ -14,7 +14,7 @@
  <div id="profil">
 	<h2>${user.pseudo}</h2>
 	<c:if test="${'Modifier' != param.modifier}">
-	<form action="<%=request.getContextPath()%>/modifierProfil">
+	<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
 		<label for="pseudo"> ${user.pseudo} </label><br/>
 		<label for="nom"> ${user.nom}</label><br/>
 		<label for="prenom"> ${user.prenom}</label><br/>
@@ -31,8 +31,8 @@
 	</c:if>
 	
 	<c:if test="${'Modifier' == param.modifier}">
-	<form action="<%=request.getContextPath()%>/modifierProfil">
-		<label for="pseudo"> ${user.pseudo} </label><br/>
+	<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
+		<input class="champtexte" type="text" id="identifiant" name="identifiant" value="${user.pseudo}"/>
 		<label for="nom"> ${user.nom}</label><br/>
 		<label for="prenom"> ${user.prenom}</label><br/>
 		<label for="email"> ${user.email}</label><br/>

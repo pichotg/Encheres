@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
@@ -33,7 +34,6 @@ public class ServletModifierProfil extends HttpServlet {
 			try {
 				user = DAOgetUtilisateur.getUtilisateurById(utilisateurRecherchee);
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -46,7 +46,35 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		if("Modifier".equals(request.getParameter("modifier")))
+		{
+			doGet(request, response);
+		}
+		if("enregistrer".equals(request.getParameter("action")))
+		{
+			HttpSession session = request.getSession();
+			UtilisateurDAO utDAO = new UtilisateurDAO();
+			Utilisateur utCourant = (Utilisateur) session.getAttribute("utilisateur");
+			Utilisateur utUpdate = new Utilisateur(request.getParameter("noUtilisateur"), 
+					request.getParameter("pseudo"), 
+					request.getParameter("nom"), 
+					request.getParameter("prenom"), 
+					request.getParameter("email"), 
+					request.getParameter("telephone"), 
+					request.getParameter("rue"), 
+					request.getParameter("codePostal"), 
+					ville, 
+					motDePasse, 
+					credit, 
+					administrateur, 
+					etatUtilisateur)
+		}
+		if("annuler".equals(request.getParameter("action")))
+		{
+			doGet(request, response);
+		}
+		
 	}
 
 }

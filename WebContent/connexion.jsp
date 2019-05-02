@@ -38,9 +38,9 @@
 		</div>
 	</c:if>
 	<label for="inputEmail" class="sr-only">Email ou Pseudo</label>
-	<input type="text" id="inputEmail" class="form-control" placeholder="Email ou pseudo" required autofocus>
+	<input type="text" id="identifiant" name="identifiant" class="form-control" placeholder="Email ou pseudo" required autofocus>
 	<label for="inputPassword" class="sr-only">Password</label>
-	<input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+	<input type="password" id="motdepasse" name="motdepasse" class="form-control" placeholder="Password" required>
 	<div class="checkbox mb-3">
 		<label>
 			<input type="checkbox" value="remember-me">Rester Connecter
