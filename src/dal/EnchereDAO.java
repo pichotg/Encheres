@@ -18,7 +18,18 @@ public class EnchereDAO {
 	private static final String INSERT_ENCHERE = "insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ENCHERES WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)";
+	private static final String SELECT_ENCHERE_EN_COURS = "SELECT *\r\n" + 
+			"FROM ENCHERES\r\n" + 
+			"INNER JOIN\r\n" + 
+			"(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
+			"ON ENCHERES.no_article = topscore.no_article\r\n" + 
+			"JOIN\r\n" + 
+			"ARTICLES_VENDUS\r\n" + 
+			"ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n" + 
+			"AND ENCHERES.montant_enchere = topscore.enchereMax \r\n" + 
+			"AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n" + 
+			"AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n" + 
+			"order by ARTICLES_VENDUS.date_fin_encheres ASC";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
 			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
