@@ -17,7 +17,7 @@ public class UtilisateurDAO {
 	private static final String SELECT_ALL_UTILISATEUR = "SELECT * FROM UTILISATEURS";
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS where no_utilisateur = ?";
 	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";
-	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,etat_utilisateur) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String MAJ_ALL = "UPDATE UTILISATEURS SET pseudo = ?,nom = ?,prenom = ?, email = ?, telephone = ?,rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ?, etat_utilisateur = ? WHERE no_utilisateur = ?";
 
 	public UtilisateurDAO() {
@@ -286,7 +286,7 @@ public class UtilisateurDAO {
 			preparedStatement.setInt(1, user.getNoUtilisateur());
 
 			if (preparedStatement.executeUpdate() == 0) {
-				System.err.println("Suppression impossible : Cette utilisateur n'est pas prï¿½sente en base.");
+				System.err.println("Suppression impossible : Cette utilisateur n'est pas présent en base.");
 			}
 			preparedStatement.close();
 			conDelete.close();
