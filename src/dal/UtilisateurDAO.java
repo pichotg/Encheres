@@ -49,7 +49,7 @@ public class UtilisateurDAO {
 				utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
 						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
 						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur"));
+						rs.getInt("credit"), rs.getInt("administrateur"), rs.getInt("etat_utilisateur"));
 			}
 
 		} catch (ClassNotFoundException |
@@ -88,7 +88,7 @@ public class UtilisateurDAO {
 				listUser.add(new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
 						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
 						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur")));
+						rs.getInt("credit"), rs.getInt("administrateur"),rs.getInt("etat_utilisateur") ));
 			}
 
 		} catch (ClassNotFoundException |
@@ -128,7 +128,7 @@ public class UtilisateurDAO {
 			preparedStatement.setString(8, user.getVille());
 			preparedStatement.setString(9, user.getMotDePasse());
 			preparedStatement.setInt(10, user.getCredit());
-			preparedStatement.setBoolean(11, user.getAdministrateur());
+			preparedStatement.setInt(11, user.getAdministrateur());
 			//where
 			preparedStatement.setInt(12, user.getNoUtilisateur());
 
@@ -211,7 +211,7 @@ public class UtilisateurDAO {
 				preparedStatement.setString(8, newutilisateur.getVille());
 				preparedStatement.setString(9, newutilisateur.getMotDePasse());
 				preparedStatement.setInt(10, newutilisateur.getCredit());
-				preparedStatement.setBoolean(11, newutilisateur.getAdministrateur());
+				preparedStatement.setInt(11, newutilisateur.getAdministrateur());
 				
 				preparedStatement.executeUpdate();
 				breturn = true;
@@ -251,7 +251,7 @@ public class UtilisateurDAO {
 				utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
 						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
 						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
-						rs.getInt("credit"), rs.getBoolean("administrateur"));
+						rs.getInt("credit"), rs.getInt("administrateur"),rs.getInt("etat_utilisateur"));
 			}
 
 		} catch (ClassNotFoundException |SQLException e) {

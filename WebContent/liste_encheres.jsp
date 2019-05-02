@@ -9,7 +9,7 @@
 <%@page import="bo.Enchere"%>
 <%@page import="bo.ArticleVendu"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!doctype html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -22,11 +22,10 @@
 	<aside class="menu">
 	<c:if test="${utilisateur.noUtilisateur != null}">
 	<p><a href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a></p><br>
-	<p><a href="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}"></a></p>
+	<p><a href="<%=request.getContextPath()%>/creerVente.jsp?noUtilisateur=${utilisateur.noUtilisateur}"></a>Vendre Article</p>
 	</c:if>
 	<c:if test="${utilisateur.noUtilisateur == -1 or utilisateur.noUtilisateur == null}">
 	<p><a href="<%=request.getContextPath()%>/connexion.jsp">Connexion</a></p><br>
-	<p><a href="<%=request.getContextPath()%>/creerCompte.jsp">Inscription</a></p><br>
 	</c:if>
 	</aside>
 
@@ -57,7 +56,7 @@
 			<label for="prix">Mise à prix :  ${enchere.noArticle.prixVente}</label><br/>
 			<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
 			<label for="retrait">Retrait : ${enchere.noUtilisateur.getAdresse()}</label><br/>
-			<label for="vendeur" >Vendeur : <a target ="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noUtilisateur.noUtilisateur}">${enchere.noUtilisateur.pseudo}</a></label><br/>
+			<label for="vendeur" >Vendeur : <a target ="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">${enchere.noArticle.utilisateur.pseudo}</a></label><br/>
 		</div>
 		</section>
 	</c:forEach>

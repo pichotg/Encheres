@@ -18,7 +18,22 @@ public class EnchereDAO {
 	private static final String INSERT_ENCHERE = "insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ALL = "select * from encheres";
+	private static final String SELECT_ENCHERE_EN_COURS = "SELECT *\r\n" + 
+			"FROM ENCHERES\r\n" + 
+			"INNER JOIN\r\n" + 
+			"(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
+			"ON ENCHERES.no_article = topscore.no_article\r\n" + 
+			"JOIN\r\n" + 
+			"ARTICLES_VENDUS\r\n" + 
+			"ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n" + 
+			"AND ENCHERES.montant_enchere = topscore.enchereMax \r\n" + 
+			"AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n" + 
+			"AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n" + 
+			"order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
+			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
+			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
+	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
 	private static final String FILTRAGE_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
 			+ " left join ENCHERES e on e.no_article = a.no_article "
 			+ " where a.no_categorie = ? and a.nom_article like ? ";
@@ -90,7 +105,13 @@ public class EnchereDAO {
 		return bool;
 	}
 
-	public List<Enchere> selectAll() throws SQLException {
+	/**
+	 * Methode pour retourner les encheres en cours
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Enchere> selectEncheresEnCours() throws SQLException {
 		List<Enchere> encheres = new ArrayList<>();
 		PreparedStatement preparedStatement = null;
 		Connection conSelectAll = null;
@@ -98,11 +119,11 @@ public class EnchereDAO {
 
 		try {
 			conSelectAll = JDBCTools.getConnection();
-			preparedStatement = conSelectAll.prepareStatement(SELECT_ALL);
+			preparedStatement = conSelectAll.prepareStatement(SELECT_ENCHERE_EN_COURS);
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le rï¿½sultat de la requï¿½te et on crï¿½e un objet Formation
+			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -125,6 +146,90 @@ public class EnchereDAO {
 		return encheres;
 	}
 
+	/**
+	 * Methode pour retourner les encheres en cours de l'utilisateur
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Enchere> selectEncheresUtilisateur(int idutilisateur) throws SQLException {
+		List<Enchere> encheres = new ArrayList<>();
+		PreparedStatement preparedStatement = null;
+		Connection conSelect = null;
+		ResultSet rs = null;
+
+		try {
+			conSelect = JDBCTools.getConnection();
+			preparedStatement = conSelect.prepareStatement(SELECT_ENCHERE_EN_COURS_BY_ID);
+			preparedStatement.setInt(1, idutilisateur);
+			rs = preparedStatement.executeQuery();
+			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
+			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
+			while (rs.next()) {
+				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
+				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
+				Enchere e = new Enchere(articleVendu, utilisateur, rs.getDate("date_enchere"),
+						rs.getInt("montant_enchere"));
+				encheres.add(e);
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (conSelect != null)
+				conSelect.close();
+		}
+		return encheres;
+	}
+	
+	/**
+	 * Methode pour retourner les encheres remportées de l'utilisateur
+	 * 
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<Enchere> selectEncheresRemporteesUtilisateur(int idutilisateur) throws SQLException {
+		List<Enchere> encheres = new ArrayList<>();
+		PreparedStatement preparedStatement = null;
+		Connection conSelect = null;
+		ResultSet rs = null;
+
+		try {
+			conSelect = JDBCTools.getConnection();
+			preparedStatement = conSelect.prepareStatement(SELECT_ENCHERE_REMPORTEE);
+			preparedStatement.setInt(1, idutilisateur);
+			rs = preparedStatement.executeQuery();
+			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
+			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
+			while (rs.next()) {
+				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
+				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
+				Enchere e = new Enchere(articleVendu, utilisateur, rs.getDate("date_enchere"),
+						rs.getInt("montant_enchere"));
+				encheres.add(e);
+			}
+
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (conSelect != null)
+				conSelect.close();
+		}
+		return encheres;
+	}
+
 	public List<Enchere> filtrageVenteEnCours(String contient, String categorie)
 			throws SQLException, ClassNotFoundException {
 
@@ -143,11 +248,11 @@ public class EnchereDAO {
 				preparedStatement.setString(2, "%" + contient.trim() + "%");
 			}
 			// Sinon on prend la version sans la catégorie
-			else if (contient != null){
+			else if (contient != null) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
 				preparedStatement.setString(1, "%" + contient.trim() + "%");
 			} else {
-				preparedStatement = conFiltre.prepareStatement(SELECT_ALL);
+				preparedStatement = conFiltre.prepareStatement(SELECT_ENCHERE_EN_COURS);
 			}
 
 			rs = preparedStatement.executeQuery();

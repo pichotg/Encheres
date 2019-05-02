@@ -25,13 +25,14 @@ public class ArticleVendu implements Serializable {
 	private String etatVente;
 	private Utilisateur utilisateur;
 	private int categorie;
+	private String pathImage;
 
 	public ArticleVendu() {
 		super();
 	}
 
 	public ArticleVendu(int noArticle, String nomArticle, String etatVente, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, int categorie) {
+			Date dateFinEncheres, int miseAPrix, int prixVente, Utilisateur utilisateur, int categorie, String pathImage) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -43,6 +44,7 @@ public class ArticleVendu implements Serializable {
 		this.prixVente = prixVente;
 		this.utilisateur = utilisateur;
 		this.categorie = categorie;
+		this.pathImage = pathImage;
 	}
 
 	public int getNoArticle() {
@@ -123,6 +125,14 @@ public class ArticleVendu implements Serializable {
 
 	public void setCategorie(int categorie) {
 		this.categorie = categorie;
+	}
+
+	public String getPathImage() {
+		return pathImage;
+	}
+
+	public void setPathImage(String pathImage) {
+		this.pathImage = pathImage;
 	}
 
 }

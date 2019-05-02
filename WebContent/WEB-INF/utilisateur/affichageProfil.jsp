@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -13,7 +13,7 @@
  <h1>Mon Profil</h1>
  <div id="profil">
 	<h2>${user.pseudo}</h2>
-	<c:if test="${'consulter' == action or null == action}">
+	<c:if test="${'Modifier' != param.modifier}">
 	<form action="<%=request.getContextPath()%>/modifierProfil">
 		<label for="pseudo"> ${user.pseudo} </label><br/>
 		<label for="nom"> ${user.nom}</label><br/>
@@ -25,11 +25,12 @@
 		<label for="ville">  ${user.ville}</label><br/>
 		<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
 		<input class="modif" type="submit" value="Modifier" name="modifier">
+		<input type="hidden" value="${user.noUtilisateur}" name="id_utilisateur_recherche">
 		</c:if>
 	</form>
 	</c:if>
 	
-	<c:if test="${'modifier' == action}">
+	<c:if test="${'Modifier' == param.modifier}">
 	<form action="<%=request.getContextPath()%>/modifierProfil">
 		<label for="pseudo"> ${user.pseudo} </label><br/>
 		<label for="nom"> ${user.nom}</label><br/>
@@ -39,8 +40,9 @@
 		<label for="rue">  ${user.rue}</label><br/>
 		<label for="codePostal"> ${user.codePostal}</label><br/>
 		<label for="ville">  ${user.ville}</label><br/>
-		<input class="annuler" type="submit" value="annuler" name="annuler">
-		<input class="enregistrer" type="submit" value="enregistrer" name="enregistrer">
+		<input class="annuler" type="submit" value="annuler" name="action">
+		<input class="enregistrer" type="submit" value="enregistrer" name="action">
+		<input type="hidden" value="${user.noUtilisateur}" name="id_utilisateur_recherche">
 	</form>
 	</c:if>
 </div>

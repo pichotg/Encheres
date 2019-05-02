@@ -52,6 +52,7 @@ public class ServletVente extends HttpServlet {
 		String description = request.getParameter("description");
 		int categorie = Integer.parseInt(request.getParameter("categorie"));
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		String path = request.getParameter("path");
 		Date debut = null, fin = null;
 		try {
 			debut = (Date) sdf.parse(request.getParameter("debut"));
@@ -68,7 +69,7 @@ public class ServletVente extends HttpServlet {
 		String etatVente = "VND";
 
 		ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut, fin, miseAPrix,
-				prixVente, null, categorie);
+				prixVente, null, categorie, path);
 		ArticleVenduDAO DAOarticleVente = new ArticleVenduDAO();
 		try {
 			ArticleVenduDAO.venteArticle(unArticle);

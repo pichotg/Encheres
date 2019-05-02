@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import bo.ArticleVendu;
+import bo.EtatVente;
 import bo.Utilisateur;
 import jdbc.JDBCTools;
 
@@ -37,9 +38,9 @@ public class ArticleVenduDAO {
 			rqt.setTimestamp(2, new java.sql.Timestamp(articleVendu.getDateDebutEncheres().getTime()));
 			rqt.setTimestamp(3, new java.sql.Timestamp(articleVendu.getDateFinEncheres().getTime()));
 			rqt.setInt(5, articleVendu.getMiseAPrix());
-			rqt.setInt(6, articleVendu.getUtilisateur().noUtilisateur);
+			rqt.setInt(6, articleVendu.getUtilisateur().getNoUtilisateur());
 			rqt.setInt(7, articleVendu.getCategorie());
-			rqt.setString(8, "vnd");
+			rqt.setString(8, EtatVente.VND.getNom());
 			rqt.executeUpdate();
 		} finally {
 			if (rqt != null)
@@ -81,7 +82,7 @@ public class ArticleVenduDAO {
 					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
 							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"));
+							rs.getInt("no_categorie"), rs.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
 					// On ajout l'article à la liste
@@ -101,7 +102,7 @@ public class ArticleVenduDAO {
 					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
 							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"));
+							rs.getInt("no_categorie"), rs.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
 					// On ajout l'article à la liste
@@ -121,7 +122,7 @@ public class ArticleVenduDAO {
 					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
 							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"));
+							rs.getInt("no_categorie"), rs.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
 					// On ajout l'article à la liste
@@ -167,7 +168,7 @@ public class ArticleVenduDAO {
 				article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 						rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
 						rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
-						utilisateur, rs.getInt("no_categorie"));
+						utilisateur, rs.getInt("no_categorie"), rs.getString("path_image"));
 			}
 
 		} catch (ClassNotFoundException | SQLException e) {
