@@ -24,7 +24,8 @@
 	<p><a href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a></p><br>
 	</c:if>
 	<c:if test="${utilisateur.noUtilisateur == -1 or utilisateur.noUtilisateur == null}">
-	<p><a href="<%=request.getContextPath()%>/connexion.jsp">Connexion / inscription</a></p><br>
+	<p><a href="<%=request.getContextPath()%>/connexion.jsp">Connexion</a></p><br>
+	<p><a href="<%=request.getContextPath()%>/creerCompte">Inscription</a></p><br>
 	</c:if>
 	</aside>
 
