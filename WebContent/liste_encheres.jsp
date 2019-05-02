@@ -51,7 +51,7 @@
 	<c:forEach var="enchere" items="${listeEncheres}">
 		<section class="enchere">
 		<div class="enchere">
-			<label for="nom">Description : ${enchere.noArticle.prixVente}</label><br/>
+			<label for="nom">Description : ${enchere.noArticle.description}</label><br/>
 			<label for="prix">Mise à prix :  ${enchere.noArticle.prixVente}</label><br/>
 			<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
 			<label for="retrait">Retrait : ${enchere.noUtilisateur.getAdresse()}</label><br/>

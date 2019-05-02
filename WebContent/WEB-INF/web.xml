@@ -45,4 +45,12 @@
     <servlet-name>ServletProfil</servlet-name>
     <url-pattern>/profil/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletCreationCompte</servlet-name>
+    <servlet-class>servlets.utilisateur.ServletCreationCompte</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletCreationCompte</servlet-name>
+    <url-pattern>/creerCompte</url-pattern>
+  </servlet-mapping>
 </web-app>
