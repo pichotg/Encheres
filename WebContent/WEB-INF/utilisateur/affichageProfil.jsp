@@ -1,50 +1,97 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<link rel="stylesheet" href="<%=request.getContextPath()%>/themes/basique/style.css">
-<title>Mon profil</title>
-</head>
-<body>
- <h1>Mon Profil</h1>
- <div id="profil">
-	<h2>${user.pseudo}</h2>
-	<c:if test="${'Modifier' != param.modifier}">
-	<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
-		<label for="pseudo"> ${user.pseudo} </label><br/>
-		<label for="nom"> ${user.nom}</label><br/>
-		<label for="prenom"> ${user.prenom}</label><br/>
-		<label for="email"> ${user.email}</label><br/>
-		<label for="telephone"> ${user.telephone}</label><br/>
-		<label for="rue">  ${user.rue}</label><br/>
-		<label for="codePostal"> ${user.codePostal}</label><br/>
-		<label for="ville">  ${user.ville}</label><br/>
-		<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
-		<input class="modif" type="submit" value="Modifier" name="modifier">
-		<input type="hidden" value="${user.noUtilisateur}" name="id_utilisateur_recherche">
-		</c:if>
-	</form>
-	</c:if>
-	
-	<c:if test="${'Modifier' == param.modifier}">
-	<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
-		<input class="champtexte" type="text" id="identifiant" name="identifiant" value="${user.pseudo}"/>
-		<label for="nom"> ${user.nom}</label><br/>
-		<label for="prenom"> ${user.prenom}</label><br/>
-		<label for="email"> ${user.email}</label><br/>
-		<label for="telephone"> ${user.telephone}</label><br/>
-		<label for="rue">  ${user.rue}</label><br/>
-		<label for="codePostal"> ${user.codePostal}</label><br/>
-		<label for="ville">  ${user.ville}</label><br/>
-		<input class="annuler" type="submit" value="annuler" name="action">
-		<input class="enregistrer" type="submit" value="enregistrer" name="action">
-		<input type="hidden" value="${user.noUtilisateur}" name="id_utilisateur_recherche">
-	</form>
-	</c:if>
-</div>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<!-- Custom styles for this template -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+	<title>Mon profil</title>
+</head> 
+<body class="text-center">
+	<div id="page">
+			<div class="container">
+				<article class="card-body mx-auto" style="max-width: 400px;">
+					<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
+					<h4 class="card-title mt-3 text-center">Créer un compte</h4>
+					<form action="<%=request.getContextPath()%>/creerCompte" method="post">
+						<c:if test="${'alreadyExist' == error}">
+							<div class="alert alert-danger" role="alert">Identifiant ou
+								mail exist déjà !</div>
+						</c:if>
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-user"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.pseudo} id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo" type="text">
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-user"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.nom} id="nom" name="nom" class="form-control" placeholder="Nom" type="text">
+							<input ${modifier} value=${user.prenom} id="prenom" name="prenom" class="form-control" placeholder="Prenom" type="text">
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-envelope"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.email} id="email" name="email" class="form-control" placeholder="Email" type="email">
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-phone"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.telephone} id="telephone" name="telephone" class="form-control" placeholder="Teléphone" type="text">
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-home"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.rue} id="rue" name="rue" class="form-control" placeholder="Rue" type="text">
+						</div>
+						<!-- form-group end.// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-home"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.ville} id="ville" name="ville" class="form-control" placeholder="Ville" type="text"> <input
+								id="codePostal" name="codePostal" class="form-control" placeholder="Code postal" type="text">
+						</div>
+						<!-- form-group end.// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-lock"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.motDePasse} id="motDePasse" name="motDePasse" class="form-control" placeholder="Mot de passe"
+								type="password">
+						</div>
+						<!-- form-group// -->
+						<div class="form-group input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> <i class="fa fa-lock"></i>
+								</span>
+							</div>
+							<input ${modifier} value=${user.motDePasse} id="confirmation" name="confirmation" class="form-control" placeholder="Confirmation"
+								type="password">
+						</div>
+					</form>
+				</article>
+			</div>
+		</div>
 </body>
 </html>
