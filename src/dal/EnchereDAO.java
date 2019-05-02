@@ -132,20 +132,22 @@ public class EnchereDAO {
 		Connection conFiltre = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-
+		System.out.println(categorie);
 		try {
 			conFiltre = JDBCTools.getConnection();
 
 			// Si la catégorie est non vide, on prend la requête classique
-			if (!"".equals(categorie.trim())) {
+			if (!"".equals(categorie) && categorie != null) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_CATEGORIE);
 				preparedStatement.setInt(1, Categorie.getNoByName(categorie));
 				preparedStatement.setString(2, "%" + contient.trim() + "%");
 			}
 			// Sinon on prend la version sans la catégorie
-			else {
+			else if (contient != null){
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
 				preparedStatement.setString(1, "%" + contient.trim() + "%");
+			} else {
+				preparedStatement = conFiltre.prepareStatement(SELECT_ALL);
 			}
 
 			rs = preparedStatement.executeQuery();

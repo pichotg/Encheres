@@ -8,6 +8,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
@@ -43,6 +44,7 @@ public class ServletConnexion extends HttpServlet {
 		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");
 		Utilisateur utilisateur = null;
+		HttpSession session = request.getSession();
 
 		Cookie ck = null;
 
@@ -66,6 +68,5 @@ public class ServletConnexion extends HttpServlet {
 			request.setAttribute("error", "connexionerror");
 			this.getServletContext().getRequestDispatcher("/connexion.jsp").forward(request, response);
 		}
-
 	}
 }
