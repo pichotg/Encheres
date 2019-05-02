@@ -20,7 +20,7 @@ public class TestUtilisateurDAO {
 				"0651845076",
 				"la rue pichot",
 				"86000",
-				"Poitiers","root",1000,false);
+				"Poitiers","root",1000,0,0);
 		
 		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		
