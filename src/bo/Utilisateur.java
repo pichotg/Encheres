@@ -3,20 +3,21 @@ package bo;
 import java.util.ArrayList;
 
 public class Utilisateur {
-	public int noUtilisateur;
-	public String pseudo;
-	public String nom;
-	public String prenom;
-	public String email;
-	public String telephone;
-	public String rue;
-	public String codePostal;
-	public String ville;
-	public String motDePasse;
-	public int credit;
-	public Boolean administrateur;
-	public ArrayList <ArticleVendu> lesArticles;
-	public ArrayList <Enchere> lesEncheres;
+	private int noUtilisateur;
+	private String pseudo;
+	private String nom;
+	private String prenom;
+	private String email;
+	private String telephone;
+	private String rue;
+	private String codePostal;
+	private String ville;
+	private String motDePasse;
+	private int credit;
+	private int administrateur;
+	private int etatUtilisateur;
+	private ArrayList <ArticleVendu> lesArticles;
+	private ArrayList <Enchere> lesEncheres;
 	
 		
 	public Utilisateur() {
@@ -24,7 +25,7 @@ public class Utilisateur {
 	}
 
 	public Utilisateur(int noUtilisateur, String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit, Boolean administrateur) {
+			String rue, String codePostal, String ville, String motDePasse, int credit, int administrateur, int etatUtilisateur) {
 		super();
 		this.noUtilisateur = noUtilisateur;
 		this.pseudo = pseudo;
@@ -38,6 +39,7 @@ public class Utilisateur {
 		this.motDePasse = motDePasse;
 		this.credit = credit;
 		this.administrateur = administrateur;
+		this.etatUtilisateur = etatUtilisateur;
 	}
 
 	public int getNoUtilisateur() {
@@ -132,12 +134,36 @@ public class Utilisateur {
 		this.credit = credit;
 	}
 
-	public Boolean getAdministrateur() {
+	public int getAdministrateur() {
 		return administrateur;
 	}
 
-	public void setAdministrateur(Boolean administrateur) {
+	public void setAdministrateur(int administrateur) {
 		this.administrateur = administrateur;
+	}
+
+	public int getEtatUtilisateur() {
+		return etatUtilisateur;
+	}
+
+	public void setEtatUtilisateur(int etatUtilisateur) {
+		this.etatUtilisateur = etatUtilisateur;
+	}
+
+	public ArrayList<ArticleVendu> getLesArticles() {
+		return lesArticles;
+	}
+
+	public void setLesArticles(ArrayList<ArticleVendu> lesArticles) {
+		this.lesArticles = lesArticles;
+	}
+
+	public ArrayList<Enchere> getLesEncheres() {
+		return lesEncheres;
+	}
+
+	public void setLesEncheres(ArrayList<Enchere> lesEncheres) {
+		this.lesEncheres = lesEncheres;
 	}
 
 	@Override
