@@ -24,7 +24,7 @@
 			<label for="categorie">Categorie :</label> 
 			 <select class="champtexte" id="categorie" name="categorie" > 
 			<c:forEach items="<%=Categorie.values()%>" var="categorie">
-    			<option value="${entry.noCategorie}">${entry.name}</option>
+    			<option value="${categorie.noCategorie}">${categorie.name}</option>
 			</c:forEach></select>
 			<label for="photo">Photo de l'article:</label> 
 			<input class="champtexte" type="file" id="photo" name="photo" /><br /> 
