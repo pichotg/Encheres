@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bo.ArticleVendu;
+import bo.Utilisateur;
 import dal.ArticleVenduDAO;
+import dal.UtilisateurDAO;
 
 /**
  * Servlet implementation class ServletVente
@@ -46,30 +48,46 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm:ss");
-
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		
 		String nomArticle = request.getParameter("article");
 		String description = request.getParameter("description");
 		int categorie = Integer.parseInt(request.getParameter("categorie"));
+		
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		String path = request.getParameter("path");
-		Date debut = null, fin = null;
+		Date debut = null;
+		Date fin = null;
+
 		try {
 			debut = (Date) sdf.parse(request.getParameter("debut"));
 			fin = (Date) sdf.parse(request.getParameter("fin"));
-		} catch (ParseException e1) {
+		} catch (ParseException e2) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			e2.printStackTrace();
+		}		
 
 		String rue = request.getParameter("rue");
 		String codePostal = request.getParameter("codePostal");
 		String ville = request.getParameter("ville");
 		int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
 		String etatVente = "VND";
+		
+		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+		
+		UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+		Utilisateur utilisateur = null;
+		
+		try {
+			utilisateur = utilisateurDAO.getUtilisateurById(noUtilisateur);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut, fin, miseAPrix,
-				prixVente, null, categorie, path);
+				prixVente, utilisateur, categorie, path);
 		ArticleVenduDAO DAOarticleVente = new ArticleVenduDAO();
 		try {
 			ArticleVenduDAO.venteArticle(unArticle);

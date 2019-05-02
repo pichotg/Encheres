@@ -16,7 +16,7 @@
 <div id="page">
 		<h1>ENI-Ench�res</h1>
 		<h2>Nouvelle vente</h2>
-		<form class="vente" action="" method="post">
+		<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}" method="post">
 			<label for="article">Article :</label> 
 			<input class="champtexte" type="text" id="article" name="article" /><br />
 			<label for="description">Description :</label> 
