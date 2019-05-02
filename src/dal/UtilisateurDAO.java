@@ -213,7 +213,7 @@ public class UtilisateurDAO {
 				preparedStatement.setString(9, newutilisateur.getMotDePasse());
 				preparedStatement.setInt(10, newutilisateur.getCredit());
 				preparedStatement.setInt(11, newutilisateur.getAdministrateur());
-				preparedStatement.setInt(12, newutilisateur.getEtatUtilisateur());
+				preparedStatement.setInt(12,1);
 				
 				
 				preparedStatement.executeUpdate();
