@@ -186,6 +186,6 @@ public class Utilisateur {
 				+ getNom() + ", getPrenom()=" + getPrenom() + ", getEmail()=" + getEmail() + ", getTelephone()="
 				+ getTelephone() + ", getRue()=" + getRue() + ", getCodePostal()=" + getCodePostal() + ", getVille()="
 				+ getVille() + ", getMotDePasse()=" + getMotDePasse() + ", getCredit()=" + getCredit()
-				+ ", getAdministrateur()=" + getAdministrateur() + "]";
+				+ ", getAdministrateur()=" + getAdministrateur() +", getetatutilisateur()=" + getEtatUtilisateur() + "]";
 	}	
 }
