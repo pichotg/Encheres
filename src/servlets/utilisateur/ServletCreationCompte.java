@@ -59,7 +59,7 @@ public class ServletCreationCompte extends HttpServlet {
 		}	
 		
 		if (bsucces) {
-			response.sendRedirect("index.html");
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}else {
 			// TODO: redirect mot de passe oublier ?
 			request.setAttribute("error", "alreadyExist");

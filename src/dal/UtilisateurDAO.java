@@ -193,9 +193,9 @@ public class UtilisateurDAO {
 	public boolean insertUtilisateur(Utilisateur newutilisateur) throws SQLException {
 		PreparedStatement preparedStatement = null;
 		Connection conInsert = null;
-
+		boolean breturn = false;
 		if (verifExistUtilisateur(newutilisateur)) {
-			return false;
+			return breturn;
 		} else {
 			try {
 				conInsert = JDBCTools.getConnection();
@@ -214,6 +214,7 @@ public class UtilisateurDAO {
 				preparedStatement.setBoolean(11, newutilisateur.getAdministrateur());
 				
 				preparedStatement.executeUpdate();
+				breturn = true;
 
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
@@ -223,7 +224,7 @@ public class UtilisateurDAO {
 				if (conInsert != null)
 					conInsert.close();
 			}
-			return true;
+			return breturn;
 		}
 	}
 	
