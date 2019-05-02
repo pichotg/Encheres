@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
@@ -37,7 +36,7 @@ public class ServletModifierProfil extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
+		request.setAttribute("modifier", "disabled");
 		request.setAttribute("user", user);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
 	}
@@ -49,11 +48,11 @@ public class ServletModifierProfil extends HttpServlet {
 		
 		if("Modifier".equals(request.getParameter("modifier")))
 		{
+			request.setAttribute("modifier", "");
 			doGet(request, response);
 		}
 		if("enregistrer".equals(request.getParameter("action")))
 		{
-			HttpSession session = request.getSession();
 			UtilisateurDAO utDAO = new UtilisateurDAO();
 			Utilisateur utUpdate = new Utilisateur(Integer.parseInt(request.getParameter("noUtilisateur")), 
 					request.getParameter("pseudo"), 
@@ -68,9 +67,17 @@ public class ServletModifierProfil extends HttpServlet {
 					Integer.parseInt(request.getParameter("credit")), 
 					Integer.parseInt(request.getParameter("administrateur")), 
 					Integer.parseInt(request.getParameter("etatUtilisateur")));
+			try {
+				utDAO.updateUtilisateur(utUpdate);
+				request.setAttribute("modifier", "disabled");
+				doGet(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		if("annuler".equals(request.getParameter("action")))
 		{
+			request.setAttribute("modifier", "disabled");
 			doGet(request, response);
 		}
 		
