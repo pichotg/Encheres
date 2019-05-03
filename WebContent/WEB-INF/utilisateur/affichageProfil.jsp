@@ -18,7 +18,7 @@
 		<article class="card-body mx-auto" style="max-width: 400px;">
 			<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
 			<h4 class="card-title mt-3 text-center">Profil</h4>
-			<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
+			<form action="<%=request.getContextPath()%>/modifierProfil.jsp" method="post">
 				<div class="form-group">
 					<label for="pseudo">Pseudo</label>
 					<input value="${user.pseudo}" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo"
