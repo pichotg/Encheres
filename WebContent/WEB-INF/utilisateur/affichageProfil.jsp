@@ -14,61 +14,61 @@
 </head>
 
 <body>
-		<div class="container">
-			<article class="card-body mx-auto" style="max-width: 400px;">
-				<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
-				<h4 class="card-title mt-3 text-center">Profil</h4>
-				<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
-					<div class="form-group">
-						<label for="pseudo">Pseudo</label>
-						<input value="${user.pseudo}" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo"
+	<div class="container">
+		<article class="card-body mx-auto" style="max-width: 400px;">
+			<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
+			<h4 class="card-title mt-3 text-center">Profil</h4>
+			<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
+				<div class="form-group">
+					<label for="pseudo">Pseudo</label>
+					<input value="${user.pseudo}" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo"
+						type="text" disabled>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="inputEmail4">Nom</label>
+						<input value="${user.nom}" id="nom" name="nom" class="form-control" placeholder="Nom"
 							type="text" disabled>
 					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="inputEmail4">Nom</label>
-							<input value="${user.nom}" id="nom" name="nom" class="form-control" placeholder="Nom"
-								type="text" disabled>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="prenom">Prenom</label>
-							<input value="${user.prenom}" id="prenom" name="prenom" class="form-control"
-								placeholder="Prenom" type="text" disabled>
-						</div>
+					<div class="form-group col-md-6">
+						<label for="prenom">Prenom</label>
+						<input value="${user.prenom}" id="prenom" name="prenom" class="form-control"
+							placeholder="Prenom" type="text" disabled>
 					</div>
-					<div class="form-group">
-						<label for="email">Email</label>
-						<input value="${user.email}" id="email" name="email" class="form-control" placeholder="Email"
-							type="email" disabled>
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input value="${user.email}" id="email" name="email" class="form-control" placeholder="Email"
+						type="email" disabled>
+				</div>
+				<div class="form-group">
+					<label for="telephone">Teléphone</label>
+					<input value="${user.telephone}" id="telephone" name="telephone" class="form-control"
+						placeholder="Teléphone" type="text" disabled>
+				</div>
+				<div class="form-group">
+					<label for="rue">Rue</label>
+					<input value="${user.rue}" id="rue" name="rue" class="form-control" placeholder="Rue" type="text"
+						disabled>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="ville">Ville</label>
+						<input value="${user.ville}" id="ville" name="ville" class="form-control" placeholder="Ville"
+							type="text" disabled>
 					</div>
-					<div class="form-group">
-						<label for="telephone">Teléphone</label>
-						<input value="${user.telephone}" id="telephone" name="telephone" class="form-control"
-							placeholder="Teléphone" type="text" disabled>
+					<div class="form-group col-md-6">
+						<label for="inputCity">Code Postal</label>
+						<input value="${user.codePostal}" id="codePostal" name="codePostal" class="form-control"
+							placeholder="Code postal" type="text" disabled>
 					</div>
-					<div class="form-group">
-						<label for="rue">Rue</label>
-						<input value="${user.rue}" id="rue" name="rue" class="form-control" placeholder="Rue" type="text"
-							disabled>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-md-6">
-							<label for="ville">Ville</label>
-							<input value="${user.ville}" id="ville" name="ville" class="form-control" placeholder="Ville"
-								type="text" disabled>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="inputCity">Code Postal</label>
-							<input value="${user.codePostal}" id="codePostal" name="codePostal" class="form-control"
-								placeholder="Code postal" type="text" disabled>
-						</div>
-					</div>
-					<input type="hidden"  value="${user.noUtilisateur}" id="noUtilisateur" name="noUtilisateur">
-					<button type="button" class="btn btn-success">Success</button>
-					<button type="button" class="btn btn-danger">Supprimer mon compte</button>
-				</form>
-			</article>
-		</div>
-	</body>
+				</div>
+				<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
+					<button type="submit" value="modifier" name="modifier" class="btn btn-primary">Modifier</button>
+				</c:if>
+			</form>
+		</article>
+	</div>
+</body>
 
 </html>
