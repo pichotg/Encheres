@@ -47,12 +47,11 @@ public class ServletModifierProfil extends HttpServlet {
 					request.getParameter("codePostal"), 
 					request.getParameter("ville"), 
 					request.getParameter("motDePasse"), 
-					Integer.parseInt(request.getParameter("credit")), 
-					Integer.parseInt(request.getParameter("administrateur")), 
-					Integer.parseInt(request.getParameter("etatUtilisateur")));
+					0, 
+					0, 
+					0);
 			try {
 				utDAO.updateUtilisateur(utUpdate);
-				request.setAttribute("modifier", isEnable);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
