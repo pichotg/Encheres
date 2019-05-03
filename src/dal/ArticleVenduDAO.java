@@ -34,9 +34,9 @@ public class ArticleVenduDAO {
 			cnx = JDBCTools.getConnection();
 			rqt = cnx.prepareStatement(INSERT_ARTICLE);
 			rqt.setString(1, articleVendu.getNomArticle());
-			rqt.setString(4, articleVendu.getDescription());
-			rqt.setTimestamp(2, new java.sql.Timestamp(articleVendu.getDateDebutEncheres().getTime()));
-			rqt.setTimestamp(3, new java.sql.Timestamp(articleVendu.getDateFinEncheres().getTime()));
+			rqt.setString(2, articleVendu.getDescription());
+			rqt.setDate(3, new java.sql.Date(articleVendu.getDateDebutEncheres().getTime()));
+			rqt.setDate(4, new java.sql.Date(articleVendu.getDateFinEncheres().getTime()));
 			rqt.setInt(5, articleVendu.getMiseAPrix());
 			rqt.setInt(6, articleVendu.getUtilisateur().getNoUtilisateur());
 			rqt.setInt(7, articleVendu.getCategorie());

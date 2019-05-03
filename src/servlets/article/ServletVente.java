@@ -7,6 +7,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,49 +51,22 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		//DateFormat formatter = new SimpleDateFormat("yy-MM-dd");
-
-		
+		/**
+		 * Recuperation des valeurs du formulaire
+		 */
 		String nomArticle = request.getParameter("article");
 		String description = request.getParameter("description");
 		int categorie = Integer.parseInt(request.getParameter("categorie"));
-		
 		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
 		String path = request.getParameter("path");
-		java.util.Date debut=null;
-		java.util.Date fin=null;
-		Timestamp debut1 = null;
-		Timestamp fin1 = null;
-		String deb = request.getParameter("debut");
-		String fi = request.getParameter("fin");
-		try {
-			debut = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(deb);
-			fin = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse(fi);
-		} catch (ParseException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		}
-		System.out.println(debut + " debut");
-		debut1 = new java.sql.Timestamp(debut.getTime());
-		System.out.println(debut1 + " debut1");
-		fin1 = new java.sql.Timestamp(fin.getTime());
-//		try {
-//			// changer formater pas sdf
-//			debut = (java.sql.Date) sdf.format(request.getParameter("debut"));
-//			fin = (Date) sdf.parse(request.getParameter("fin"));
-//		} catch (ParseException e2) {
-//			// TODO Auto-generated catch block
-//			e2.printStackTrace();
-//		}		
+		Timestamp debut1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("debut")));
+		Timestamp fin1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("fin")));
 		
 		String rue = request.getParameter("rue");
 		String codePostal = request.getParameter("codePostal");
 		String ville = request.getParameter("ville");
 		int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
 		String etatVente = "VND";
-		
 		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
 		
 		UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
@@ -104,10 +78,8 @@ public class ServletVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-
 		ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
 				prixVente, utilisateur, categorie, path);
-		ArticleVenduDAO DAOarticleVente = new ArticleVenduDAO();
 		try {
 			ArticleVenduDAO.venteArticle(unArticle);
 		} catch (ClassNotFoundException | SQLException e) {

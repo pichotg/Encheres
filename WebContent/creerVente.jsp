@@ -28,12 +28,12 @@
 			</c:forEach></select>
 			<label for="photo">Photo de l'article:</label> 
 			<input class="champtexte" type="file" id="photo" name="photo" /><br /> 
-			<label for="miseAPrix">Mise � prix :</label> 
+			<label for="miseAPrix">Mise à prix :</label> 
 			<input class="champtexte" type="text" id="miseAPrix" name="miseAPrix" /> <br />
-			<label for="debut">D�but de l'ench�re :</label> 
-			<input type="date" id="debut" name="debut" /><br />
+			<label for="debut">Début de l'enchère :</label> 
+			<input type="datetime-local" id="debut" name="debut" /><br />
 			<label for="fin">Fin de l'ench�re :</label> 
-			<input class="champtexte" type="date" id="fin" name="fin" /> <br />
+			<input class="champtexte" type="datetime-local" id="fin" name="fin" /> <br />
 			<label for="rue">Rue :</label> 
 			<input class="champtexte" type="text" id="rue" name="rue" /> <br/>
 			<label for="codePostal">Code postal :</label> 
