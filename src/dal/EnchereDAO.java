@@ -18,80 +18,92 @@ public class EnchereDAO {
 	private static final String INSERT_ENCHERE = "insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "SELECT *\r\n" + 
-			"FROM ENCHERES\r\n" + 
-			"INNER JOIN\r\n" + 
-			"(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
-			"ON ENCHERES.no_article = topscore.no_article\r\n" + 
-			"JOIN\r\n" + 
-			"ARTICLES_VENDUS\r\n" + 
-			"ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n" + 
-			"AND ENCHERES.montant_enchere = topscore.enchereMax \r\n" + 
-			"AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n" + 
-			"AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n" + 
-			"order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String SELECT_ENCHERE_EN_COURS = "SELECT *\r\n" + "FROM ENCHERES\r\n" + "INNER JOIN\r\n"
+			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n"
+			+ "ON ENCHERES.no_article = topscore.no_article\r\n" + "JOIN\r\n" + "ARTICLES_VENDUS\r\n"
+			+ "ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n"
+			+ "AND ENCHERES.montant_enchere = topscore.enchereMax \r\n"
+			+ "AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n"
+			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n"
+			+ "order by ARTICLES_VENDUS.date_fin_encheres ASC";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
 			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
 	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
-	private static final String FILTRAGE_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
-			+ " left join ENCHERES e on e.no_article = a.no_article "
-			+ " where a.no_categorie = ? and a.nom_article like ? ";
-	private static final String FILTRAGE_SANS_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
-			+ " left join ENCHERES e on e.no_article = a.no_article where a.nom_article like ? ";
+	private static final String FILTRAGE_CATEGORIE = "SELECT *\r\n" + "FROM ENCHERES\r\n" + "INNER JOIN\r\n"
+			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n"
+			+ "ON ENCHERES.no_article = topscore.no_article\r\n" + "JOIN\r\n" + "ARTICLES_VENDUS\r\n"
+			+ "ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n"
+			+ "AND ENCHERES.montant_enchere = topscore.enchereMax \r\n"
+			+ "AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n"
+			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n"
+			+ "AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE no_categorie = ?)\r\n"
+			+ "AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE nom_article like ?)\r\n"
+			+ "order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String FILTRAGE_SANS_CATEGORIE = "SELECT *\r\n" + "FROM ENCHERES\r\n" + "INNER JOIN\r\n"
+			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n"
+			+ "ON ENCHERES.no_article = topscore.no_article\r\n" + "JOIN\r\n" + "ARTICLES_VENDUS\r\n"
+			+ "ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n"
+			+ "AND ENCHERES.montant_enchere = topscore.enchereMax \r\n"
+			+ "AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n"
+			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n"
+			+ "AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE nom_article like ?)\r\n"
+			+ "order by ARTICLES_VENDUS.date_fin_encheres ASC";
 	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
-	
-/**
- * Ajout d'une enchère
- * @param enchere
- * @throws SQLException
- * @throws ClassNotFoundException
- */
+
+	/**
+	 * Ajout d'une enchï¿½re
+	 * 
+	 * @param enchere
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static void ajouter(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-		if (enchere.achatPossible()) {
-			if (verifPremiereEnchere(enchere)) {
-				try {
-					cnx = JDBCTools.getConnection();
-					rqt = cnx.prepareStatement(INSERT_ENCHERE);
-					rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
-					rqt.setInt(2, enchere.getNoArticle().getNoArticle());
-					rqt.setDate(3, enchere.getDateEnchere());
-					rqt.setInt(4, enchere.getMontant_enchere());
-					rqt.executeUpdate();
-					
-				} finally {
-					if (rqt != null)
-						rqt.close();
-					if (cnx != null)
-						cnx.close();
-				}
-			} else {
-				try {
-					cnx = JDBCTools.getConnection();
-					rqt = cnx.prepareStatement(UPDATE_ENCHERE);
-					rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
-					rqt.setInt(2, enchere.getNoArticle().getNoArticle());
-					rqt.setDate(3, enchere.getDateEnchere());
-					rqt.setInt(4, enchere.getMontant_enchere());
-					rqt.executeUpdate();
-				} finally {
-					if (rqt != null)
-						rqt.close();
-					if (cnx != null)
-						cnx.close();
-				}
+		java.sql.Date datSql = new java.sql.Date(enchere.getDateEnchere().getTime());
+		if (verifPremiereEnchere(enchere)) {
+			try {
+				cnx = JDBCTools.getConnection();
+				rqt = cnx.prepareStatement(INSERT_ENCHERE);
+				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
+				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
+				rqt.setDate(3, datSql);
+				rqt.setInt(4, enchere.getMontant_enchere());
+				rqt.executeUpdate();
+
+			} finally {
+				if (rqt != null)
+					rqt.close();
+				if (cnx != null)
+					cnx.close();
+			}
+		} else {
+			try {
+				cnx = JDBCTools.getConnection();
+				rqt = cnx.prepareStatement(UPDATE_ENCHERE);
+				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
+				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
+				rqt.setDate(3, datSql);
+				rqt.setInt(4, enchere.getMontant_enchere());
+				rqt.executeUpdate();
+			} finally {
+				if (rqt != null)
+					rqt.close();
+				if (cnx != null)
+					cnx.close();
 			}
 		}
 	}
-/**
- * Verifie si uen enchere existe déjà sinon insert de celle ci
- * @param enchere
- * @return
- * @throws SQLException
- * @throws ClassNotFoundException
- */
+
+	/**
+	 * Verifie si uen enchere existe dï¿½jï¿½ sinon insert de celle ci
+	 * 
+	 * @param enchere
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static Boolean verifPremiereEnchere(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
@@ -118,13 +130,15 @@ public class EnchereDAO {
 		}
 		return bool;
 	}
-/**
- * Vérifie si l'enchere est bien supérieure aux enchères existantes
- * @param enchere
- * @return
- * @throws SQLException
- * @throws ClassNotFoundException
- */
+
+	/**
+	 * Vï¿½rifie si l'enchere est bien supï¿½rieure aux enchï¿½res existantes
+	 * 
+	 * @param enchere
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
 	public static int verifEnchereSup(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
@@ -136,8 +150,8 @@ public class EnchereDAO {
 			rqt.setInt(1, enchere.getNoArticle().getNoArticle());
 			rs = rqt.executeQuery();
 			if (rs.next()) {
-				
-				enchereMax = rs.getInt("enchereMax");	
+
+				enchereMax = rs.getInt("enchereMax");
 			}
 		} finally {
 			if (rs != null)
@@ -149,6 +163,7 @@ public class EnchereDAO {
 		}
 		return enchereMax;
 	}
+
 	/**
 	 * Methode pour retourner les encheres en cours
 	 * 
@@ -167,7 +182,7 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
+			// On parcourt le resultat de la requete et on crï¿½e les objets liï¿½s ï¿½ l'enchï¿½re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -209,7 +224,7 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
+			// On parcourt le resultat de la requete et on crï¿½e les objets liï¿½s ï¿½ l'enchï¿½re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -231,9 +246,9 @@ public class EnchereDAO {
 		}
 		return encheres;
 	}
-	
+
 	/**
-	 * Methode pour retourner les encheres remportées de l'utilisateur
+	 * Methode pour retourner les encheres remportï¿½es de l'utilisateur
 	 * 
 	 * @return
 	 * @throws SQLException
@@ -251,7 +266,7 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on crée les objets liés à l'enchère
+			// On parcourt le resultat de la requete et on crï¿½e les objets liï¿½s ï¿½ l'enchï¿½re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -281,17 +296,16 @@ public class EnchereDAO {
 		Connection conFiltre = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		System.out.println(categorie);
 		try {
 			conFiltre = JDBCTools.getConnection();
 
-			// Si la catégorie est non vide, on prend la requête classique
+			// Si la catï¿½gorie est non vide, on prend la requï¿½te classique
 			if (!"".equals(categorie) && categorie != null) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_CATEGORIE);
 				preparedStatement.setInt(1, Categorie.getNoByName(categorie));
 				preparedStatement.setString(2, "%" + contient.trim() + "%");
 			}
-			// Sinon on prend la version sans la catégorie
+			// Sinon on prend la version sans la catï¿½gorie
 			else if (contient != null) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
 				preparedStatement.setString(1, "%" + contient.trim() + "%");
@@ -310,7 +324,7 @@ public class EnchereDAO {
 				ArticleVendu av = avDAO.getArticleById(identifiantArticle);
 				Enchere enchere = new Enchere(av, ut, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
 
-				// On ajoute l'enchere à la liste
+				// On ajoute l'enchere ï¿½ la liste
 				encheres.add(enchere);
 			}
 		} finally {

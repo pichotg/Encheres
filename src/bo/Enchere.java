@@ -1,6 +1,6 @@
 package bo;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Enchere {
 	public ArticleVendu noArticle;

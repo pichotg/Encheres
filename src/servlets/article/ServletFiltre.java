@@ -30,6 +30,7 @@ public class ServletFiltre extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
 		EnchereDAO enchereDAO;
 		List<Enchere> encheres = new ArrayList<>();
 		String contient = request.getParameter("contient");
@@ -41,7 +42,6 @@ public class ServletFiltre extends HttpServlet {
 			encheres = enchereDAO.filtrageVenteEnCours(contient, categorie);
 
 		} catch (SQLException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -56,7 +56,7 @@ public class ServletFiltre extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		EnchereDAO enchereDAO = new EnchereDAO();
 		ArrayList<Enchere> encheres = new ArrayList<>();
 		String categorie = request.getParameter("categorie");

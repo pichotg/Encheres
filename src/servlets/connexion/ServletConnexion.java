@@ -59,7 +59,6 @@ public class ServletConnexion extends HttpServlet {
 			ck.setMaxAge(CINQ_MINUTES);
 			// Si on a coch� , il faudra mettre SE_SOUVENIR pour �tre m�moris� 30 jours
 			session.setAttribute("utilisateur", utilisateur);
-			System.out.println(utilisateur.getNoUtilisateur());
 			// On ajoute le cookie
 			response.addCookie(ck);
 			this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);

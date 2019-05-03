@@ -50,7 +50,6 @@ public class ServletCreationCompte extends HttpServlet {
 				 0,
 				 0,
 				 0);
-		System.out.println(user.toString());
 		try {
 			bsucces = DAOcreerCompte.insertUtilisateur(user);
 		} catch (SQLException e) {

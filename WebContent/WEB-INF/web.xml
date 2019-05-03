@@ -68,4 +68,12 @@
     <servlet-name>ServletVente</servlet-name>
     <url-pattern>/vente/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletAjouterEnchere</servlet-name>
+    <servlet-class>servlets.enchere.ServletAjouterEnchere</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletAjouterEnchere</servlet-name>
+    <url-pattern>/ajouterEnchere</url-pattern>
+  </servlet-mapping>
 </web-app>
