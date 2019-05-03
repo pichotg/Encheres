@@ -2,7 +2,7 @@ package bo;
 
 public enum Categorie {
 	// Objets directement construits
-	INFO(1, "Informatique"), AMEU(2, "Ameublement"), VETE(3, "Vêtement"), SPOR(4, "Sport&Loisirs");
+	INFO(1, "Informatique"), AMEU(2, "Ameublement"), VETE(3, "Vï¿½tement"), SPOR(4, "Sport&Loisirs"), ALL(5,"Toutes");
 
 	private int noCategorie = -1;
 	private String name = "";
@@ -46,7 +46,7 @@ public enum Categorie {
 		case "Ameublement":
 			noCat = 2;
 			break;
-		case "Vêtement":
+		case "Vï¿½tement":
 			noCat = 3;
 			break;
 		case "Sport&Loisirs":

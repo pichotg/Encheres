@@ -305,8 +305,8 @@ public class EnchereDAO {
 				preparedStatement.setInt(1, Categorie.getNoByName(categorie));
 				preparedStatement.setString(2, "%" + contient.trim() + "%");
 			}
-			// Sinon on prend la version sans la cat�gorie
-			else if (contient != null) {
+			// Sinon on prend la version avec toutes les catégories
+			else if (contient != null && Categorie.ALL.equals(categorie)) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
 				preparedStatement.setString(1, "%" + contient.trim() + "%");
 			} else {
