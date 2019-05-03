@@ -34,11 +34,36 @@ public class EnchereDAO {
 			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
 			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
 	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
-	private static final String FILTRAGE_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
-			+ " left join ENCHERES e on e.no_article = a.no_article "
-			+ " where a.no_categorie = ? and a.nom_article like ? ";
-	private static final String FILTRAGE_SANS_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
-			+ " left join ENCHERES e on e.no_article = a.no_article where a.nom_article like ? ";
+//	private static final String FILTRAGE_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
+//			+ " left join ENCHERES e on e.no_article = a.no_article "
+//			+ " where a.no_categorie = ? and a.nom_article like ? ";
+	private static final String FILTRAGE_CATEGORIE = "SELECT *\r\n" + 
+	"FROM ENCHERES\r\n" + 
+	"INNER JOIN\r\n" + 
+	"(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
+	"ON ENCHERES.no_article = topscore.no_article\r\n" + 
+	"JOIN\r\n" + 
+	"ARTICLES_VENDUS\r\n" + 
+	"ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n" + 
+	"AND ENCHERES.montant_enchere = topscore.enchereMax \r\n" + 
+	"AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n" + 
+	"AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n" +
+	"AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE no_categorie = ?)\r\n" +
+	"AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE nom_article like ?)\r\n" +
+	"order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String FILTRAGE_SANS_CATEGORIE = "SELECT *\r\n" + 
+			"FROM ENCHERES\r\n" + 
+			"INNER JOIN\r\n" + 
+			"(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
+			"ON ENCHERES.no_article = topscore.no_article\r\n" + 
+			"JOIN\r\n" + 
+			"ARTICLES_VENDUS\r\n" + 
+			"ON ENCHERES.no_article = ARTICLES_VENDUS.no_article\r\n" + 
+			"AND ENCHERES.montant_enchere = topscore.enchereMax \r\n" + 
+			"AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) \r\n" + 
+			"AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS)\r\n" +
+			"AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE nom_article like ?)\r\n" +
+			"order by ARTICLES_VENDUS.date_fin_encheres ASC";
 	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
 	
 /**
