@@ -7,6 +7,9 @@ public enum Categorie {
 	private int noCategorie = -1;
 	private String name = "";
 
+	private Categorie() {
+	}
+
 	// Constructeur
 	Categorie(int noCategorie, String name) {
 		this.name = name;
@@ -55,5 +58,7 @@ public enum Categorie {
 
 		return noCat;
 	}
+	
+	
 
 }
