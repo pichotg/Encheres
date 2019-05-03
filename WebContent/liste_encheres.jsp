@@ -57,28 +57,37 @@
 				class="btn btn-primary btn-lg">Rechercher</button>
 		</div>
 	</form>
-	<div class="container" >
-		<div class="card-deck mb-3 ">
+	<div >
+		<div class="card-deck px-3 py-3 mb-3">
+		
 		<c:forEach var="enchere" items="${listeEncheres}">
-			<div class="card mb-4 border border-secondary">
-				<div class="card-header">
-        			<h4 class="my-0 font-weight-normal">${enchere.noArticle.description}</h4>
-      			</div>
-				<div class="card-body">
-					<ul class="list-group list-group-flush">
-						<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
-						<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</li>
-						<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
-						<li class="list-group-item">Vendeur :
-							<a target="_blank"
-								href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-								${enchere.noArticle.utilisateur.pseudo}
-							</a>
-						</li>
-					</ul>
+			
+			<div class="card mb-4" style="min-width: 400px;">
+				<div class="row no-gutters">
+					<div class="col-md-4">
+	      				<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
+	   				 </div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title">${enchere.noArticle.description}</h5>
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
+								<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</li>
+								<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
+								<li class="list-group-item">Vendeur :
+									<a target="_blank"
+										href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
+										${enchere.noArticle.utilisateur.pseudo}
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
+			
 		</c:forEach>
+		
 		</div>
 	</div>
 </body>
