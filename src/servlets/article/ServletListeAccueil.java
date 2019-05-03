@@ -49,7 +49,7 @@ public class ServletListeAccueil extends HttpServlet {
 			if ("connexion".equals(ck.getName())) {
 				UtilisateurDAO utDAO = new UtilisateurDAO();
 				try {
-					Utilisateur utilisateur = utDAO.getUtilisateurById(Integer.parseInt(ck.getValue()));
+					Utilisateur utilisateur = utDAO.getUtilisateurByPseudo(ck.getValue());
 					session.setAttribute("utilisateur", utilisateur);
 				} catch (NumberFormatException | SQLException e) {
 					e.printStackTrace();
