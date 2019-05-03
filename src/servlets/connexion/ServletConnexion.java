@@ -61,7 +61,7 @@ public class ServletConnexion extends HttpServlet {
 			session.setAttribute("utilisateur", utilisateur);
 			// On ajoute le cookie
 			response.addCookie(ck);
-			this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
+			this.getServletContext().getRequestDispatcher("/filtre").forward(request, response);
 		} else {
 			// Les identifiants sont incorrects, on passe le cookie à NOK
 			request.setAttribute("error", "connexionerror");
