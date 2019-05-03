@@ -57,7 +57,7 @@
 			<label for="prix">Mise à prix :  ${enchere.noArticle.prixVente}</label><br/>
 			<label for="fin">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</label><br/>
 			<label for="retrait">Retrait : ${enchere.noUtilisateur.getAdresse()}</label><br/>
-			<label for="vendeur" >Vendeur : <a target ="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}?modifier=disabled">${enchere.noArticle.utilisateur.pseudo}</a></label><br/>
+			<label for="vendeur" >Vendeur : <a target ="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}&modifier=disabled">${enchere.noArticle.utilisateur.pseudo}</a></label><br/>
 		</div>
 		</section>
 	</c:forEach>
