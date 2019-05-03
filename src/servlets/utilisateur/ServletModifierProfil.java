@@ -26,33 +26,14 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UtilisateurDAO DAOgetUtilisateur = new UtilisateurDAO();
-		Utilisateur user = null;
-			
-		Integer utilisateurRecherchee = Integer.parseInt(request.getParameter("id_utilisateur_recherche"));
-		if (utilisateurRecherchee != null) {
-			try {
-				user = DAOgetUtilisateur.getUtilisateurById(utilisateurRecherchee);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		request.setAttribute("modifier", isEnable);
-		request.setAttribute("user", user);
-		this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if("Modifier".equals(request.getParameter("modifier")))
-		{
-			isEnable = "";
-			request.setAttribute("modifier", isEnable);
-			doGet(request, response);
-		}
+
 		if("enregistrer".equals(request.getParameter("action")))
 		{
 			UtilisateurDAO utDAO = new UtilisateurDAO();
@@ -71,18 +52,15 @@ public class ServletModifierProfil extends HttpServlet {
 					Integer.parseInt(request.getParameter("etatUtilisateur")));
 			try {
 				utDAO.updateUtilisateur(utUpdate);
-				isEnable = "disabled";
 				request.setAttribute("modifier", isEnable);
-				doGet(request, response);
+				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		if("annuler".equals(request.getParameter("action")))
 		{
-			isEnable = "disabled";
-			request.setAttribute("modifier", isEnable);
-			doGet(request, response);
+			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
 		}
 		
 	}
