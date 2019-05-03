@@ -36,14 +36,12 @@ public class ServletListeAccueil extends HttpServlet {
 		Cookie[] cookies;
 		cookies = request.getCookies();
 		HttpSession session = request.getSession();
-		if(cookies == null)
-		{
+		if (cookies == null) {
 			Cookie[] cook = new Cookie[1];
 			Cookie ck = new Cookie("connexion", "-1");
 			cook[0] = ck;
 			cookies = cook;
 			response.addCookie(ck);
-			response.sendRedirect("/liste_encheres.jsp");
 		}
 		for (Cookie ck : cookies) {
 			if ("connexion".equals(ck.getName())) {
@@ -64,7 +62,6 @@ public class ServletListeAccueil extends HttpServlet {
 		try {
 			encheres = enchereDAO.selectEncheresEnCours();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

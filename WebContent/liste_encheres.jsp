@@ -27,6 +27,7 @@
 		crossorigin="anonymous"></script>
 		
 	<link rel="stylesheet" href="./themes/basique/style.css">
+	<META HTTP-EQUIV="Refresh" CONTENT="TRUE"> 
 </head>
 
 <body>

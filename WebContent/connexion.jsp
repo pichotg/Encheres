@@ -29,6 +29,7 @@
 	<title>Connexion</title>
 </head> 
 <body class="text-center">
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<form class="form-signin" action="<%=request.getContextPath()%>/connexion" method="post">
 	<img class="mb-4" src="<%=request.getContextPath()%>/ressource/userlogin.jpg" alt="" width="150" height="120">
 	<h1 class="h3 mb-3 font-weight-normal"></h1>

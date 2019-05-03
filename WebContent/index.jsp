@@ -18,7 +18,7 @@
 
 </head>
 <body>
-
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 <h1>ENI - Enchères</h1>
 	<hr id="header">
 	<aside class="menu">

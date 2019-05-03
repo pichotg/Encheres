@@ -11,6 +11,7 @@
 <title>Vente</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<div id="page">
 		<h1>ENI-Enchères</h1>
 		<h2>Detail Vente</h2>

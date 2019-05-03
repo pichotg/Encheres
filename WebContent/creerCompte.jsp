@@ -14,6 +14,7 @@
 </head>
 
 <body class="text-center">
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<div id="page">
 		<div class="container">
 			<article class="card-body mx-auto" style="max-width: 400px;">
