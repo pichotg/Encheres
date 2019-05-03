@@ -300,13 +300,13 @@ public class EnchereDAO {
 			conFiltre = JDBCTools.getConnection();
 
 			// Si la cat�gorie est non vide, on prend la requ�te classique
-			if (!"".equals(categorie) && categorie != null) {
+			if (!Categorie.ALL.getName().equals(categorie) && categorie != null) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_CATEGORIE);
 				preparedStatement.setInt(1, Categorie.getNoByName(categorie));
 				preparedStatement.setString(2, "%" + contient.trim() + "%");
 			}
 			// Sinon on prend la version avec toutes les catégories
-			else if (contient != null && Categorie.ALL.equals(categorie)) {
+			else if (Categorie.ALL.getName().equals(categorie)) {
 				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
 				preparedStatement.setString(1, "%" + contient.trim() + "%");
 			} else {
