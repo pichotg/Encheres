@@ -59,11 +59,7 @@ public class EnchereDAO {
 					rqt.setInt(2, enchere.getNoArticle().getNoArticle());
 					rqt.setDate(3, enchere.getDateEnchere());
 					rqt.setInt(4, enchere.getMontant_enchere());
-					if(enchere.getMontant_enchere() > verifEnchereSup(enchere) ) {
-						rqt.executeUpdate();
-					}else {
-						throw new SQLException("Votre enchère doit être supérieure à l'enchère actuelle");
-					}
+					rqt.executeUpdate();
 					
 				} finally {
 					if (rqt != null)
