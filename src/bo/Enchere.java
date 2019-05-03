@@ -51,10 +51,18 @@ public class Enchere {
 	public void setMontant_enchere(int montant_enchere) {
 		this.montant_enchere = montant_enchere;
 	}
-
+	
+	/**
+	 * Méthode qui vérifie si l'utilisateur a sufisemment de crédits
+	 * Et que la date d'enchère est comprise entre début et fin de vente.
+	 * @return
+	 */
 	public Boolean achatPossible() {
 		Boolean bool = false;
-		if (this.getMontant_enchere() <= this.noUtilisateur.getCredit()) {
+		if (this.getMontant_enchere() <= this.getNoUtilisateur().getCredit()
+				&& this.getDateEnchere().after(this.getNoArticle().getDateDebutEncheres())
+				&& this.getDateEnchere().before(this.getNoArticle().getDateFinEncheres()))
+		{
 			bool = true;
 		}
 		return bool;
