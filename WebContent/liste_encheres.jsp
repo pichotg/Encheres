@@ -12,7 +12,7 @@
 <!doctype html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="utf-8">
 <title>index</title>
 <link rel="stylesheet" href="./themes/basique/style.css">
 </head>

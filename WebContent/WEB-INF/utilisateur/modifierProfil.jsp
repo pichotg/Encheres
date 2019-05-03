@@ -10,6 +10,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/themes/basique/signin.css">
     <title>Mon profil</title>
 </head>
 
@@ -75,13 +76,14 @@
                 <div class="form-group">
                     <label for="credit">Crédit</label>
                     <input value="${user.credit}" id="credit" name="credit" class="form-control" placeholder="credit"
-                        type="text">
+                        type="text" disabled>
                 </div>
                 <input type="hidden" value="${user.noUtilisateur}" id="noUtilisateur" name="noUtilisateur">
-                <button type="submit" value="enregistrer" name="action" class="btn btn-success">Enregistrer</button>
-                <button type="submit" value="supprimer" name="action" class="btn btn-danger">Supprimer mon
-                    compte</button>
-                <button type="submit" value="annuler" name="action" class="btn btn-primary">Primary</button>
+                <div class="btn-group btn-block"> 
+                    <button type="submit" value="enregistrer" name="action" class="btn btn-success">Enregistrer</button>
+                    <button type="submit" value="supprimer" name="action" class="btn btn-danger">Supprimer</button>
+                    <button type="submit" value="annuler" name="action" class="btn btn-primary">Retour</button>
+                </div>
             </form>
         </article>
     </div>
