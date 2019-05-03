@@ -7,13 +7,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.Utilisateur;
 import dal.UtilisateurDAO;
 
 public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String isEnable = "disabled";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,11 +33,13 @@ public class ServletModifierProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		request.setCharacterEncoding("UTF-8");
+		UtilisateurDAO utDAO = new UtilisateurDAO();
+		HttpSession session = request.getSession();
+		Utilisateur utAvantModif = (Utilisateur) session.getAttribute("user");
 		if("enregistrer".equals(request.getParameter("action")))
 		{
-			UtilisateurDAO utDAO = new UtilisateurDAO();
-			Utilisateur utUpdate = new Utilisateur(Integer.parseInt(request.getParameter("noUtilisateur")), 
+			Utilisateur utUpdate = new Utilisateur(utAvantModif.getNoUtilisateur(), 
 					request.getParameter("pseudo"), 
 					request.getParameter("nom"), 
 					request.getParameter("prenom"), 
@@ -46,13 +48,16 @@ public class ServletModifierProfil extends HttpServlet {
 					request.getParameter("rue"), 
 					request.getParameter("codePostal"), 
 					request.getParameter("ville"), 
-					request.getParameter("motDePasse"), 
-					0, 
-					0, 
-					0);
-			try {
+					request.getParameter("motDePasse"),
+					utAvantModif.getCredit(), 
+					utAvantModif.getAdministrateur(), 
+					utAvantModif.getEtatUtilisateur());
+			try {	
 				utDAO.updateUtilisateur(utUpdate);
-				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
+				// On récupère l'utilisateur mis à jour afin de gérer l'affichage une fois le formulaire validé
+				Utilisateur newUtilisateur = utDAO.getUtilisateurById(utAvantModif.getNoUtilisateur());
+				session.setAttribute("user", newUtilisateur);
+				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp?id_utilisateur_recherche="+utAvantModif.getNoUtilisateur()).forward(request, response);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -60,6 +65,11 @@ public class ServletModifierProfil extends HttpServlet {
 		if("annuler".equals(request.getParameter("action")))
 		{
 			this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp").forward(request, response);
+		}
+		if("supprimer".equals(request.getParameter("action")))
+		{
+			utDAO.deleteUtilisateur(utAvantModif);
+			this.getServletContext().getRequestDispatcher("/deconnexion").forward(request, response);
 		}
 		
 	}

@@ -22,6 +22,7 @@ public class ServletDeconnexion extends HttpServlet {
 		cookies = request.getCookies();
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateur", null);
+		session.setAttribute("user", null);
 		for (Cookie ck : cookies) {
 			if ("connexion".equals(ck.getName())) {
 				ck.setValue("NULL");
