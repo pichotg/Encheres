@@ -34,9 +34,6 @@ public class EnchereDAO {
 			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
 			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
 	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
-//	private static final String FILTRAGE_CATEGORIE = "select e.* from ARTICLES_VENDUS a "
-//			+ " left join ENCHERES e on e.no_article = a.no_article "
-//			+ " where a.no_categorie = ? and a.nom_article like ? ";
 	private static final String FILTRAGE_CATEGORIE = "SELECT *\r\n" + 
 	"FROM ENCHERES\r\n" + 
 	"INNER JOIN\r\n" + 
@@ -306,7 +303,6 @@ public class EnchereDAO {
 		Connection conFiltre = null;
 		PreparedStatement preparedStatement = null;
 		ResultSet rs = null;
-		System.out.println(categorie);
 		try {
 			conFiltre = JDBCTools.getConnection();
 
