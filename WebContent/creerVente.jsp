@@ -35,11 +35,11 @@
 			<label for="fin">Fin de l'ench�re :</label> 
 			<input class="champtexte" type="datetime-local" id="fin" name="fin" /> <br />
 			<label for="rue">Rue :</label> 
-			<input class="champtexte" type="text" id="rue" name="rue" /> <br/>
+			<input class="champtexte" type="text" id="rue" name="rue" value="${rue}" /> <br/>
 			<label for="codePostal">Code postal :</label> 
-			<input class="champtexte" type="text" id="codePostal" name="codePostal" /> <br />
+			<input class="champtexte" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> <br />
 			<label for="ville">Ville :</label> 
-			<input class="champtexte" type="text" id="ville" name="ville" /><br/>
+			<input class="champtexte" type="text" id="ville" name="ville" value="${ville}" /><br/>
 			<input type="submit" id="enregistrer" name="enregistrer" value="Enregistrer" />
 			<input type="submit" id="annuler" name="annuler" value="Annuler" />
 		</form>

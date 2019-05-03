@@ -16,8 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bo.ArticleVendu;
+import bo.Retrait;
 import bo.Utilisateur;
 import dal.ArticleVenduDAO;
+import dal.RetraitDAO;
 import dal.UtilisateurDAO;
 
 /**
@@ -62,9 +64,6 @@ public class ServletVente extends HttpServlet {
 		Timestamp debut1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("debut")));
 		Timestamp fin1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("fin")));
 		
-		String rue = request.getParameter("rue");
-		String codePostal = request.getParameter("codePostal");
-		String ville = request.getParameter("ville");
 		int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
 		String etatVente = "VND";
 		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
@@ -78,14 +77,29 @@ public class ServletVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
 		ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
 				prixVente, utilisateur, categorie, path);
+		int dernier_id = 0;
 		try {
 			ArticleVenduDAO.venteArticle(unArticle);
+			dernier_id = articleVenduDao.dernier_id();
+			//ArticleVenduDAO.venteArticle(unArticle);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Retrait unRetrait = new Retrait(dernier_id,request.getParameter("rue"),request.getParameter("codePostal"),request.getParameter("ville"));
+		
+		RetraitDAO retraitDao = new RetraitDAO();
+		
+		try {
+			retraitDao.ajout_Retrait(unRetrait);
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		response.sendRedirect(request.getContextPath()+"/index.jsp");
 	}
-
 }

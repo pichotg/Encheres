@@ -76,4 +76,12 @@
     <servlet-name>ServletAjouterEnchere</servlet-name>
     <url-pattern>/ajouterEnchere</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletAccesVente</servlet-name>
+    <servlet-class>servlets.article.ServletAccesVente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletAccesVente</servlet-name>
+    <url-pattern>/accesVente/*</url-pattern>
+  </servlet-mapping>
 </web-app>

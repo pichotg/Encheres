@@ -16,7 +16,7 @@
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
 				</li>
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/creerVente.jsp">Vendre Article</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}">Vendre Article</a>
 				</li>
 			</c:if>
 			<c:if test="${utilisateur.noUtilisateur == -1 or utilisateur.noUtilisateur == null}">

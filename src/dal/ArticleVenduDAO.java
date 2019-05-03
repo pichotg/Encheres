@@ -18,7 +18,7 @@ public class ArticleVenduDAO {
 	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vnd'";
 	private static final String LISTE_MES_VENTES_TERMINEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_fin_encheres < (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vet'";
 	private static final String SELECT_BY_ID = "select * from ARTICLES_VENDUS where no_article = ?";
-
+	private static final String DERNIER_ID = "select MAX(no_article) as numero_article from articles_vendus; ";
 	/**
 	 * Mise en vente d'un article
 	 * 
@@ -35,8 +35,8 @@ public class ArticleVenduDAO {
 			rqt = cnx.prepareStatement(INSERT_ARTICLE);
 			rqt.setString(1, articleVendu.getNomArticle());
 			rqt.setString(2, articleVendu.getDescription());
-			rqt.setDate(3, new java.sql.Date(articleVendu.getDateDebutEncheres().getTime()));
-			rqt.setDate(4, new java.sql.Date(articleVendu.getDateFinEncheres().getTime()));
+			rqt.setTimestamp(3, new java.sql.Timestamp(articleVendu.getDateDebutEncheres().getTime()));
+			rqt.setTimestamp(4, new java.sql.Timestamp(articleVendu.getDateFinEncheres().getTime()));
 			rqt.setInt(5, articleVendu.getMiseAPrix());
 			rqt.setInt(6, articleVendu.getUtilisateur().getNoUtilisateur());
 			rqt.setInt(7, articleVendu.getCategorie());
@@ -183,5 +183,27 @@ public class ArticleVenduDAO {
 				conSelect.close();
 		}
 		return article;
+	}
+	
+	public int dernier_id() throws ClassNotFoundException, SQLException {
+		int dernier_id = 0;
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(DERNIER_ID);
+			rqt.executeQuery();
+			rs = rqt.executeQuery();
+			if (rs.next()) {
+				dernier_id = rs.getInt("numero_article");
+			}
+		} finally {
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		return dernier_id;	
 	}
 }

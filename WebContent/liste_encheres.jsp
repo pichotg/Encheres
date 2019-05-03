@@ -47,7 +47,7 @@
 					<option>Informatique</option>
 					<option>Ameublement</option>
 					<option>Vêtement</option>
-					<option>Sport et Loisirs</option>
+					<option>Sport&Loisirs</option>
 				</select>
 			</div>
 
