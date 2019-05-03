@@ -13,93 +13,62 @@
 	<title>Mon profil</title>
 </head>
 
-<body class="text-center">
-	<p> ${modifier}</p>
-	<div id="page">
+<body>
 		<div class="container">
 			<article class="card-body mx-auto" style="max-width: 400px;">
 				<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
 				<h4 class="card-title mt-3 text-center">Profil</h4>
-				<form>
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-user"></i>
-							</span>
-						</div>
-						<input ${modifier} value="${user.pseudo}" id="pseudo" name="pseudo" class="form-control"
-							placeholder="Pseudo" type="text">
+				<form action="<%=request.getContextPath()%>/modifierProfil" method="post">
+					<div class="form-group">
+						<label for="pseudo">Pseudo</label>
+						<input value="${user.pseudo}" id="pseudo" name="pseudo" class="form-control" placeholder="Pseudo"
+							type="text" disabled>
 					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-user"></i>
-							</span>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="inputEmail4">Nom</label>
+							<input value="${user.nom}" id="nom" name="nom" class="form-control" placeholder="Nom"
+								type="text" disabled>
 						</div>
-						<input ${modifier} value="${user.nom}" id="nom" name="nom" class="form-control"
-							placeholder="Nom" type="text">
-						<input ${modifier} value="${user.prenom}" id="prenom" name="prenom" class="form-control"
-							placeholder="Prenom" type="text">
-					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-envelope"></i>
-							</span>
+						<div class="form-group col-md-6">
+							<label for="prenom">Prenom</label>
+							<input value="${user.prenom}" id="prenom" name="prenom" class="form-control"
+								placeholder="Prenom" type="text" disabled>
 						</div>
-						<input ${modifier} value="${user.email}" id="email" name="email" class="form-control"
-							placeholder="Email" type="email">
 					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-phone"></i>
-							</span>
+					<div class="form-group">
+						<label for="email">Email</label>
+						<input value="${user.email}" id="email" name="email" class="form-control" placeholder="Email"
+							type="email" disabled>
+					</div>
+					<div class="form-group">
+						<label for="telephone">Teléphone</label>
+						<input value="${user.telephone}" id="telephone" name="telephone" class="form-control"
+							placeholder="Teléphone" type="text" disabled>
+					</div>
+					<div class="form-group">
+						<label for="rue">Rue</label>
+						<input value="${user.rue}" id="rue" name="rue" class="form-control" placeholder="Rue" type="text"
+							disabled>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-md-6">
+							<label for="ville">Ville</label>
+							<input value="${user.ville}" id="ville" name="ville" class="form-control" placeholder="Ville"
+								type="text" disabled>
 						</div>
-						<input ${modifier} value="${user.telephone}" id="telephone" name="telephone"
-							class="form-control" placeholder="Teléphone" type="text">
-					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-home"></i>
-							</span>
+						<div class="form-group col-md-6">
+							<label for="inputCity">Code Postal</label>
+							<input value="${user.codePostal}" id="codePostal" name="codePostal" class="form-control"
+								placeholder="Code postal" type="text" disabled>
 						</div>
-						<input ${modifier} value="${user.rue}" id="rue" name="rue" class="form-control"
-							placeholder="Rue" type="text">
 					</div>
-					<!-- form-group end.// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-home"></i>
-							</span>
-						</div>
-						<input ${modifier} value="${user.ville}" id="ville" name="ville" class="form-control"
-							placeholder="Ville" type="text">
-						<input ${modifier} value="${user.codePostal}" id="codePostal" name="codePostal" class="form-control" placeholder="Code postal"
-							type="text">
-					</div>
-					<!-- form-group end.// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-lock"></i>
-							</span>
-						</div>
-						<input ${modifier} value="${user.motDePasse}" id="motDePasse" name="motDePasse"
-							class="form-control" placeholder="Mot de passe" type="password">
-					</div>
-					<!-- form-group// -->
-					<div class="form-group input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"> <i class="fa fa-lock"></i>
-							</span>
-						</div>
-						<input ${modifier} value="${user.motDePasse}" id="confirmation" name="confirmation"
-							class="form-control" placeholder="Confirmation" type="password">
-					</div>
+					<input type="hidden"  value="${user.noUtilisateur}" id="noUtilisateur" name="noUtilisateur">
+					<button type="button" class="btn btn-success">Success</button>
+					<button type="button" class="btn btn-danger">Supprimer mon compte</button>
 				</form>
 			</article>
 		</div>
-	</div>
-</body>
+	</body>
 
 </html>
