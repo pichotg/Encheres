@@ -11,7 +11,7 @@
 	
 	<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
 		<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-			<c:if test="${utilisateur.noUtilisateur != null}">
+			<c:if test="${cookie.connexion.value != '-1'}">
 				<li class="nav-item">
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
 				</li>
@@ -19,7 +19,7 @@
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}">Vendre Article</a>
 				</li>
 			</c:if>
-			<c:if test="${utilisateur.noUtilisateur == -1 or utilisateur.noUtilisateur == null}">
+			<c:if test="${cookie.connexion.value == '-1'}">
 				<li class="nav-item">
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/connexion.jsp">Connexion</a>
 				</li>

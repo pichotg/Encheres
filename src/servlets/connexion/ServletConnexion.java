@@ -22,7 +22,7 @@ import dal.UtilisateurDAO;
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final int CINQ_MINUTES = 5 * 60;
-	private static final int SE_SOUVENIR = 30 * 24 * 60 * 60; // On se souvient de l'utilisateur pendant 30 jours.
+	private static final int SE_SOUVENIR = 7 * 24 * 60 * 60; // On se souvient de l'utilisateur pendant 30 jours.
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -33,7 +33,6 @@ public class ServletConnexion extends HttpServlet {
 		try {
 			doProcess(request, response);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -50,20 +49,29 @@ public class ServletConnexion extends HttpServlet {
 
 		DAOIdentification = new UtilisateurDAO();
 		utilisateur = DAOIdentification.verifIdentification(identifiant, motDePasse);
-		ck = new Cookie("connexion", "NULL");
+		ck = new Cookie("connexion", "-1");
 
 		if (utilisateur != null) {
 			// le cookie est valide 10 minutes
-			ck.setValue("OK");
+			ck.setValue(utilisateur.getPseudo());
 			// Si on n'a pas coch� se souvenir de moi
-			ck.setMaxAge(CINQ_MINUTES);
+			if("on".equals(request.getParameter("remember-me")))
+			{
+				ck.setMaxAge(SE_SOUVENIR);
+			}
+			else 
+			{
+				ck.setMaxAge(CINQ_MINUTES);
+			}
+			
 			// Si on a coch� , il faudra mettre SE_SOUVENIR pour �tre m�moris� 30 jours
 			session.setAttribute("utilisateur", utilisateur);
 			// On ajoute le cookie
 			response.addCookie(ck);
 			this.getServletContext().getRequestDispatcher("/filtre").forward(request, response);
 		} else {
-			// Les identifiants sont incorrects, on passe le cookie à NOK
+			// Les identifiants sont incorrects, on laisse le cookie à -1
+			response.addCookie(ck);
 			request.setAttribute("error", "connexionerror");
 			this.getServletContext().getRequestDispatcher("/connexion.jsp").forward(request, response);
 		}

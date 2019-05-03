@@ -25,7 +25,7 @@ public class ServletDeconnexion extends HttpServlet {
 		session.setAttribute("user", null);
 		for (Cookie ck : cookies) {
 			if ("connexion".equals(ck.getName())) {
-				ck.setValue("NULL");
+				ck.setValue("-1");
 				response.addCookie(ck);
 			}
 		}

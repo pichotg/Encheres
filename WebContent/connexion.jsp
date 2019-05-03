@@ -43,7 +43,7 @@
 	<input type="password" id="motdepasse" name="motdepasse" class="form-control" placeholder="Password" required>
 	<div class="checkbox mb-3">
 		<label>
-			<input type="checkbox" value="remember-me">Rester Connecter
+			<input type="checkbox" id="remember-me" name="remember-me">Rester Connecter
 		</label>
 	</div>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Connexion</button>
