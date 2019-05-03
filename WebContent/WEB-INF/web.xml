@@ -60,4 +60,12 @@
     <servlet-name>ServletModifierProfil</servlet-name>
     <url-pattern>/modifierProfil</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletVente</servlet-name>
+    <servlet-class>servlets.article.ServletVente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletVente</servlet-name>
+    <url-pattern>/vente/*</url-pattern>
+  </servlet-mapping>
 </web-app>
