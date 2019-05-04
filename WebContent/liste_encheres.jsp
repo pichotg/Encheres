@@ -60,33 +60,34 @@
 	</form>
 	<div >
 		<div class="card-deck px-3 py-3 mb-3">
-		
-		<c:forEach var="enchere" items="${listeEncheres}">
-			
-			<div class="card mb-4" style="min-width: 400px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-	      				<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
-	   				 </div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">${enchere.noArticle.description}</h5>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
-								<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</li>
-								<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
-								<li class="list-group-item">Vendeur :
-									<a target="_blank"
-										href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-										${enchere.noArticle.utilisateur.pseudo}
-									</a>
-								</li>
-							</ul>
+		<c:forEach var="enchere" items="${listeEncheres}">	
+			<form class="form-signin" action="<%=request.getContextPath()%>/detailVente" method="post">
+				<div class="card mb-4" style="min-width: 400px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+		      				<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
+		   				 </div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">${enchere.noArticle.description}</h5>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
+									<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</li>
+									<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
+									<li class="list-group-item">Vendeur :
+										<a target="_blank"
+											href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
+											${enchere.noArticle.utilisateur.pseudo}
+										</a>
+									</li>
+								</ul>
+								<input type="hidden" value="${enchere.noArticle.noArticle}" id="noArticle" name="noArticle">
+								<button class="btn btn-lg btn-primary btn-block" type="submit">Détail de la vente</button>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			
+			</form>
 		</c:forEach>
 		
 		</div>

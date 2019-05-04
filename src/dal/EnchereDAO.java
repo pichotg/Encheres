@@ -17,6 +17,7 @@ public class EnchereDAO {
 
 	private static final String INSERT_ENCHERE = "insert into encheres(no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
+	private static final String ENCHERE_EXISTANTE = "select * from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
 	private static final String SELECT_ENCHERE_EN_COURS = "SELECT *\r\n" + "FROM ENCHERES\r\n" + "INNER JOIN\r\n"
 			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n"
@@ -69,7 +70,7 @@ public class EnchereDAO {
 				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
 				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
 				rqt.setDate(3, datSql);
-				rqt.setInt(4, enchere.getMontant_enchere());
+				rqt.setInt(4, enchere.getMontantEnchere());
 				rqt.executeUpdate();
 
 			} finally {
@@ -85,7 +86,7 @@ public class EnchereDAO {
 				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
 				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
 				rqt.setDate(3, datSql);
-				rqt.setInt(4, enchere.getMontant_enchere());
+				rqt.setInt(4, enchere.getMontantEnchere());
 				rqt.executeUpdate();
 			} finally {
 				if (rqt != null)
@@ -97,7 +98,7 @@ public class EnchereDAO {
 	}
 
 	/**
-	 * Verifie si uen enchere existe d�j� sinon insert de celle ci
+	 * Verifie si une enchere existe déjà sinon insert de celle ci
 	 * 
 	 * @param enchere
 	 * @return
@@ -182,7 +183,8 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on cr�e les objets li�s � l'ench�re
+			// On parcourt le resultat de la requete et on cr�e les objets li�s �
+			// l'ench�re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -224,7 +226,8 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on cr�e les objets li�s � l'ench�re
+			// On parcourt le resultat de la requete et on cr�e les objets li�s �
+			// l'ench�re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -266,7 +269,8 @@ public class EnchereDAO {
 			rs = preparedStatement.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on cr�e les objets li�s � l'ench�re
+			// On parcourt le resultat de la requete et on cr�e les objets li�s �
+			// l'ench�re
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
@@ -337,5 +341,77 @@ public class EnchereDAO {
 		}
 
 		return encheres;
+	}
+
+	/**
+	 * Verification de l'existance d'une enchere pour un utilisateur sur un article
+	 * donnée avec d'autres paramètres
+	 * 
+	 * @param enchere
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public static Enchere enchereExistante(int noUtilisateur, int noArticle)
+			throws SQLException, ClassNotFoundException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		Enchere enchere = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(ENCHERE_EXISTANTE);
+			rqt.setInt(1, noUtilisateur);
+			rqt.setInt(2, noArticle);
+			rs = rqt.executeQuery();
+			if (rs.next()) {
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				Utilisateur ut = utDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
+				ArticleVenduDAO avDAO = new ArticleVenduDAO();
+				ArticleVendu av = avDAO.getArticleById(rs.getInt("no_article"));
+				enchere = new Enchere(av, ut, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		return enchere;
+	}
+
+	/**
+	 * V�rifie si l'enchere est bien sup�rieure aux ench�res existantes
+	 * 
+	 * @param enchere
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public static int getEnchereMax(int noArticle) throws SQLException, ClassNotFoundException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		int enchereMax = 0;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(SELECT_ENCHERE_MAX);
+			rqt.setInt(1, noArticle);
+			rs = rqt.executeQuery();
+			if (rs.next()) {
+
+				enchereMax = rs.getInt("enchereMax");
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		return enchereMax;
 	}
 }

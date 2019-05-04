@@ -54,7 +54,7 @@ public class ServletAjouterEnchere extends HttpServlet {
 		if (enchere.achatPossible()) {
 			// On vérifie maintenant que l'enchère est bien supérieure à celle courante
 			try {
-				if (enchere.getMontant_enchere() > EnchereDAO.verifEnchereSup(enchere))
+				if (enchere.getMontantEnchere() > EnchereDAO.verifEnchereSup(enchere))
 					EnchereDAO.ajouter(enchere);
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
