@@ -46,7 +46,8 @@ public class ServletFiltre extends HttpServlet {
 		}
 
 		request.setAttribute("listeEncheres", encheres);
-
+		request.setAttribute("contient", contient);
+		request.setAttribute("categorie", categorie);
 		this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
 	}
 

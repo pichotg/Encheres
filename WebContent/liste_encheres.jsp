@@ -33,22 +33,27 @@
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-		<h2 class="display-6">Liste des enchères</h1>
+		<h1 class="display-6">Liste des enchères</h1>
 	</div>
 	<form class="row col-12" action="filtre" method="post">
 		<div class="col-6">
 			<div class="form-group">
-				<label for="categorie">Filtres :</label>
-				<input type="text" class="form-control" id="contient" name="contient" placeholder="Le nom de l'article">
+				<label for="categorie">Le nom contient :</label>
+				<c:if test="${param.contient == null}">
+					<input type="text" class="form-control" id="contient" name="contient" placeholder="Le nom de l'article contient">
+				</c:if>
+				<c:if test="${param.contient != null}">
+					<input type="text" class="form-control" id="contient" name="contient" value="${param.contient}">
+				</c:if>
 			</div>
 			<div class="form-group">
 				<label for="categorie">Catégorie :</label>
 				<select class="custom-select" name="categorie" id="categorie">
-					<option selected>Toutes</option>
-					<option>Informatique</option>
-					<option>Ameublement</option>
-					<option>Vêtement</option>
-					<option>Sport&Loisirs</option>
+					<option <c:if test="${param.categorie == null or param.categorie == 'Toutes'}">selected</c:if>>Toutes</option>
+					<option <c:if test="${param.categorie == 'Informatique'}">selected</c:if>>Informatique</option>
+					<option <c:if test="${param.categorie == 'Ameublement'}">selected</c:if>>Ameublement</option>
+					<option <c:if test="${param.categorie == 'Vêtement'}">selected</c:if>>Vêtement</option>
+					<option <c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
 				</select>
 			</div>
 
