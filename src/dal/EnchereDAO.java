@@ -414,4 +414,116 @@ public class EnchereDAO {
 		}
 		return enchereMax;
 	}
+
+	public static ArrayList<Enchere> listerAchatEnCours(int noUtilisateur, String checkbox1, String checkbox2,
+			String checkbox3) throws SQLException, ClassNotFoundException {
+		Connection cnx1 = null, cnx2 = null, cnx3 = null;
+		PreparedStatement rqt1 = null, rqt2 = null, rqt3 = null;
+		ResultSet rs1 = null, rs2 = null, rs3 = null;
+		ArrayList<Enchere> listeEncheresAll = new ArrayList<>();
+		ArrayList<Enchere> listeEncheresEnCours = new ArrayList<>();
+		ArrayList<Enchere> listeMesEncheresEnCours = new ArrayList<>();
+		ArrayList<Enchere> listeEncheresRemportees = new ArrayList<>();
+
+		try {
+			if ("on".equals(checkbox1)) {
+				cnx1 = JDBCTools.getConnection();
+				rqt1 = cnx1.prepareStatement(SELECT_ENCHERE_EN_COURS);
+				rqt1.setInt(1, noUtilisateur);
+				rs1 = rqt1.executeQuery();
+				Utilisateur ut = null;
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				ArticleVendu articleVendu = null;
+				ArticleVenduDAO articleDAO = new ArticleVenduDAO();
+				while (rs1.next()) {
+					ut = utDAO.getUtilisateurById(noUtilisateur);
+					articleVendu = articleDAO.getArticleById(rs1.getInt("no_article"));
+					Enchere enchere = new Enchere(articleVendu, ut, rs1.getDate("date_enchere"),
+							rs1.getInt("montant_enchere"));
+					// On ajoute l'article � la liste
+					listeEncheresEnCours.add(enchere);
+				}
+				// Doublons impossibles à cette étape
+				listeEncheresAll.addAll(listeEncheresEnCours);
+			}
+			if ("on".equals(checkbox2)) {
+				cnx2 = JDBCTools.getConnection();
+				rqt2 = cnx2.prepareStatement(SELECT_ENCHERE_EN_COURS_BY_ID);
+				rqt2.setInt(1, noUtilisateur);
+				rs2 = rqt2.executeQuery();
+				Utilisateur ut = null;
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				ArticleVendu articleVendu = null;
+				ArticleVenduDAO articleDAO = new ArticleVenduDAO();
+				while (rs1.next()) {
+					ut = utDAO.getUtilisateurById(noUtilisateur);
+					articleVendu = articleDAO.getArticleById(rs1.getInt("no_article"));
+					Enchere enchere = new Enchere(articleVendu, ut, rs1.getDate("date_enchere"),
+							rs1.getInt("montant_enchere"));
+					// On ajoute l'article � la liste
+					listeMesEncheresEnCours.add(enchere);
+				}
+				// On retire les doublons même si théoriquement il n'y en aura pas
+				for (Enchere enchere : listeEncheresAll) {
+					for (Enchere enchere2 : listeMesEncheresEnCours) {
+						if (enchere.getNoArticle() == enchere2.getNoArticle()
+								&& enchere.getNoUtilisateur() == enchere2.getNoUtilisateur()) {
+							listeEncheresAll.remove(enchere);
+						}
+					}
+				}
+				listeEncheresAll.addAll(listeMesEncheresEnCours);
+			}
+			if ("on".equals(checkbox3)) {
+				cnx3 = JDBCTools.getConnection();
+				rqt3 = cnx3.prepareStatement(SELECT_ENCHERE_REMPORTEE);
+				rqt3.setInt(1, noUtilisateur);
+				rs3 = rqt3.executeQuery();
+				Utilisateur ut = null;
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				ArticleVendu articleVendu = null;
+				ArticleVenduDAO articleDAO = new ArticleVenduDAO();
+				while (rs1.next()) {
+					ut = utDAO.getUtilisateurById(noUtilisateur);
+					articleVendu = articleDAO.getArticleById(rs1.getInt("no_article"));
+					Enchere enchere = new Enchere(articleVendu, ut, rs1.getDate("date_enchere"),
+							rs1.getInt("montant_enchere"));
+					// On ajoute l'article � la liste
+					listeMesEncheresEnCours.add(enchere);
+				}
+				// On retire les doublons même si théoriquement il n'y en aura pas
+				for (Enchere enchere : listeEncheresAll) {
+					for (Enchere enchere2 : listeEncheresRemportees) {
+						if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()
+								&& enchere.getNoUtilisateur().getNoUtilisateur() == enchere2.getNoUtilisateur()
+										.getNoUtilisateur()) {
+							listeEncheresAll.remove(enchere);
+						}
+					}
+				}
+				listeEncheresAll.addAll(listeEncheresRemportees);
+			}
+		} finally {
+			if (rs1 != null)
+				rs1.close();
+			if (rqt1 != null)
+				rqt1.close();
+			if (cnx1 != null)
+				cnx1.close();
+			if (rs2 != null)
+				rs2.close();
+			if (rqt2 != null)
+				rqt2.close();
+			if (cnx2 != null)
+				cnx2.close();
+			if (rs3 != null)
+				rs3.close();
+			if (rqt3 != null)
+				rqt3.close();
+			if (cnx3 != null)
+				cnx3.close();
+		}
+
+		return listeEncheresAll;
+	}
 }

@@ -56,7 +56,6 @@
 					<option <c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
 				</select>
 			</div>
-
 		</div>
 		<div class="col-6">
 			<button type="submit" id="rechercher" value="rechercher"
