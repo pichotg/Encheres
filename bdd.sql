@@ -159,3 +159,17 @@ INSERT INTO RETRAITS VALUES(3,'rue de test2','79000','Niort');
 INSERT INTO RETRAITS VALUES(4,'rue de test3','79000','Niort');
 INSERT INTO RETRAITS VALUES(5,'rue de l admin','79000','Niort');
 
+CREATE PROCEDURE encheres_terminees
+AS
+DECLARE c_article CURSOR FOR SELECT no_article from ARTICLES_VENDUS WHERE etat_vente = 'vec' AND date_fin_encheres < GETDATE() FOR UPDATE OF etat_vente, prix_vente;
+DECLARE  @v_article INT;
+OPEN c_articles FETCH c_articles INTO @v_article
+WHILE @@FETCH_STATUS = 0
+BEGIN
+	UPDATE [ENCHERES].[dbo].[ARTICLES_VENDUS] 
+	SET 
+		etat_vente = 'vet',
+		prix_vente = (SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = @v_article);
+END;
+CLOSE c_articles;
+DEALLOCATE c_articles;
