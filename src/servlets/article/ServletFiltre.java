@@ -102,9 +102,7 @@ public class ServletFiltre extends HttpServlet {
 						// On parcourt les encheres
 						for (Enchere enchere2 : encheresFiltrees) {
 							// On n'ajoute que celles qui correspondent aux deux filtres
-							if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()
-									&& enchere.getNoUtilisateur().getNoUtilisateur() == enchere2.getNoUtilisateur()
-											.getNoUtilisateur()) {
+							if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()) {
 								encheresFinales.add(enchere);
 							}
 						}
