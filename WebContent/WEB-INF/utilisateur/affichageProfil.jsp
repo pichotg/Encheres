@@ -12,12 +12,15 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 	<title>Mon profil</title>
 </head>
-
+<style>
+body{
+	background-color: #f5f5f5;
+}
+</style>
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<div class="container">
 		<article class="card-body mx-auto" style="max-width: 400px;">
-			<h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
 			<h4 class="card-title mt-3 text-center">Profil</h4>
 			<form action="<%=request.getContextPath()%>/profil" method="post">
 				<div class="form-group">
