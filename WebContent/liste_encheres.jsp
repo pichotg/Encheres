@@ -11,6 +11,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
 <html>
+
 <head>
 	<meta charset="utf-8">
 	<title>Liste des enchères</title>
@@ -25,7 +26,7 @@
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-		
+
 	<link rel="stylesheet" href="./themes/basique/style.css">
 </head>
 
@@ -38,7 +39,58 @@
 		<div class="col-6">
 			<div class="form-group">
 				<label for="categorie">Filtres :</label>
-				<input type="text" class="form-control" id="contient" name="contient" placeholder="Le nom de l'article">
+				<c:if test="${utilisateur.noUtilisateur != null}">
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+							value="option2">
+						<label class="form-check-label" for="exampleRadios2">
+							Achats
+						</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  enchères ouvertes
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  mes enchères en cours
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  mes enchères remportées
+							</label>
+						</div>
+					</div>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
+							value="option2">
+						<label class="form-check-label" for="exampleRadios2">
+							Mes ventes
+						</label>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  mes ventes cours
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  ventes non débutées
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+							<label class="form-check-label" for="defaultCheck2">
+							  vente terminées
+							</label>
+						</div>
+					</div>
+				</c:if>
 			</div>
 			<div class="form-group">
 				<label for="categorie">Catégorie :</label>
@@ -50,44 +102,45 @@
 					<option>Sport&Loisirs</option>
 				</select>
 			</div>
+			<input type="text" class="form-control" id="contient" name="contient" placeholder="Le nom de l'article">
 
 		</div>
 		<div class="col-6">
-			<button type="submit" id="rechercher" value="rechercher"
-				class="btn btn-primary btn-lg">Rechercher</button>
+			<button type="submit" id="rechercher" value="rechercher" class="btn btn-primary btn-lg">Rechercher</button>
 		</div>
 	</form>
-	<div >
+	<div>
 		<div class="card-deck px-3 py-3 mb-3">
-		
-		<c:forEach var="enchere" items="${listeEncheres}">
-			
-			<div class="card mb-4" style="min-width: 400px;">
-				<div class="row no-gutters">
-					<div class="col-md-4">
-	      				<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
-	   				 </div>
-					<div class="col-md-8">
-						<div class="card-body">
-							<h5 class="card-title">${enchere.noArticle.description}</h5>
-							<ul class="list-group list-group-flush">
-								<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
-								<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}</li>
-								<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
-								<li class="list-group-item">Vendeur :
-									<a target="_blank"
-										href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-										${enchere.noArticle.utilisateur.pseudo}
-									</a>
-								</li>
-							</ul>
+
+			<c:forEach var="enchere" items="${listeEncheres}">
+
+				<div class="card mb-4" style="min-width: 400px;">
+					<div class="row no-gutters">
+						<div class="col-md-4">
+							<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
+						</div>
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">${enchere.noArticle.description}</h5>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
+									<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}
+									</li>
+									<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
+									<li class="list-group-item">Vendeur :
+										<a target="_blank"
+											href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
+											${enchere.noArticle.utilisateur.pseudo}
+										</a>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-		</c:forEach>
-		
+
+			</c:forEach>
+
 		</div>
 	</div>
 </body>
