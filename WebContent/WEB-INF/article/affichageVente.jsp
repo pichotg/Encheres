@@ -39,30 +39,39 @@
 					<div class="col-md-8">
 					<h1 class="card-title">${article.nomArticle}</h1>
 						<div class="card-body">
+						<form action="<%=request.getContextPath()%>/ajouterEnchere" method="post">
 							<h5 class="card-title">${article.description}</h5>
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${article.categorie}</li>
 								<li class="list-group-item">Meilleure offre : ${enchereMax}</li>
 								<li class="list-group-item">Mise à prix : ${article.prixVente}</li>
 								<li class="list-group-item">Fin de l'enchère : ${article.dateFinEncheres}</li>
-								<li class="list-group-item">Retrait : ${article.utilisateur.getAdresse()}</li>
+								<li class="list-group-item">Retrait : <a href ="http://maps.google.com/?q=${article.utilisateur.getAdresse()}" target="_blank">${article.utilisateur.getAdresse()}</a></li>
 								<li class="list-group-item">Vendeur :
 									<a target="_blank"
 										href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${article.utilisateur.noUtilisateur}">
 										${article.utilisateur.pseudo}
 									</a>
 								</li>
-								<c:if test="${utilisateur != null && cookie.connexion.value != '-1'}">
-									<c:if test="${montantEnchere != 0}">
-										<li class="list-group-item">Ma proposition : ${montantEnchere}</li>
+								<c:if test="${utilisateur != null && cookie.connexion.value != '-1' && utilisateur.noUtilisateur != article.utilisateur.noUtilisateur}">
+									<c:if test="${montantEnchere != 0 && montantEnchere < enchereMax}">
+										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
+										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax + 1}" style="text-align : center;"></li>
 									</c:if>
 									<c:if test="${montantEnchere == 0}">
-										<li class="list-group-item">Ma proposition : Vous n'avez pas encore enchéri sur cette vente</li>
+										<li class="list-group-item">Vous n'avez pas encore enchéri sur cette vente</li>
+										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
+										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax +  1}" style="text-align : center;"></li>
+									</c:if>
+									<c:if test="${montantEnchere == enchereMax}">
+										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
+										<li class="list-group-item">Votre enchère est la plus haute actuellement</li>
 									</c:if>
 									<button class="btn btn-lg btn-primary btn-block" type="submit">Enchérir</button>
 								</c:if>
 							</ul>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>		
