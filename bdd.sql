@@ -115,7 +115,7 @@ INSERT INTO UTILISATEURS VALUES('test4','test4','test4','test4@eni.fr','06060606
 INSERT INTO ARTICLES_VENDUS VALUES('bureau','vec','bureau de base','29/04/2019 19:45:45','30/05/2019 19:45:20',100,null,1,2,'');
 INSERT INTO ARTICLES_VENDUS VALUES('tablette','vec','tablette de base','29/04/2019 19:45:45','30/05/2019 19:45:20',100,null,2,1,'' );
 INSERT INTO ARTICLES_VENDUS VALUES('pull','vnd','pull de base','30/05/2019 19:45:45','30/06/2019 19:45:20',100,null,3,3,'' );
-INSERT INTO ARTICLES_VENDUS VALUES('ballon','vec','ballon de base','28/04/2019 19:45:45','30/05/2019 19:45:20',100,,4,4,'' );
+INSERT INTO ARTICLES_VENDUS VALUES('ballon','vec','ballon de base','28/04/2019 19:45:45','30/05/2019 19:45:20',100,null,4,4,'' );
 INSERT INTO ARTICLES_VENDUS VALUES('skate','vet','skate de base','29/04/2019 19:45:45','30/04/2019 19:45:20',100,300,1,4,'' );
 INSERT INTO ARTICLES_VENDUS VALUES('tee-shirt','vet','tee-shirt de base','29/04/2019 19:45:45','30/04/2019 19:45:20',100,150,1,3,'' );
 INSERT INTO ARTICLES_VENDUS VALUES('chaise','vet','chaise de base','29/04/2019 19:45:45','30/04/2019 19:45:20',100,400,1,2,'' );
