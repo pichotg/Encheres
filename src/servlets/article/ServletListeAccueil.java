@@ -26,6 +26,7 @@ public class ServletListeAccueil extends HttpServlet {
 	public ServletListeAccueil() {
 		super();
 	}
+	//COUCOU BIS
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
