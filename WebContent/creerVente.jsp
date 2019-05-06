@@ -59,7 +59,7 @@
 			
 			<div class="row align-items-center">
 			<label for="miseAPrix">Mise à prix</label> 
-			<div class="col"><input class="form-control" type="number" id="miseAPrix" name="miseAPrix" placeholder="Prix de départ de l'enchere en €" required/> </div></div><br />
+			<div class="col"><input class="form-control" type="number" id="miseAPrix" name="miseAPrix" min="1" placeholder="Prix de départ de l'enchere > 1€" required/> </div></div><br />
 			
 			<div class="row align-items-center">
 			<label for="debut">Début de l'enchère</label> 
@@ -86,10 +86,11 @@
 			</div>
 			</fieldset><br />
 			
-			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">&nbsp;&nbsp;&nbsp;
-			<input class="btn btn-primary " type="submit" id="annuler" name="action" value="Annuler" />
-		</form>
- </div>
+			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">
+			<input class="btn btn-primary " type="reset" value="Annuler">
+			<!-- <a href="index.jsp"><button class="btn btn-primary ">Annuler</button></a> -->
+			</form>
+	</div>
 	</article>
 	</div> 
 </body>
