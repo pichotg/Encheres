@@ -37,7 +37,7 @@
 		<h1 class="display-6">Liste des enchères</h1>
 	</div>
 	<form class="row col-12" action="filtre" method="post">
-		<div class="col-6">
+		<div class="col-6" style="min-width: 230px;">
 			<div class="form-group">
 				<label for="categorie">Le nom contient :</label>
 				<c:if test="${param.contient == null}">

@@ -19,6 +19,9 @@
 				<li class="nav-item">
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}">Vendre Article</a>
 				</li>
+				<li class="nav-item">
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateur.noUtilisateur}">Mon profil</a>
+				</li>
 			</c:if>
 		<!-- Le menu lorsqu'on est déconnecté, à savoir lorsque l'utilisateur connecté est null ou que le cookie vaut -1 -->
 			<c:if test="${utilisateur == null || cookie.connexion.value == '-1'}">
