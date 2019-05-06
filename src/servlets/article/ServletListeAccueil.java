@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.Enchere;
+import bo.Utilisateur;
 import dal.EnchereDAO;
+import dal.UtilisateurDAO;
 
 public class ServletListeAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -21,7 +25,6 @@ public class ServletListeAccueil extends HttpServlet {
 	 */
 	public ServletListeAccueil() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -30,6 +33,27 @@ public class ServletListeAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		Cookie[] cookies;
+		cookies = request.getCookies();
+		HttpSession session = request.getSession();
+		if (cookies == null) {
+			Cookie[] cook = new Cookie[1];
+			Cookie ck = new Cookie("connexion", "-1");
+			cook[0] = ck;
+			cookies = cook;
+			response.addCookie(ck);
+		}
+		for (Cookie ck : cookies) {
+			if ("connexion".equals(ck.getName())) {
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				try {
+					Utilisateur utilisateur = utDAO.getUtilisateurByPseudo(ck.getValue());
+					session.setAttribute("utilisateur", utilisateur);
+				} catch (NumberFormatException | SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		EnchereDAO enchereDAO;
 		List<Enchere> encheres = new ArrayList<>();
 
@@ -38,7 +62,6 @@ public class ServletListeAccueil extends HttpServlet {
 		try {
 			encheres = enchereDAO.selectEncheresEnCours();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

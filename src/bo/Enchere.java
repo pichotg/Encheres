@@ -6,18 +6,18 @@ public class Enchere {
 	public ArticleVendu noArticle;
 	public Utilisateur noUtilisateur;
 	public Date dateEnchere;
-	public int montant_enchere;
+	public int montantEnchere;
 
 	public Enchere() {
 		super();
 	}
 
-	public Enchere(ArticleVendu noArticle, Utilisateur noUtilisateur, Date dateEnchere, int montant_enchere) {
+	public Enchere(ArticleVendu noArticle, Utilisateur noUtilisateur, Date dateEnchere, int montantEnchere) {
 		super();
 		this.noArticle = noArticle;
 		this.noUtilisateur = noUtilisateur;
 		this.dateEnchere = dateEnchere;
-		this.montant_enchere = montant_enchere;
+		this.montantEnchere = montantEnchere;
 	}
 
 	public ArticleVendu getNoArticle() {
@@ -44,12 +44,12 @@ public class Enchere {
 		this.dateEnchere = dateEnchere;
 	}
 
-	public int getMontant_enchere() {
-		return montant_enchere;
+	public int getMontantEnchere() {
+		return montantEnchere;
 	}
 
-	public void setMontant_enchere(int montant_enchere) {
-		this.montant_enchere = montant_enchere;
+	public void setMontantEnchere(int montantEnchere) {
+		this.montantEnchere = montantEnchere;
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class Enchere {
 	 */
 	public Boolean achatPossible() {
 		Boolean bool = false;
-		if (this.getMontant_enchere() <= this.getNoUtilisateur().getCredit()
+		if (this.getMontantEnchere() <= this.getNoUtilisateur().getCredit()
 				&& this.getDateEnchere().after(this.getNoArticle().getDateDebutEncheres())
 				&& this.getDateEnchere().before(this.getNoArticle().getDateFinEncheres()))
 		{

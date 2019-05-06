@@ -13,6 +13,7 @@
 <title>CreerVente</title>
 </head>
 <body>
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 <div id="page">
 		<h1>ENI-Ench�res</h1>
 		<h2>Nouvelle vente</h2>
@@ -40,8 +41,8 @@
 			<input class="champtexte" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> <br />
 			<label for="ville">Ville :</label> 
 			<input class="champtexte" type="text" id="ville" name="ville" value="${ville}" /><br/>
-			<input type="submit" id="enregistrer" name="enregistrer" value="Enregistrer" />
-			<input type="submit" id="annuler" name="annuler" value="Annuler" />
+			<input type="submit" id="enregistrer" name="action" value="Enregistrer" />
+			<input type="submit" id="annuler" name="action" value="Annuler" />
 		</form>
 	</div>
 </body>

@@ -13,134 +13,161 @@
 <html>
 
 <head>
-	<meta charset="utf-8">
-	<title>Liste des enchères</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
+<meta charset="utf-8">
+<title>Liste des enchères</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="./themes/basique/style.css">
+<link rel="stylesheet" href="./themes/basique/style.css">
+<META HTTP-EQUIV="Refresh" CONTENT="TRUE">
 </head>
 
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-		<h2 class="display-6">Liste des enchères</h1>
+		<h1 class="display-6">Liste des enchères</h1>
 	</div>
 	<form class="row col-12" action="filtre" method="post">
 		<div class="col-6">
 			<div class="form-group">
-				<label for="categorie">Filtres :</label>
-				<c:if test="${utilisateur.noUtilisateur != null}">
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-							value="option2">
-						<label class="form-check-label" for="exampleRadios2">
-							Achats
-						</label>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  enchères ouvertes
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  mes enchères en cours
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  mes enchères remportées
-							</label>
-						</div>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2"
-							value="option2">
-						<label class="form-check-label" for="exampleRadios2">
-							Mes ventes
-						</label>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  mes ventes cours
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  ventes non débutées
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-							<label class="form-check-label" for="defaultCheck2">
-							  vente terminées
-							</label>
-						</div>
-					</div>
+				<label for="categorie">Le nom contient :</label>
+				<c:if test="${param.contient == null}">
+					<input type="text" class="form-control" id="contient"
+						name="contient" placeholder="Le nom de l'article contient">
+				</c:if>
+				<c:if test="${param.contient != null}">
+					<input type="text" class="form-control" id="contient"
+						name="contient" value="${param.contient}">
 				</c:if>
 			</div>
 			<div class="form-group">
-				<label for="categorie">Catégorie :</label>
-				<select class="custom-select" name="categorie" id="categorie">
-					<option selected>Toutes</option>
-					<option>Informatique</option>
-					<option>Ameublement</option>
-					<option>Vêtement</option>
-					<option>Sport&Loisirs</option>
+				<label for="categorie">Catégorie :</label> <select
+					class="custom-select" name="categorie" id="categorie">
+					<option
+						<c:if test="${param.categorie == null or param.categorie == 'Toutes'}">selected</c:if>>Toutes</option>
+					<option
+						<c:if test="${param.categorie == 'Informatique'}">selected</c:if>>Informatique</option>
+					<option
+						<c:if test="${param.categorie == 'Ameublement'}">selected</c:if>>Ameublement</option>
+					<option
+						<c:if test="${param.categorie == 'Vêtement'}">selected</c:if>>Vêtement</option>
+					<option
+						<c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
 				</select>
 			</div>
-			<input type="text" class="form-control" id="contient" name="contient" placeholder="Le nom de l'article">
-
+			<!--Achats-->
+			<div class="form-group">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="achatsRadio" name="achatsVentesRadio"
+						class="custom-control-input" value="achatsRadio"> <label
+						class="custom-control-label" for="achatsRadio">Achats</label>
+				</div>
+				<div class="ml-3">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxAchats1" name="checkBoxAchats1"> <label
+							class="custom-control-label" for="checkBoxAchats1">enchères
+							ouverts</label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxAchats2" name="checkBoxAchats2"> <label
+							class="custom-control-label" for="checkBoxAchats2">mes
+							enchères en cours</label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxAchats3" name="checkBoxAchats3"> <label
+							class="custom-control-label" for="checkBoxAchats3">mes
+							enchères remporter</label>
+					</div>
+				</div>
+			</div>
+			<!--Mes Ventes-->
+			<div class="form-group">
+				<div class="custom-control custom-radio">
+					<input type="radio" id="ventesRadio" name="achatsVentesRadio"
+						class="custom-control-input" value="ventesRadio"> <label
+						class="custom-control-label" for="ventesRadio">Mes ventes</label>
+				</div>
+				<div class="ml-3">
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxVentes1" name="checkBoxVentes1"> <label
+							class="custom-control-label" for="checkBoxVentes1">mes
+							ventes en cours</label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxVentes2" name="checkBoxVentes2"> <label
+							class="custom-control-label" for="checkBoxVentes2">ventes
+							non débutées</label>
+					</div>
+					<div class="custom-control custom-checkbox">
+						<input type="checkbox" class="custom-control-input"
+							id="checkBoxVentes3" name="checkBoxVentes3"> <label
+							class="custom-control-label" for="checkBoxVentes3">ventes
+							terminées</label>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="col-6">
-			<button type="submit" id="rechercher" value="rechercher" class="btn btn-primary btn-lg">Rechercher</button>
+			<button type="submit" id="rechercher" value="rechercher"
+				class="btn btn-primary btn-lg">Rechercher</button>
 		</div>
 	</form>
 	<div>
 		<div class="card-deck px-3 py-3 mb-3">
-
 			<c:forEach var="enchere" items="${listeEncheres}">
-
 				<div class="card mb-4" style="min-width: 400px;">
-					<div class="row no-gutters">
-						<div class="col-md-4">
-							<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">${enchere.noArticle.description}</h5>
-								<ul class="list-group list-group-flush">
-									<li class="list-group-item">Mise à prix : ${enchere.noArticle.prixVente}</li>
-									<li class="list-group-item">Fin de l'enchère : ${enchere.noArticle.dateFinEncheres}
-									</li>
-									<li class="list-group-item">Retrait : ${enchere.noUtilisateur.getAdresse()}</li>
-									<li class="list-group-item">Vendeur :
-										<a target="_blank"
+					<form action="<%=request.getContextPath()%>/detailVente"
+						method="post">
+						<div class="row no-gutters">
+							<div class="col-md-4">
+								<img class="img-fluid"
+									src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h5 class="card-title">${enchere.noArticle.description}</h5>
+									<ul class="list-group list-group-flush">
+										<li class="list-group-item">Mise à prix :
+											${enchere.noArticle.prixVente}</li>
+										<li class="list-group-item">Fin de l'enchère :
+											${enchere.noArticle.dateFinEncheres}</li>
+										<li class="list-group-item">Retrait :
+											${enchere.noUtilisateur.getAdresse()}</li>
+										<li class="list-group-item">Vendeur : <a target="_blank"
 											href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-											${enchere.noArticle.utilisateur.pseudo}
-										</a>
-									</li>
-								</ul>
+												${enchere.noArticle.utilisateur.pseudo} </a>
+										</li>
+										<li class="list-group-item">
+											<button class="btn btn-lg btn-primary btn-block"
+												type="submit">Détail de la vente</button>
+										</li>
+									</ul>
+									<input type="hidden" value="${enchere.noArticle.noArticle}"
+										id="noArticle" name="noArticle">
+								</div>
 							</div>
 						</div>
-					</div>
+					</form>
 				</div>
-
 			</c:forEach>
-
 		</div>
 	</div>
 </body>

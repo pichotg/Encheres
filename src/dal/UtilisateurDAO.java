@@ -16,6 +16,7 @@ public class UtilisateurDAO {
 	private static final String VERIF_UTILISATEUR = "SELECT * FROM UTILISATEURS where (pseudo = ? OR email = ?) AND mot_de_passe = ?";
 	private static final String SELECT_ALL_UTILISATEUR = "SELECT * FROM UTILISATEURS";
 	private static final String GET_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEURS where no_utilisateur = ?";
+	private static final String GET_UTILISATEUR_BY_PSEUDO = "SELECT * FROM UTILISATEURS where pseudo = ?";
 	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,etat_utilisateur) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String MAJ_ALL = "UPDATE UTILISATEURS SET pseudo = ?,nom = ?,prenom = ?, email = ?, telephone = ?,rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ?, etat_utilisateur = ? WHERE no_utilisateur = ?";
@@ -273,6 +274,47 @@ public class UtilisateurDAO {
 	}
 	
 	/**
+	 * Get Utilisateur by pseudo
+	 * @param id
+	 * @return Utilisateur
+	 * @throws SQLException
+	 */
+	public Utilisateur getUtilisateurByPseudo(String pseudo) throws SQLException {
+		Utilisateur utilisateur = null;
+		PreparedStatement preparedStatement = null;
+		Connection conSelect = null;
+		ResultSet rs = null;
+
+		try {
+			conSelect = JDBCTools.getConnection();
+			preparedStatement = conSelect.prepareStatement(GET_UTILISATEUR_BY_PSEUDO);
+
+			preparedStatement.setString(1, pseudo);
+			rs = preparedStatement.executeQuery();
+
+			if (rs.next()) {
+				utilisateur = new Utilisateur(rs.getInt("no_utilisateur"), rs.getString("pseudo"), rs.getString("nom"),
+						rs.getString("prenom"), rs.getString("email"), rs.getString("telephone"), rs.getString("rue"),
+						rs.getString("code_postal"), rs.getString("ville"), rs.getString("mot_de_passe"),
+						rs.getInt("credit"), rs.getInt("administrateur"),rs.getInt("etat_utilisateur"));
+			}
+
+		} catch (ClassNotFoundException |SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (conSelect != null)
+				conSelect.close();
+		}
+
+		return utilisateur;
+		
+	}
+	
+	/**
 	 * Delete Utilisateur TODO: delete FK
 	 * @param Utilisateur user
 	 */
@@ -286,7 +328,7 @@ public class UtilisateurDAO {
 			preparedStatement.setInt(1, user.getNoUtilisateur());
 
 			if (preparedStatement.executeUpdate() == 0) {
-				System.err.println("Suppression impossible : Cette utilisateur n'est pas présent en base.");
+				System.err.println("Suppression impossible : Cette utilisateur n'est pas prï¿½sent en base.");
 			}
 			preparedStatement.close();
 			conDelete.close();

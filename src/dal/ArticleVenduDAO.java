@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import bo.ArticleVendu;
@@ -14,11 +13,12 @@ import jdbc.JDBCTools;
 
 public class ArticleVenduDAO {
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie,etat_vente,path_image) VALUES(?,?,?,?,?,?,?,?,?)";
-	private static final String LISTE_MES_VENTES_EN_COURS = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres > (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vec'";
-	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vnd'";
+	private static final String LISTE_MES_VENTES_EN_COURS = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vec'";
+	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres > (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vnd'";
 	private static final String LISTE_MES_VENTES_TERMINEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_fin_encheres < (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vet'";
 	private static final String SELECT_BY_ID = "select * from ARTICLES_VENDUS where no_article = ?";
 	private static final String DERNIER_ID = "select MAX(no_article) as numero_article from articles_vendus; ";
+
 	/**
 	 * Mise en vente d'un article
 	 * 
@@ -58,86 +58,125 @@ public class ArticleVenduDAO {
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public static ArrayList<ArticleVendu> listerVenteEnCours(int checkboxChoix)
-			throws SQLException, ClassNotFoundException {
-		Connection cnx = null;
-		Statement rqt = null;
-		ResultSet rs = null;
+	public static ArrayList<ArticleVendu> listerVenteEnCours(int noUtilisateur, String checkbox1, String checkbox2,
+			String checkbox3) throws SQLException, ClassNotFoundException {
+		Connection cnx1 = null, cnx2 = null, cnx3 = null;
+		PreparedStatement rqt1 = null, rqt2 = null, rqt3 = null;
+		ResultSet rs1 = null, rs2 = null, rs3 = null;
 		ArrayList<ArticleVendu> listeArticlesAll = new ArrayList<ArticleVendu>();
 		ArrayList<ArticleVendu> listeArticlesEnCours = new ArrayList<ArticleVendu>();
 		ArrayList<ArticleVendu> listeArticlesNonDebut = new ArrayList<ArticleVendu>();
 		ArrayList<ArticleVendu> listeArticlesTermi = new ArrayList<ArticleVendu>();
 
 		try {
-			cnx = JDBCTools.getConnection();
-			rqt = cnx.createStatement();
-			if (checkboxChoix == 1) {
-				rs = rqt.executeQuery(LISTE_MES_VENTES_EN_COURS);
+			if ("on".equals(checkbox1)) {
+				cnx1 = JDBCTools.getConnection();
+				rqt1 = cnx1.prepareStatement(LISTE_MES_VENTES_EN_COURS);
+				rqt1.setInt(1, noUtilisateur);
+				rs1 = rqt1.executeQuery();
 				int identifiantUtilisateur = -1;
 				Utilisateur ut = null;
 				UtilisateurDAO utDAO = new UtilisateurDAO();
 				ArticleVendu articleVendu;
-				while (rs.next()) {
-					identifiantUtilisateur = rs.getInt("no_utilisateur");
+				while (rs1.next()) {
+					identifiantUtilisateur = rs1.getInt("no_utilisateur");
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
-					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
-							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"), rs.getString("path_image"));
+					articleVendu = new ArticleVendu(rs1.getInt("no_article"), rs1.getString("nom_article"),
+							rs1.getString("etat_vente"), rs1.getString("description"),
+							rs1.getDate("date_debut_encheres"), rs1.getDate("date_fin_encheres"),
+							rs1.getInt("prix_initial"), rs1.getInt("prix_vente"), null, rs1.getInt("no_categorie"),
+							rs1.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
-					// On ajout l'article � la liste
+					// On ajout l'article � la liste
 					listeArticlesEnCours.add(articleVendu);
-					listeArticlesAll.addAll(listeArticlesEnCours);
 				}
+				// Doublons impossibles à cette étape
+				listeArticlesAll.addAll(listeArticlesEnCours);
 			}
-			if (checkboxChoix == 2) {
-				rs = rqt.executeQuery(LISTE_MES_VENTES_NON_DEBUTEES);
+			if ("on".equals(checkbox2)) {
+				cnx2 = JDBCTools.getConnection();
+				rqt2 = cnx2.prepareStatement(LISTE_MES_VENTES_NON_DEBUTEES);
+				rqt2.setInt(1, noUtilisateur);
+				rs2 = rqt2.executeQuery();
 				int identifiantUtilisateur = -1;
 				Utilisateur ut = null;
 				UtilisateurDAO utDAO = new UtilisateurDAO();
 				ArticleVendu articleVendu;
-				while (rs.next()) {
-					identifiantUtilisateur = rs.getInt("no_utilisateur");
+				while (rs2.next()) {
+					identifiantUtilisateur = rs2.getInt("no_utilisateur");
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
-					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
-							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"), rs.getString("path_image"));
+					articleVendu = new ArticleVendu(rs2.getInt("no_article"), rs2.getString("nom_article"),
+							rs2.getString("etat_vente"), rs2.getString("description"),
+							rs2.getDate("date_debut_encheres"), rs2.getDate("date_fin_encheres"),
+							rs2.getInt("prix_initial"), rs2.getInt("prix_vente"), null, rs2.getInt("no_categorie"),
+							rs2.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
-					// On ajout l'article � la liste
+					// On ajout l'article � la liste
 					listeArticlesNonDebut.add(articleVendu);
-					listeArticlesAll.addAll(listeArticlesNonDebut);
 				}
+				// On retire les doublons même si théoriquement il n'y en aura pas
+				for (ArticleVendu article : listeArticlesAll) {
+					for (ArticleVendu article2 : listeArticlesNonDebut) {
+						if (article.getNoArticle() == article2.getNoArticle()) {
+							listeArticlesAll.remove(article);
+						}
+					}
+				}
+				listeArticlesAll.addAll(listeArticlesNonDebut);
 			}
-			if (checkboxChoix == 3) {
-				rs = rqt.executeQuery(LISTE_MES_VENTES_TERMINEES);
+			if ("on".equals(checkbox3)) {
+				cnx3 = JDBCTools.getConnection();
+				rqt3 = cnx3.prepareStatement(LISTE_MES_VENTES_TERMINEES);
+				rqt3.setInt(1, noUtilisateur);
+				rs3 = rqt3.executeQuery();
 				int identifiantUtilisateur = -1;
 				Utilisateur ut = null;
 				UtilisateurDAO utDAO = new UtilisateurDAO();
 				ArticleVendu articleVendu;
-				while (rs.next()) {
-					identifiantUtilisateur = rs.getInt("no_utilisateur");
+				while (rs3.next()) {
+					identifiantUtilisateur = rs3.getInt("no_utilisateur");
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
-					articleVendu = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-							rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
-							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"), null,
-							rs.getInt("no_categorie"), rs.getString("path_image"));
+					articleVendu = new ArticleVendu(rs3.getInt("no_article"), rs3.getString("nom_article"),
+							rs3.getString("etat_vente"), rs3.getString("description"),
+							rs3.getDate("date_debut_encheres"), rs3.getDate("date_fin_encheres"),
+							rs3.getInt("prix_initial"), rs3.getInt("prix_vente"), null, rs3.getInt("no_categorie"),
+							rs3.getString("path_image"));
 					// On set l'utilisateur
 					articleVendu.setUtilisateur(ut);
-					// On ajout l'article � la liste
+					// On ajout l'article � la liste
 					listeArticlesTermi.add(articleVendu);
-					listeArticlesAll.addAll(listeArticlesTermi);
 				}
+				// On retire les doublons même si théoriquement il n'y en aura pas
+				for (ArticleVendu article : listeArticlesAll) {
+					for (ArticleVendu article2 : listeArticlesTermi) {
+						if (article.getNoArticle() == article2.getNoArticle()) {
+							listeArticlesAll.remove(article);
+						}
+					}
+				}
+				listeArticlesAll.addAll(listeArticlesTermi);
 			}
 		} finally {
-			if (rs != null)
-				rs.close();
-			if (rqt != null)
-				rqt.close();
-			if (cnx != null)
-				cnx.close();
+			if (rs1 != null)
+				rs1.close();
+			if (rqt1 != null)
+				rqt1.close();
+			if (cnx1 != null)
+				cnx1.close();
+			if (rs2 != null)
+				rs2.close();
+			if (rqt2 != null)
+				rqt2.close();
+			if (cnx2 != null)
+				cnx2.close();
+			if (rs3 != null)
+				rs3.close();
+			if (rqt3 != null)
+				rqt3.close();
+			if (cnx3 != null)
+				cnx3.close();
 		}
 
 		return listeArticlesAll;
@@ -184,7 +223,7 @@ public class ArticleVenduDAO {
 		}
 		return article;
 	}
-	
+
 	public int dernier_id() throws ClassNotFoundException, SQLException {
 		int dernier_id = 0;
 		Connection cnx = null;
@@ -204,6 +243,6 @@ public class ArticleVenduDAO {
 			if (cnx != null)
 				cnx.close();
 		}
-		return dernier_id;	
+		return dernier_id;
 	}
 }

@@ -84,4 +84,12 @@
     <servlet-name>ServletAccesVente</servlet-name>
     <url-pattern>/accesVente/*</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ServletDetailVente</servlet-name>
+    <servlet-class>servlets.article.ServletDetailVente</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletDetailVente</servlet-name>
+    <url-pattern>/detailVente</url-pattern>
+  </servlet-mapping>
 </web-app>

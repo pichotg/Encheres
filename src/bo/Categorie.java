@@ -51,7 +51,7 @@ public enum Categorie {
 			break;
 		case "Sport&Loisirs":
 			noCat = 4;
-			break;
+			break;	
 		default:
 			break;
 		}

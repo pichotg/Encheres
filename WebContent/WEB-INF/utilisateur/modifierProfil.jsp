@@ -15,6 +15,7 @@
 </head>
 
 <body>
+	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
     <div class="container">
         <article class="card-body mx-auto" style="max-width: 400px;">
             <h1 class="card-title mt-3 text-center">ENI-Enchères</h1>
