@@ -32,7 +32,6 @@ public class ServletVente extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	// COUCOU
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
