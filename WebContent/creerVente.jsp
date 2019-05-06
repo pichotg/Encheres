@@ -40,11 +40,11 @@
 			<div class="col"><input class="form-control" type="text" id="article" name="article" required/></div>
 			</div><br /> 			
 			
-			
 			<div class="row align-items-center">
 			<label for="description">Description</label> 
 			<div class="col"><textarea class="form-control" id="description" name="description" required></textarea></div>
 			</div><br />
+			
 			<div class="row align-items-center">
 			<label for="categorie">Categorie</label> 
 			<div class="col"><select class="form-control" id="categorie" name="categorie" >
@@ -52,32 +52,35 @@
     			<option value="${categorie.noCategorie}">${categorie.name}</option>
 			</c:forEach></select></div></div><br />
 			
-			
 			<div class="row align-items-center">
 			<label for="photo">Photo de l'article</label> 
 			<div class="col"><input class="form-control" type="file" id="photo" name="photo" /></div>
 			</div><br />
 			
-			
-			
 			<div class="row align-items-center">
 			<label for="miseAPrix">Mise à prix</label> 
 			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" required/> </div></div><br />
+			
 			<div class="row align-items-center">
 			<label for="debut">Début de l'enchère</label> 
 			<div class="col"><input class="form-control" type="datetime-local" id="debut" name="debut" required/></div></div><br />
+			
 			<div class="row align-items-center">
 			<label for="fin">Fin de l'enchère</label> 
 			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" required/></div></div> <br />
+			
 			<div class="row align-items-center">
 			<label for="rue">Rue</label> 
 			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" required/> </div></div><br/>
+			
 			<div class="row align-items-center">
 			<label for="codePostal">Code postal</label> 
 			<div class="col"><input class="form-control" type="text" id="codePostal" name="codePostal" value="${codePostal}" required/> </div></div><br />
+			
 			<div class="row align-items-center">
 			<label for="ville">Ville</label> 
 			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" required /></div></div><br/>
+			
 			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">&nbsp;&nbsp;&nbsp;
 			<input class="btn btn-primary " type="submit" id="annuler" name="action" value="Annuler" />
 		</form>
