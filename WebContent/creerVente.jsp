@@ -37,12 +37,12 @@
 			
 			<div class="row align-items-center">
 			<label for="article">Article</label>
-			<div class="col"><input class="form-control" type="text" id="article" name="article" required/></div>
+			<div class="col"><input class="form-control" type="text" id="article" name="article" placeholder="Nom de l'article" required/></div>
 			</div><br /> 			
 			
 			<div class="row align-items-center">
 			<label for="description">Description</label> 
-			<div class="col"><textarea class="form-control" id="description" name="description" required></textarea></div>
+			<div class="col"><textarea class="form-control" id="description" name="description" placeholder="Description détailler de l'objet " required></textarea></div>
 			</div><br />
 			
 			<div class="row align-items-center">
@@ -59,7 +59,7 @@
 			
 			<div class="row align-items-center">
 			<label for="miseAPrix">Mise à prix</label> 
-			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" required/> </div></div><br />
+			<div class="col"><input class="form-control" type="number" id="miseAPrix" name="miseAPrix" placeholder="Prix de départ de l'enchere en €" required/> </div></div><br />
 			
 			<div class="row align-items-center">
 			<label for="debut">Début de l'enchère</label> 
@@ -69,6 +69,9 @@
 			<label for="fin">Fin de l'enchère</label> 
 			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" required/></div></div> <br />
 			
+			<fieldset style="border: solid 1px black; margin-left : -20px">
+			<legend style="width: auto; padding-left: 10px; padding-right: 10px;">Retrait</legend>
+			<div class="control-group" style="padding-left:24px;padding-right:24px;">
 			<div class="row align-items-center">
 			<label for="rue">Rue</label> 
 			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" required/> </div></div><br/>
@@ -80,6 +83,8 @@
 			<div class="row align-items-center">
 			<label for="ville">Ville</label> 
 			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" required /></div></div><br/>
+			</div>
+			</fieldset><br />
 			
 			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">&nbsp;&nbsp;&nbsp;
 			<input class="btn btn-primary " type="submit" id="annuler" name="action" value="Annuler" />
