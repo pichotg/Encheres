@@ -41,22 +41,28 @@ public class ServletFiltre extends HttpServlet {
 		HttpSession session = request.getSession();
 		String contient = request.getParameter("contient");
 		String categorie = request.getParameter("categorie");
-		String filtrageVente = request.getParameter("filtrageVente");
-		String filtrageAchat = request.getParameter("filtrageAchat");
-		String checkBoxAchat1 = request.getParameter("checkBoxAchat1");
-		String checkBoxAchat2 = request.getParameter("checkBoxAchat2");
-		String checkBoxAchat3 = request.getParameter("checkBoxAchat3");
-		String checkBoxVente1 = request.getParameter("checkBoxVente1");
-		String checkBoxVente2 = request.getParameter("checkBoxVente2");
-		String checkBoxVente3 = request.getParameter("checkBoxVente3");
+		String achatsVentesRadio = request.getParameter("achatsVentesRadio");
+		String checkBoxAchats1 = request.getParameter("checkBoxAchats1");
+		String checkBoxAchats2 = request.getParameter("checkBoxAchats2");
+		String checkBoxAchats3 = request.getParameter("checkBoxAchats3");
+		String checkBoxVentes1 = request.getParameter("checkBoxVentes1");
+		String checkBoxVentes2 = request.getParameter("checkBoxVentes2");
+		String checkBoxVentes3 = request.getParameter("checkBoxVentes3");
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
 		int noUtilisateur = -1;
 
 		enchereDAO = new EnchereDAO();
 
 		try {
-			encheresFiltrees = enchereDAO.filtrageVenteEnCours(contient, categorie);
-			encheresFinales.addAll(encheresFiltrees);
+			if(utilisateur == null)
+			{
+				encheresFiltrees = enchereDAO.filtrageEncheresDeconnecte(contient, categorie);
+				encheresFinales.addAll(encheresFiltrees);
+			}
+			else
+			{
+				encheresFiltrees = enchereDAO.filtrageEncheresConnecte(contient, categorie);
+			}
 
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -66,13 +72,13 @@ public class ServletFiltre extends HttpServlet {
 			noUtilisateur = utilisateur.getNoUtilisateur();
 			// Si l'utilisateur a décidé de filtrer ses ventes, il faut filtrer de nouveau
 			// la liste filtrée par nom et catégorie
-			if (filtrageVente != null) {
+			if ("ventesRadio".equals(achatsVentesRadio)) {
 				try {
-					ArrayList<ArticleVendu> articles = ArticleVenduDAO.listerVenteEnCours(noUtilisateur, checkBoxVente1,
-							checkBoxVente2, checkBoxVente3);
+					ArrayList<ArticleVendu> articles = ArticleVenduDAO.listerVenteEnCours(noUtilisateur, checkBoxVentes1,
+							checkBoxVentes2, checkBoxVentes3);
 					// On parcourt les articles filtrés par les checkbox
 					for (ArticleVendu article : articles) {
-						// On parcourt les encheres
+						// On parcourt les encheres filtrées
 						for (Enchere enchere : encheresFiltrees) {
 							// On n'ajoute que celles qui correspondent aux deux filtres
 							if (article.getNoArticle() == enchere.getNoArticle().getNoArticle()) {
@@ -87,10 +93,10 @@ public class ServletFiltre extends HttpServlet {
 			}
 
 			// Si l'utilisateur a décidé de filtrer ses achats, idem mais avec les encheres
-			if (filtrageAchat != null) {
+			if ("achatsRadio".equals(achatsVentesRadio)) {
 				try {
-					ArrayList<Enchere> encheres = EnchereDAO.listerAchatEnCours(noUtilisateur, checkBoxAchat1,
-							checkBoxAchat2, checkBoxAchat3);
+					ArrayList<Enchere> encheres = EnchereDAO.listerAchatEnCours(noUtilisateur, checkBoxAchats1,
+							checkBoxAchats2, checkBoxAchats3);
 					// On parcourt les articles filtrés par les checkbox
 					for (Enchere enchere : encheres) {
 						// On parcourt les encheres
@@ -108,10 +114,21 @@ public class ServletFiltre extends HttpServlet {
 					e.printStackTrace();
 				}
 			}
+			if(achatsVentesRadio == null)
+			{
+				encheresFinales.addAll(encheresFiltrees);
+			}
 		}
 		request.setAttribute("listeEncheres", encheresFinales);
 		request.setAttribute("contient", contient);
 		request.setAttribute("categorie", categorie);
+		request.setAttribute("achatsVentesRadio", achatsVentesRadio);
+		request.setAttribute("checkBoxAchats1", checkBoxAchats1);
+		request.setAttribute("checkBoxAchats2", checkBoxAchats2);
+		request.setAttribute("checkBoxAchats3", checkBoxAchats3);
+		request.setAttribute("checkBoxVentes1", checkBoxVentes1);
+		request.setAttribute("checkBoxVentes2", checkBoxVentes2);
+		request.setAttribute("checkBoxVentes3", checkBoxVentes3);
 		this.getServletContext().getRequestDispatcher("/liste_encheres.jsp").forward(request, response);
 	}
 
