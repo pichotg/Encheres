@@ -49,7 +49,7 @@ public class ServletVente extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		if ("enregistrer".equals(request.getParameter("action"))) {
+		if ("Enregistrer".equals(request.getParameter("action"))) {
 			/**
 			 * Recuperation des valeurs du formulaire
 			 */

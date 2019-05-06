@@ -36,7 +36,7 @@
 		<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}" method="post">
 			
 			<div class="row align-items-center">
-			<label for="article">Article :</label>
+			<label for="article">Article</label>
 			<div class="col"><input class="form-control" type="text" id="article" name="article" /></div>
 			</div><br /> 
 			
@@ -48,11 +48,11 @@
 			
 			
 			<div class="row align-items-center">
-			<label for="description">Description :</label> 
+			<label for="description">Description</label> 
 			<div class="col"><textarea class="form-control" id="description" name="description" ></textarea></div>
 			</div><br />
 			<div class="row align-items-center">
-			<label for="categorie">Categorie :</label> 
+			<label for="categorie">Categorie</label> 
 			<div class="col"><select class="form-control" id="categorie" name="categorie" >
 			<c:forEach items="<%=Categorie.values()%>" var="categorie">
     			<option value="${categorie.noCategorie}">${categorie.name}</option>
@@ -67,25 +67,25 @@
 			
 			
 			<div class="row align-items-center">
-			<label for="miseAPrix">Mise à prix :</label> 
+			<label for="miseAPrix">Mise à prix</label> 
 			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" /> </div></div><br />
 			<div class="row align-items-center">
-			<label for="debut">Début de l'enchère :</label> 
+			<label for="debut">Début de l'enchère</label> 
 			<div class="col"><input class="form-control" type="datetime-local" id="debut" name="debut" /></div></div><br />
 			<div class="row align-items-center">
-			<label for="fin">Fin de l'enchère :</label> 
+			<label for="fin">Fin de l'enchère</label> 
 			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" /></div></div> <br />
 			<div class="row align-items-center">
-			<label for="rue">Rue :</label> 
+			<label for="rue">Rue</label> 
 			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" /> </div></div><br/>
 			<div class="row align-items-center">
-			<label for="codePostal">Code postal :</label> 
+			<label for="codePostal">Code postal</label> 
 			<div class="col"><input class="form-control" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> </div></div><br />
 			<div class="row align-items-center">
-			<label for="ville">Ville :</label> 
+			<label for="ville">Ville</label> 
 			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" /></div></div><br/>
-			<input type="submit" id="enregistrer" name="action" value="Enregistrer" />
-			<input type="submit" id="annuler" name="action" value="Annuler" />
+			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">&nbsp;&nbsp;&nbsp;
+			<input class="btn btn-primary " type="submit" id="annuler" name="action" value="Annuler" />
 		</form>
  </div>
 	</article>
