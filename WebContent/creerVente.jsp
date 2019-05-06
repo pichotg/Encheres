@@ -37,19 +37,13 @@
 			
 			<div class="row align-items-center">
 			<label for="article">Article</label>
-			<div class="col"><input class="form-control" type="text" id="article" name="article" /></div>
-			</div><br /> 
-			
-			<!-- <div class="form-group row">
-			<label for="article" class="col-sm-2 col-form-label">Article</label>
-			<div class="col-sm-10"><input class="form-control" type="text" id="article" name="article" /></div>
-			</div><br /> -->
-			
+			<div class="col"><input class="form-control" type="text" id="article" name="article" required/></div>
+			</div><br /> 			
 			
 			
 			<div class="row align-items-center">
 			<label for="description">Description</label> 
-			<div class="col"><textarea class="form-control" id="description" name="description" ></textarea></div>
+			<div class="col"><textarea class="form-control" id="description" name="description" required></textarea></div>
 			</div><br />
 			<div class="row align-items-center">
 			<label for="categorie">Categorie</label> 
@@ -68,22 +62,22 @@
 			
 			<div class="row align-items-center">
 			<label for="miseAPrix">Mise à prix</label> 
-			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" /> </div></div><br />
+			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" required/> </div></div><br />
 			<div class="row align-items-center">
 			<label for="debut">Début de l'enchère</label> 
-			<div class="col"><input class="form-control" type="datetime-local" id="debut" name="debut" /></div></div><br />
+			<div class="col"><input class="form-control" type="datetime-local" id="debut" name="debut" required/></div></div><br />
 			<div class="row align-items-center">
 			<label for="fin">Fin de l'enchère</label> 
-			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" /></div></div> <br />
+			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" required/></div></div> <br />
 			<div class="row align-items-center">
 			<label for="rue">Rue</label> 
-			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" /> </div></div><br/>
+			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" required/> </div></div><br/>
 			<div class="row align-items-center">
 			<label for="codePostal">Code postal</label> 
-			<div class="col"><input class="form-control" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> </div></div><br />
+			<div class="col"><input class="form-control" type="text" id="codePostal" name="codePostal" value="${codePostal}" required/> </div></div><br />
 			<div class="row align-items-center">
 			<label for="ville">Ville</label> 
-			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" /></div></div><br/>
+			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" required /></div></div><br/>
 			<input class="btn btn-primary " type="submit" id="enregistrer" name="action" value="Enregistrer">&nbsp;&nbsp;&nbsp;
 			<input class="btn btn-primary " type="submit" id="annuler" name="action" value="Annuler" />
 		</form>
