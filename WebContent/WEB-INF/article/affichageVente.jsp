@@ -41,6 +41,7 @@
 						<div class="card-body">
 						<form action="<%=request.getContextPath()%>/ajouterEnchere" method="post">
 							<h5 class="card-title">${article.description}</h5>
+							<input type="hidden" name="noArticle" value="${article.noArticle }">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${article.categorie}</li>
 								<li class="list-group-item">Meilleure offre : ${enchereMax}</li>
@@ -56,12 +57,12 @@
 								<c:if test="${utilisateur != null && cookie.connexion.value != '-1' && utilisateur.noUtilisateur != article.utilisateur.noUtilisateur}">
 									<c:if test="${montantEnchere != 0 && montantEnchere < enchereMax}">
 										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
-										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax + 1}" style="text-align : center;"></li>
+										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax + 1}" name="enchere"  style="text-align : center;"></li>
 									</c:if>
 									<c:if test="${montantEnchere == 0}">
 										<li class="list-group-item">Vous n'avez pas encore enchéri sur cette vente</li>
 										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
-										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax +  1}" style="text-align : center;"></li>
+										<li class="list-group-item">Ma proposition : <input type="number" value ="${enchereMax +  1}" name="enchere" style="text-align : center;"></li>
 									</c:if>
 									<c:if test="${montantEnchere == enchereMax}">
 										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>

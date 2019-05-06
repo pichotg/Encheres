@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import bo.ArticleVendu;
 import bo.Enchere;
 import bo.Utilisateur;
+import dal.ArticleVenduDAO;
 import dal.EnchereDAO;
 
 public class ServletAjouterEnchere extends HttpServlet {
@@ -31,8 +32,7 @@ public class ServletAjouterEnchere extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
 	/**
@@ -42,10 +42,17 @@ public class ServletAjouterEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		ArticleVendu article = (ArticleVendu) session.getAttribute("article");
+		ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
+		int noArticle = Integer.parseInt(request.getParameter("noArticle"));
+		ArticleVendu articleVendu = null;
+		try {
+			articleVendu = articleVenduDao.getArticleById(noArticle);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		int montantEnchere = Integer.parseInt(request.getParameter("montantEnchere"));
-		Enchere enchere = new Enchere(article, utilisateur, new Date(), montantEnchere);
+		int montantEnchere = Integer.parseInt(request.getParameter("enchere"));
+		Enchere enchere = new Enchere(articleVendu, utilisateur, new Date(), montantEnchere);
 
 		/**
 		 * Dans la couche BO, on ne peut pas vérifier l'enchere max car elle n'est pas dans les objets
@@ -59,6 +66,7 @@ public class ServletAjouterEnchere extends HttpServlet {
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
+			response.sendRedirect(request.getContextPath()+"/index.jsp");
 		}
 	}
 }

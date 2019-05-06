@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,14 +78,13 @@ public class EnchereDAO {
 	public static void ajouter(Enchere enchere) throws SQLException, ClassNotFoundException {
 		Connection cnx = null;
 		PreparedStatement rqt = null;
-		java.sql.Date datSql = new java.sql.Date(enchere.getDateEnchere().getTime());
 		if (verifPremiereEnchere(enchere)) {
 			try {
 				cnx = JDBCTools.getConnection();
 				rqt = cnx.prepareStatement(INSERT_ENCHERE);
 				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
 				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
-				rqt.setDate(3, datSql);
+				rqt.setTimestamp(3, new java.sql.Timestamp(enchere.getDateEnchere().getTime()));
 				rqt.setInt(4, enchere.getMontantEnchere());
 				rqt.executeUpdate();
 
@@ -98,10 +98,10 @@ public class EnchereDAO {
 			try {
 				cnx = JDBCTools.getConnection();
 				rqt = cnx.prepareStatement(UPDATE_ENCHERE);
-				rqt.setInt(1, enchere.getNoUtilisateur().getNoUtilisateur());
-				rqt.setInt(2, enchere.getNoArticle().getNoArticle());
-				rqt.setDate(3, datSql);
-				rqt.setInt(4, enchere.getMontantEnchere());
+				rqt.setTimestamp(1, new java.sql.Timestamp(enchere.getDateEnchere().getTime()));
+				rqt.setInt(2, enchere.getMontantEnchere());
+				rqt.setInt(3, enchere.getNoUtilisateur().getNoUtilisateur());
+				rqt.setInt(4, enchere.getNoArticle().getNoArticle());
 				rqt.executeUpdate();
 			} finally {
 				if (rqt != null)
