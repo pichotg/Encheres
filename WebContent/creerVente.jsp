@@ -9,41 +9,86 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="../themes/basique/style.css">
 <title>CreerVente</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+		
+	<link rel="stylesheet" href="./themes/basique/style.css">
+	<META HTTP-EQUIV="Refresh" CONTENT="TRUE"> 
 </head>
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
-<div id="page">
-		<h1>ENI-Ench�res</h1>
+	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 		<h2>Nouvelle vente</h2>
+	</div>
+	<div class="container">
+	<article class="card-body mx-auto" style="max-width: 500px;" > 
+	<div class="form-group input-group">
 		<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}" method="post">
-			<label for="article">Article :</label> 
-			<input class="champtexte" type="text" id="article" name="article" /><br />
+			
+			<div class="row align-items-center">
+			<label for="article">Article :</label>
+			<div class="col"><input class="form-control" type="text" id="article" name="article" /></div>
+			</div><br /> 
+			
+			<!-- <div class="form-group row">
+			<label for="article" class="col-sm-2 col-form-label">Article</label>
+			<div class="col-sm-10"><input class="form-control" type="text" id="article" name="article" /></div>
+			</div><br /> -->
+			
+			
+			
+			<div class="row align-items-center">
 			<label for="description">Description :</label> 
-			<input class="champtexte" type="text" id="description" name="description" /><br />
+			<div class="col"><textarea class="form-control" id="description" name="description" ></textarea></div>
+			</div><br />
+			<div class="row align-items-center">
 			<label for="categorie">Categorie :</label> 
-			 <select class="champtexte" id="categorie" name="categorie" > 
+			<div class="col"><select class="form-control" id="categorie" name="categorie" >
 			<c:forEach items="<%=Categorie.values()%>" var="categorie">
     			<option value="${categorie.noCategorie}">${categorie.name}</option>
-			</c:forEach></select>
-			<label for="photo">Photo de l'article:</label> 
-			<input class="champtexte" type="file" id="photo" name="photo" /><br /> 
+			</c:forEach></select></div></div><br />
+			
+			
+			<div class="row align-items-center">
+			<label for="photo">Photo de l'article</label> 
+			<div class="col"><input class="form-control" type="file" id="photo" name="photo" /></div>
+			</div><br />
+			
+			
+			
+			<div class="row align-items-center">
 			<label for="miseAPrix">Mise à prix :</label> 
-			<input class="champtexte" type="text" id="miseAPrix" name="miseAPrix" /> <br />
+			<div class="col"><input class="form-control" type="text" id="miseAPrix" name="miseAPrix" /> </div></div><br />
+			<div class="row align-items-center">
 			<label for="debut">Début de l'enchère :</label> 
-			<input type="datetime-local" id="debut" name="debut" /><br />
-			<label for="fin">Fin de l'ench�re :</label> 
-			<input class="champtexte" type="datetime-local" id="fin" name="fin" /> <br />
+			<div class="col"><input class="form-control" type="datetime-local" id="debut" name="debut" /></div></div><br />
+			<div class="row align-items-center">
+			<label for="fin">Fin de l'enchère :</label> 
+			<div class="col"><input class="form-control" type="datetime-local" id="fin" name="fin" /></div></div> <br />
+			<div class="row align-items-center">
 			<label for="rue">Rue :</label> 
-			<input class="champtexte" type="text" id="rue" name="rue" value="${rue}" /> <br/>
+			<div class="col"><input class="form-control" type="text" id="rue" name="rue" value="${rue}" /> </div></div><br/>
+			<div class="row align-items-center">
 			<label for="codePostal">Code postal :</label> 
-			<input class="champtexte" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> <br />
+			<div class="col"><input class="form-control" type="text" id="codePostal" name="codePostal" value="${codePostal}" /> </div></div><br />
+			<div class="row align-items-center">
 			<label for="ville">Ville :</label> 
-			<input class="champtexte" type="text" id="ville" name="ville" value="${ville}" /><br/>
+			<div class="col"><input class="form-control" type="text" id="ville" name="ville" value="${ville}" /></div></div><br/>
 			<input type="submit" id="enregistrer" name="action" value="Enregistrer" />
 			<input type="submit" id="annuler" name="action" value="Annuler" />
 		</form>
-	</div>
+ </div>
+	</article>
+	</div> 
 </body>
 </html>

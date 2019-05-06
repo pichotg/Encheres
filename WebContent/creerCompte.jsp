@@ -23,11 +23,9 @@
 	<title>CreerCompte</title>
 </head>
 <style>
-<!--
 body{
 	background-color: #f5f5f5;
 }
--->
 </style>
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
