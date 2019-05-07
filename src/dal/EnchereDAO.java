@@ -493,8 +493,7 @@ public class EnchereDAO {
 				// On retire les doublons même si théoriquement il n'y en aura pas
 				for (Enchere enchere : listeEncheresAll) {
 					for (Enchere enchere2 : listeMesEncheresEnCours) {
-						if (enchere.getNoArticle() == enchere2.getNoArticle()
-								&& enchere.getNoUtilisateur() == enchere2.getNoUtilisateur()) {
+						if (enchere.getNoArticle() == enchere2.getNoArticle()) {
 							listeEncheresAll.remove(enchere);
 						}
 					}
