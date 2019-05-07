@@ -65,7 +65,6 @@ public class ServletVente extends HttpServlet {
 			String description = request.getParameter("description");
 			int categorie = Integer.parseInt(request.getParameter("categorie"));
 			int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-			String path = request.getParameter("path");
 			Timestamp debut1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("debut")));
 			Timestamp fin1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("fin")));
 
@@ -83,15 +82,34 @@ public class ServletVente extends HttpServlet {
 				e1.printStackTrace();
 			}
 			ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
-			ArticleVendu unArticle = new ArticleVendu(0, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
-					prixVente, utilisateur, categorie, path);
+		
 			int dernier_id = 0;
 			try {
-				ArticleVenduDAO.venteArticle(unArticle);
-				dernier_id = articleVenduDao.dernier_id();
-				// ArticleVenduDAO.venteArticle(unArticle);
-			} catch (ClassNotFoundException | SQLException e) {
+				dernier_id = articleVenduDao.dernier_id()+1;
+			} catch (ClassNotFoundException | SQLException e1) {
 				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String path = null;
+			String chemin = this.getServletConfig().getInitParameter(CHEMIN);
+		    Part part = request.getPart("photo");
+		    String nomFichier = getNomFichier(part);
+		    if (nomFichier != null && !nomFichier.isEmpty()) {
+			    if (nomFichier.lastIndexOf(".") > 0) {	        
+			        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
+			        nomFichier = Integer.toString(dernier_id) + ext;
+			        System.out.println(nomFichier);
+			    }
+		        InputStream input = part.getInputStream();
+		        path = ecrireFichier( input, nomFichier, chemin );
+		    }
+		    
+			try {
+				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
+						prixVente, utilisateur, categorie, path);
+				ArticleVenduDAO.venteArticle(unArticle);
+
+			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 
@@ -106,19 +124,6 @@ public class ServletVente extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-			String chemin = this.getServletConfig().getInitParameter(CHEMIN);
-		    Part part = request.getPart("photo");
-		    String nomFichier = getNomFichier(part);
-		    if (nomFichier != null && !nomFichier.isEmpty()) {
-			    if (nomFichier.lastIndexOf(".") > 0) {	        
-			        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
-			        nomFichier = Integer.toString(dernier_id) + ext;
-			        System.out.println(nomFichier);
-			    }
-		        InputStream input = part.getInputStream();
-		        String newChemin = ecrireFichier( input, nomFichier, chemin );
-		    }
 		}
 	}
 	
