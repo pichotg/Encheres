@@ -33,7 +33,7 @@
 	<div class="container">
 	<article class="card-body mx-auto" style="max-width: 500px;" > 
 	<div class="form-group input-group">
-		<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}" method="post">
+		<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}" method="post" enctype="multipart/form-data">
 			
 			<div class="row align-items-center">
 			<label for="article">Article</label>
