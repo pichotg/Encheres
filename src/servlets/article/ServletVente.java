@@ -136,6 +136,7 @@ public class ServletVente extends HttpServlet {
 				e1.printStackTrace();
 			}
 		}
+		response.sendRedirect("index.jsp");
 	}
 	
 	
