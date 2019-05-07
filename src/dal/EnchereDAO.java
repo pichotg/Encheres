@@ -20,14 +20,9 @@ public class EnchereDAO {
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String ENCHERE_EXISTANTE = "select * from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ENCHERES INNER JOIN "
-			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore "
-			+ "ON ENCHERES.no_article = topscore.no_article JOIN ARTICLES_VENDUS "
-			+ "ON ENCHERES.no_article = ARTICLES_VENDUS.no_article "
-			+ "AND ENCHERES.montant_enchere = topscore.enchereMax "
-			+ "AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
-			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) "
-			+ "order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ARTICLES_VENDUS left JOIN (SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
+			"ON ARTICLES_VENDUS.no_article = topscore.no_article  WHERE GETDATE() BETWEEN (date_debut_encheres) AND (date_fin_encheres) \r\n" + 
+			"AND ARTICLES_VENDUS.etat_vente ='vec' order by ARTICLES_VENDUS.date_fin_encheres ASC";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
 			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
@@ -203,8 +198,8 @@ public class EnchereDAO {
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
-				Enchere e = new Enchere(articleVendu, utilisateur, rs.getDate("date_enchere"),
-						rs.getInt("montant_enchere"));
+				Enchere e = new Enchere(articleVendu, utilisateur, rs.getDate("date_fin_encheres"),
+						rs.getInt("enchereMax"));
 				encheres.add(e);
 			}
 

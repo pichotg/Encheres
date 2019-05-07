@@ -161,8 +161,10 @@
 								<div class="card-body">
 									<h5 class="card-title">${enchere.noArticle.description}</h5>
 									<ul class="list-group list-group-flush">
-										<li class="list-group-item">Mise à prix :
-											${enchere.noArticle.prixVente}</li>
+									<li class="list-group-item">Mise à prix :
+											${enchere.noArticle.miseAPrix}</li>
+										<li class="list-group-item">Enchère actuelle :
+											${enchere.montantEnchere}</li>
 										<li class="list-group-item">Fin de l'enchère :
 											${enchere.noArticle.affichageDateFin()}</li>
 										<li class="list-group-item">Retrait :
