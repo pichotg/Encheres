@@ -1,5 +1,6 @@
 package bo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Enchere {
@@ -66,5 +67,16 @@ public class Enchere {
 			bool = true;
 		}
 		return bool;
+	}
+	/**Formate la date
+	 * 
+	 * @return
+	 */
+	public String affichageDateEnchere()
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		String dateFormatee = "";
+		dateFormatee = sdf.format(this.getDateEnchere());
+		return dateFormatee;
 	}
 }
