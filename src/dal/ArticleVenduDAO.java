@@ -1,5 +1,6 @@
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,7 +84,7 @@ public class ArticleVenduDAO {
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
 					articleVendu = new ArticleVendu(rs1.getInt("no_article"), rs1.getString("nom_article"),
 							rs1.getString("etat_vente"), rs1.getString("description"),
-							rs1.getDate("date_debut_encheres"), rs1.getDate("date_fin_encheres"),
+							rs1.getTimestamp("date_debut_encheres"), rs1.getTimestamp("date_fin_encheres"),
 							rs1.getInt("prix_initial"), rs1.getInt("prix_vente"), null, rs1.getInt("no_categorie"),
 							rs1.getString("path_image"));
 					// On set l'utilisateur
@@ -108,7 +109,7 @@ public class ArticleVenduDAO {
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
 					articleVendu = new ArticleVendu(rs2.getInt("no_article"), rs2.getString("nom_article"),
 							rs2.getString("etat_vente"), rs2.getString("description"),
-							rs2.getDate("date_debut_encheres"), rs2.getDate("date_fin_encheres"),
+							rs2.getTimestamp("date_debut_encheres"), rs2.getTimestamp("date_fin_encheres"),
 							rs2.getInt("prix_initial"), rs2.getInt("prix_vente"), null, rs2.getInt("no_categorie"),
 							rs2.getString("path_image"));
 					// On set l'utilisateur
@@ -140,7 +141,7 @@ public class ArticleVenduDAO {
 					ut = utDAO.getUtilisateurById(identifiantUtilisateur);
 					articleVendu = new ArticleVendu(rs3.getInt("no_article"), rs3.getString("nom_article"),
 							rs3.getString("etat_vente"), rs3.getString("description"),
-							rs3.getDate("date_debut_encheres"), rs3.getDate("date_fin_encheres"),
+							rs3.getTimestamp("date_debut_encheres"), rs3.getTimestamp("date_fin_encheres"),
 							rs3.getInt("prix_initial"), rs3.getInt("prix_vente"), null, rs3.getInt("no_categorie"),
 							rs3.getString("path_image"));
 					// On set l'utilisateur
@@ -206,8 +207,8 @@ public class ArticleVenduDAO {
 			if (rs.next()) {
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
 				article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-						rs.getString("etat_vente"), rs.getString("description"), rs.getDate("date_debut_encheres"),
-						rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
+						rs.getString("etat_vente"), rs.getString("description"), rs.getTimestamp("date_debut_encheres"),
+						rs.getTimestamp("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
 						utilisateur, rs.getInt("no_categorie"), rs.getString("path_image"));
 			}
 
@@ -244,5 +245,26 @@ public class ArticleVenduDAO {
 				cnx.close();
 		}
 		return dernier_id;
+	}
+	
+	public static void refreshArticles() throws SQLException {
+		Connection cnx = null;
+		CallableStatement rqt = null;
+		CallableStatement rqt2 = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareCall("{call encheres_terminees()}");
+			rqt2 = cnx.prepareCall("{call encheres_a_debuter()}");
+			rqt.execute();
+			rqt2.execute();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		
 	}
 }

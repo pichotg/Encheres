@@ -2,10 +2,11 @@ package bo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Cette classe décrit l'objet métier Article Vendu
+ * Cette classe dï¿½crit l'objet mï¿½tier Article Vendu
  * 
  * @author adeloffre
  *
@@ -13,7 +14,7 @@ import java.util.Date;
 public class ArticleVendu implements Serializable {
 
 	/**
-	 * propriétés
+	 * propriÃ©tÃ©s
 	 */
 	private static final long serialVersionUID = 1L;
 	private int noArticle;
@@ -135,5 +136,12 @@ public class ArticleVendu implements Serializable {
 	public void setPathImage(String pathImage) {
 		this.pathImage = pathImage;
 	}
-
+	
+	public String affichageDateFin()
+	{
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		String dateFormatee = "";
+		dateFormatee = sdf.format(this.getDateFinEncheres());
+		return dateFormatee;
+	}
 }
