@@ -1,10 +1,10 @@
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +20,10 @@ public class EnchereDAO {
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String ENCHERE_EXISTANTE = "select * from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "SELECT * FROM ARTICLES_VENDUS left JOIN (SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore \r\n" + 
-			"ON ARTICLES_VENDUS.no_article = topscore.no_article  WHERE GETDATE() BETWEEN (date_debut_encheres) AND (date_fin_encheres) \r\n" + 
-			"AND ARTICLES_VENDUS.etat_vente ='vec' order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String SELECT_ENCHERE_EN_COURS = "{call liste_articles_en_cours()}";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
-			+ "WHERE date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
-			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) AND no_utilisateur =?";
+			+ "WHERE no_article in (SELECT no_article FROM ARTICLES_VENDUS WHERE etat_vente = 'vec') "
+			+ "AND no_utilisateur =?";
 	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
 	private static final String FILTRAGE_CATEGORIE = "SELECT * FROM ENCHERES INNER JOIN "
 			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore "
@@ -183,23 +181,23 @@ public class EnchereDAO {
 	 */
 	public List<Enchere> selectEncheresEnCours() throws SQLException {
 		List<Enchere> encheres = new ArrayList<>();
-		PreparedStatement preparedStatement = null;
+		CallableStatement callableStmt = null;
 		Connection conSelectAll = null;
 		ResultSet rs = null;
 
 		try {
 			conSelectAll = JDBCTools.getConnection();
-			preparedStatement = conSelectAll.prepareStatement(SELECT_ENCHERE_EN_COURS);
-			rs = preparedStatement.executeQuery();
+			callableStmt = conSelectAll.prepareCall(SELECT_ENCHERE_EN_COURS);
+			rs = callableStmt.executeQuery();
 			ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			// On parcourt le resultat de la requete et on cr�e les objets li�s �
-			// l'ench�re
+			// On parcourt le resultat de la requete et on crée les objets liés à
+			// l'enchère
 			while (rs.next()) {
 				ArticleVendu articleVendu = articleDAO.getArticleById(rs.getInt("no_article"));
 				Utilisateur utilisateur = utilisateurDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
 				Enchere e = new Enchere(articleVendu, utilisateur, rs.getDate("date_fin_encheres"),
-						rs.getInt("enchereMax"));
+						rs.getInt("montant_enchere"));
 				encheres.add(e);
 			}
 
@@ -209,8 +207,8 @@ public class EnchereDAO {
 		} finally {
 			if (rs != null)
 				rs.close();
-			if (preparedStatement != null)
-				preparedStatement.close();
+			if (callableStmt != null)
+				callableStmt.close();
 			if (conSelectAll != null)
 				conSelectAll.close();
 		}
