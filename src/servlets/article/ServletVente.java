@@ -1,6 +1,11 @@
 package servlets.article;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -10,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import bo.ArticleVendu;
 import bo.Retrait;
@@ -24,6 +30,8 @@ import dal.UtilisateurDAO;
 @WebServlet("/ServletVente")
 public class ServletVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static final String CHEMIN = "chemin";
+	public static final int TAILLE_TAMPON = 10240; // 10 ko
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -98,7 +106,51 @@ public class ServletVente extends HttpServlet {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			String chemin = this.getServletConfig().getInitParameter(CHEMIN);
+		    Part part = request.getPart("photo");
+		    String nomFichier = getNomFichier(part);
+		    if (nomFichier != null && !nomFichier.isEmpty()) {
+			    if (nomFichier.lastIndexOf(".") > 0) {	        
+			        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
+			        nomFichier = Integer.toString(dernier_id) + ext;
+			        System.out.println(nomFichier);
+			    }
+		        InputStream input = part.getInputStream();
+		        String newChemin = ecrireFichier( input, nomFichier, chemin );
+		    }
 		}
-		response.sendRedirect(request.getContextPath() + "/index.jsp");
+	}
+	
+	
+	private static String getNomFichier( Part part ) {
+	    /* Boucle sur chacun des paramètres de l'en-tête "content-disposition". */
+	    for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
+	    	/* Recherche de l'éventuelle présence du paramètre "filename". */
+	        if ( contentDisposition.trim().startsWith("filename") ) {
+	            /* Si "filename" est présent, alors renvoi de sa valeur, c'est-à-dire du nom de fichier. */
+	        	String chaineASupprimer = "\"";
+	            return contentDisposition.substring(contentDisposition.indexOf( '=' ) + 1 ).replace(chaineASupprimer, "");
+	        }
+	    }
+	    return null;
+	}
+	
+	private String ecrireFichier( InputStream input, String nomFichier, String chemin ) throws IOException {
+		File localFile = new File(chemin + nomFichier);
+		String newChemin = localFile.toString();
+		BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(localFile));
+		byte[] data = new byte[TAILLE_TAMPON];
+ 
+		int count;
+		while ((count = input.read(data, 0, TAILLE_TAMPON)) != -1) {
+			output.write(data, 0, count);
+		}
+ 
+		input.close();
+		output.flush();
+		output.close();
+		
+		return newChemin;
 	}
 }
