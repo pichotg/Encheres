@@ -8,7 +8,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE PROCEDURE [dbo].[liste_filtre_categorie_nom_deconnecte] @no_categorie integer, @contient varchar
+CREATE PROCEDURE [dbo].[liste_filtre_categorie_nom_deconnecte] @no_categorie integer, @contient varchar (30)
 AS 
 IF @no_categorie != 5 AND @no_categorie is not null
 
