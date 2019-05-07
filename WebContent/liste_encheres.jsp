@@ -164,7 +164,7 @@
 										<li class="list-group-item">Mise à prix :
 											${enchere.noArticle.prixVente}</li>
 										<li class="list-group-item">Fin de l'enchère :
-											${enchere.noArticle.dateFinEncheres}</li>
+											${enchere.noArticle.affichageDateFin()}</li>
 										<li class="list-group-item">Retrait :
 											${enchere.noUtilisateur.getAdresse()}</li>
 										<li class="list-group-item">Vendeur : <a target="_blank"

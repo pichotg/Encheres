@@ -68,7 +68,9 @@
 										<li class="list-group-item">Enchère actuelle : ${enchereMax}</li>
 										<li class="list-group-item">Votre enchère est la plus haute actuellement</li>
 									</c:if>
-									<button class="btn btn-lg btn-primary btn-block" type="submit">Enchérir</button>
+									<c:if test="${montantEnchere != enchereMax}">
+										<button class="btn btn-lg btn-primary btn-block" type="submit">Enchérir</button>
+									</c:if>
 								</c:if>
 							</ul>
 						</div>
