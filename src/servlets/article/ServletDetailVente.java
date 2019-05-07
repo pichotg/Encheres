@@ -108,6 +108,7 @@ public class ServletDetailVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		request.setAttribute("enchere", request.getParameter("uneEnchere"));
 		request.setAttribute("enchereMax", enchereMax);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/article/affichageVente.jsp").forward(request, response);
 	}
