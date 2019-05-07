@@ -20,7 +20,7 @@ public class EnchereDAO {
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String ENCHERE_EXISTANTE = "select * from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "{call liste_ventes_en_cours()}";
+	private static final String SELECT_ENCHERE_EN_COURS = "{call liste_articles_en_cours()}";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE no_article in (SELECT no_article FROM ARTICLES_VENDUS WHERE etat_vente = 'vec') "
 			+ "AND no_utilisateur =?";
