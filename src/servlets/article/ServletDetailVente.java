@@ -98,6 +98,7 @@ public class ServletDetailVente extends HttpServlet {
 
 		if (enchere != null) {
 			request.setAttribute("montantEnchere", enchere.getMontantEnchere());
+			request.setAttribute("dateEnchere", enchere.getDateEnchere());
 		} else {
 			request.setAttribute("montantEnchere", 0);
 		}
