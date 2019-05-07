@@ -20,21 +20,12 @@ public class EnchereDAO {
 	private static final String SELECT_ENCHERE = "select count(*) as nbre  from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String ENCHERE_EXISTANTE = "select * from ENCHERES where no_utilisateur = ? and no_article = ?;";
 	private static final String UPDATE_ENCHERE = "update encheres set date_enchere = ?, montant_enchere = ? where no_utilisateur = ? and no_article = ?;";
-	private static final String SELECT_ENCHERE_EN_COURS = "{call liste_articles_en_cours()}";
+	private static final String SELECT_ENCHERE_EN_COURS = "{call liste_ventes_en_cours()}";
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE no_article in (SELECT no_article FROM ARTICLES_VENDUS WHERE etat_vente = 'vec') "
 			+ "AND no_utilisateur =?";
 	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
-	private static final String FILTRAGE_CATEGORIE = "SELECT * FROM ENCHERES INNER JOIN "
-			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore "
-			+ "ON ENCHERES.no_article = topscore.no_article JOIN ARTICLES_VENDUS "
-			+ "ON ENCHERES.no_article = ARTICLES_VENDUS.no_article "
-			+ "AND ENCHERES.montant_enchere = topscore.enchereMax "
-			+ "AND date_enchere BETWEEN (SELECT MIN(date_debut_encheres) FROM ARTICLES_VENDUS) "
-			+ "AND (SELECT MAX(date_fin_encheres) FROM ARTICLES_VENDUS) "
-			+ "AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE no_categorie = ?) "
-			+ "AND ENCHERES.no_article in (SELECT ARTICLES_VENDUS.no_article FROM ARTICLES_VENDUS WHERE nom_article like ?) "
-			+ "order by ARTICLES_VENDUS.date_fin_encheres ASC";
+	private static final String FILTRAGE_CATEGORIE = "{call liste_filtre_categorie_nom_deconnecte(?,?)}";
 	private static final String FILTRAGE_CATEGORIE_CONNECTE = "SELECT * FROM ENCHERES INNER JOIN "
 			+ "(SELECT no_article,MAX(montant_enchere) as enchereMax FROM ENCHERES GROUP BY no_article) as topscore "
 			+ "ON ENCHERES.no_article = topscore.no_article JOIN ARTICLES_VENDUS "
@@ -300,9 +291,10 @@ public class EnchereDAO {
 		}
 		return encheres;
 	}
-	
+
 	/**
 	 * Méthode permettant de filtrer la liste des enchères en mode déconnecté
+	 * 
 	 * @param contient
 	 * @param categorie
 	 * @return
@@ -314,26 +306,17 @@ public class EnchereDAO {
 
 		ArrayList<Enchere> encheres = new ArrayList<>();
 		Connection conFiltre = null;
-		PreparedStatement preparedStatement = null;
+		CallableStatement callableStmt = null;
 		ResultSet rs = null;
 		try {
 			conFiltre = JDBCTools.getConnection();
 
-			// Si la cat�gorie est non vide, on prend la requ�te classique
-			if (!Categorie.ALL.getName().equals(categorie) && categorie != null) {
-				preparedStatement = conFiltre.prepareStatement(FILTRAGE_CATEGORIE);
-				preparedStatement.setInt(1, Categorie.getNoByName(categorie));
-				preparedStatement.setString(2, "%" + contient.trim() + "%");
-			}
-			// Sinon on prend la version avec toutes les catégories
-			else if (Categorie.ALL.getName().equals(categorie)) {
-				preparedStatement = conFiltre.prepareStatement(FILTRAGE_SANS_CATEGORIE);
-				preparedStatement.setString(1, "%" + contient.trim() + "%");
-			} else {
-				preparedStatement = conFiltre.prepareStatement(SELECT_ENCHERE_EN_COURS);
-			}
+			callableStmt = conFiltre.prepareCall(FILTRAGE_CATEGORIE);
+			callableStmt.setInt(1, Categorie.getNoByName(categorie));
+			String chaine="%"+contient.trim()+"%";
+			callableStmt.setString(2,chaine );
 
-			rs = preparedStatement.executeQuery();
+			rs = callableStmt.executeQuery();
 
 			while (rs.next()) {
 				int identifiantUtilisateur = rs.getInt("no_utilisateur");
@@ -344,24 +327,25 @@ public class EnchereDAO {
 				ArticleVendu av = avDAO.getArticleById(identifiantArticle);
 				Enchere enchere = new Enchere(av, ut, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
 
-				// On ajoute l'enchere � la liste
+				// On ajoute l'enchere à la liste
 				encheres.add(enchere);
 			}
 		} finally {
 			if (rs != null)
 				rs.close();
-			if (preparedStatement != null)
-				preparedStatement.close();
+			if (callableStmt != null)
+				callableStmt.close();
 			if (conFiltre != null)
 				conFiltre.close();
 		}
 
 		return encheres;
 	}
-	
+
 	/**
-	 * Méthode permettant de filtrer la liste des enchères en mode connecté
-	 * Dans ce cas, on ne prend pas que les encheres en cours.
+	 * Méthode permettant de filtrer la liste des enchères en mode connecté Dans ce
+	 * cas, on ne prend pas que les encheres en cours.
+	 * 
 	 * @param contient
 	 * @param categorie
 	 * @return
