@@ -8,7 +8,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,10 +66,18 @@ public class ServletVente extends HttpServlet {
 			 */
 			String nomArticle = request.getParameter("article");
 			String description = request.getParameter("description");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 			int categorie = Integer.parseInt(request.getParameter("categorie"));
 			int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-			Timestamp debut1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("debut")));
-			Timestamp fin1 = Timestamp.valueOf(LocalDateTime.parse(request.getParameter("fin")));
+			Date debut1 = null;
+			Date fin1 = null;
+			try {
+				debut1 = sdf.parse(request.getParameter("debut"));
+				fin1 = sdf.parse(request.getParameter("fin"));
+			} catch (ParseException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 
 			int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
 			String etatVente = "VND";

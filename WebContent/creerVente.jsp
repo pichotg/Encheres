@@ -90,7 +90,7 @@
 						<label for="fin">Fin de l'enchère</label>
 						<div class="col">
 							<div class="input-group date" id="fin" data-target-input="nearest">
-								<input type="text" class="form-control datetimepicker-input" name="fin" data-target="#fin">
+								<input type="text" class="form-control datetimepicker-input" name="fin" data-target="#fin" required>
 								<div class="input-group-append" data-target="#fin" data-toggle="datetimepicker">
 									<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 								</div>
