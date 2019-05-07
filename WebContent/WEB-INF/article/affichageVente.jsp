@@ -45,8 +45,8 @@
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${article.categorie}</li>
 								<li class="list-group-item">Meilleure offre : ${enchereMax}</li>
-								<li class="list-group-item">Mise à prix : ${article.prixVente}</li>
-								<li class="list-group-item">Fin de l'enchère : ${article.dateFinEncheres}</li>
+								<li class="list-group-item">Mise à prix : ${article.miseAPrix}</li>
+								<li class="list-group-item">Fin de l'enchère : ${article.affichageDateFin()}</li>
 								<li class="list-group-item">Retrait : <a href ="http://maps.google.com/?q=${article.utilisateur.getAdresse()}" target="_blank">${article.utilisateur.getAdresse()}</a></li>
 								<li class="list-group-item">Vendeur :
 									<a target="_blank"
