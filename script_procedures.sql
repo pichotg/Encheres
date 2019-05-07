@@ -158,3 +158,4 @@ ELSE
 	left join ENCHERES e on e.no_article = av.no_article and e.montant_enchere = ec.enchereMax
 	WHERE av.nom_article like @contient
 	order by av.date_fin_encheres ASC;
+	GO
