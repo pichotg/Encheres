@@ -24,7 +24,7 @@ public class EnchereDAO {
 	private static final String SELECT_ENCHERE_EN_COURS_BY_ID = "SELECT * FROM ENCHERES "
 			+ "WHERE no_article in (SELECT no_article FROM ARTICLES_VENDUS WHERE etat_vente = 'vec') "
 			+ "AND no_utilisateur =?";
-	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT * FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
+	private static final String SELECT_ENCHERE_REMPORTEE = "SELECT ENCHERES.* FROM ENCHERES JOIN ARTICLES_VENDUS ON ENCHERES.no_article = ARTICLES_VENDUS.no_article WHERE montant_enchere = prix_vente AND ENCHERES.no_utilisateur = ?";
 	private static final String FILTRAGE_CATEGORIE = "{call liste_filtre_categorie_nom_deconnecte(?,?)}";
 	private static final String FILTRAGE_CATEGORIE_CONNECTE = "{call liste_filtre_categorie_nom_connecte(?,?)}";
 	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
@@ -515,7 +515,7 @@ public class EnchereDAO {
 					Enchere enchere = new Enchere(articleVendu, ut, rs3.getDate("date_enchere"),
 							rs3.getInt("montant_enchere"));
 					// On ajoute l'article � la liste
-					listeMesEncheresEnCours.add(enchere);
+					listeEncheresRemportees.add(enchere);
 				}
 				// On retire les doublons même si théoriquement il n'y en aura pas
 				for (Enchere enchere : listeEncheresAll) {
