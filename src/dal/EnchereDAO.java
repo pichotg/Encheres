@@ -290,8 +290,8 @@ public class EnchereDAO {
 
 			callableStmt = conFiltre.prepareCall(FILTRAGE_CATEGORIE);
 			callableStmt.setInt(1, Categorie.getNoByName(categorie));
-			String chaine="%"+contient.trim()+"%";
-			callableStmt.setString(2,chaine );
+			String chaine = "%" + contient.trim() + "%";
+			callableStmt.setString(2, chaine);
 
 			rs = callableStmt.executeQuery();
 
@@ -331,7 +331,7 @@ public class EnchereDAO {
 	 */
 	public List<Enchere> filtrageEncheresConnecte(String contient, String categorie)
 			throws SQLException, ClassNotFoundException {
-		
+
 		ArrayList<Enchere> encheres = new ArrayList<>();
 		Connection conFiltre = null;
 		CallableStatement callableStmt = null;
@@ -341,8 +341,8 @@ public class EnchereDAO {
 
 			callableStmt = conFiltre.prepareCall(FILTRAGE_CATEGORIE_CONNECTE);
 			callableStmt.setInt(1, Categorie.getNoByName(categorie));
-			String chaine="%"+contient.trim()+"%";
-			callableStmt.setString(2,chaine );
+			String chaine = "%" + contient.trim() + "%";
+			callableStmt.setString(2, chaine);
 
 			rs = callableStmt.executeQuery();
 
@@ -490,11 +490,14 @@ public class EnchereDAO {
 					// On ajoute l'article � la liste
 					listeMesEncheresEnCours.add(enchere);
 				}
-				// On retire les doublons même si théoriquement il n'y en aura pas
+				// On retire les doublons
 				for (Enchere enchere : listeEncheresAll) {
 					for (Enchere enchere2 : listeMesEncheresEnCours) {
-						if (enchere.getNoArticle() == enchere2.getNoArticle()) {
-							listeEncheresAll.remove(enchere);
+						if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()) {
+							listeMesEncheresEnCours.remove(enchere2);
+							// On fait un break afin d'éviter de repasser dans la boucle alors que l'objet
+							// est retiré de la liste
+							break;
 						}
 					}
 				}
@@ -517,13 +520,14 @@ public class EnchereDAO {
 					// On ajoute l'article � la liste
 					listeEncheresRemportees.add(enchere);
 				}
-				// On retire les doublons même si théoriquement il n'y en aura pas
+				// On retire les doublons
 				for (Enchere enchere : listeEncheresAll) {
 					for (Enchere enchere2 : listeEncheresRemportees) {
-						if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()
-								&& enchere.getNoUtilisateur().getNoUtilisateur() == enchere2.getNoUtilisateur()
-										.getNoUtilisateur()) {
-							listeEncheresAll.remove(enchere);
+						if (enchere.getNoArticle().getNoArticle() == enchere2.getNoArticle().getNoArticle()) {
+							listeEncheresRemportees.remove(enchere2);
+							// On fait un break afin d'éviter de repasser dans la boucle alors que l'objet
+							// est retiré de la liste
+							break;
 						}
 					}
 				}
