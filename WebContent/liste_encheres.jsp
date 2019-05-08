@@ -74,19 +74,19 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats1"
 									name="checkBoxAchats1" <c:if test="${param.checkBoxAchats1 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats1">enchères
+									for="checkBoxAchats1">Enchères
 									ouvertes</label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats2"
 									name="checkBoxAchats2" <c:if test="${param.checkBoxAchats2 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats2">mes
+									for="checkBoxAchats2">Mes
 									enchères en cours</label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats3"
 									name="checkBoxAchats3" <c:if test="${param.checkBoxAchats3 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats3">mes
+									for="checkBoxAchats3">Mes
 									enchères remportées</label>
 							</div>
 						</div>
@@ -102,19 +102,19 @@
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes1"
 									name="checkBoxVentes1" <c:if test="${param.checkBoxVentes1 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes1">mes
+									for="checkBoxVentes1">Mes
 									ventes en cours</label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes2"
 									name="checkBoxVentes2" <c:if test="${param.checkBoxVentes2 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes2">ventes
+									for="checkBoxVentes2">Ventes
 									non débutées</label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes3"
 									name="checkBoxVentes3" <c:if test="${param.checkBoxVentes3 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes3">ventes
+									for="checkBoxVentes3">Ventes
 									terminées</label>
 							</div>
 						</div>
