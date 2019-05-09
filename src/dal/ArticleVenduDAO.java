@@ -14,6 +14,7 @@ import jdbc.JDBCTools;
 
 public class ArticleVenduDAO {
 	private static final String INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie,etat_vente,path_image) VALUES(?,?,?,?,?,?,?,?,?)";
+	private static final String UPDATE_ARTICLE = "UPDATE ARTICLES_VENDUS set nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, no_utilisateur = ?, no_categorie = ?, etat_vente = ?, path_image = ? WHERE no_article = ?";
 	private static final String LISTE_MES_VENTES_EN_COURS = "SELECT * FROM ARTICLES_VENDUS WHERE (select GETDATE()) BETWEEN date_debut_encheres AND date_fin_encheres AND no_utilisateur =? AND etat_vente = 'vec'";
 	private static final String LISTE_MES_VENTES_NON_DEBUTEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_debut_encheres > (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vnd'";
 	private static final String LISTE_MES_VENTES_TERMINEES = "SELECT * FROM ARTICLES_VENDUS WHERE date_fin_encheres < (SELECT GETDATE()) AND no_utilisateur =? AND etat_vente = 'vet'";
@@ -266,9 +267,38 @@ public class ArticleVenduDAO {
 		} finally {
 			if (rqt != null)
 				rqt.close();
+			if (rqt2 != null)
+				rqt2.close();
 			if (cnx != null)
 				cnx.close();
 		}
+	}
 
+	public static void updateArticle(ArticleVendu articleUpdate) throws SQLException {
+		Connection conUpdate = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			conUpdate = JDBCTools.getConnection();
+			preparedStatement = conUpdate.prepareStatement(UPDATE_ARTICLE);
+			preparedStatement.setString(1, articleUpdate.getNomArticle());
+			preparedStatement.setString(2, articleUpdate.getDescription());
+			preparedStatement.setTimestamp(3, new java.sql.Timestamp(articleUpdate.getDateDebutEncheres().getTime()));
+			preparedStatement.setTimestamp(4, new java.sql.Timestamp(articleUpdate.getDateFinEncheres().getTime()));
+			preparedStatement.setInt(5, articleUpdate.getMiseAPrix());
+			preparedStatement.setInt(6, articleUpdate.getUtilisateur().getNoUtilisateur());
+			preparedStatement.setInt(7, articleUpdate.getCategorie());
+			preparedStatement.setString(8, EtatVente.VND.getNom());
+			preparedStatement.setString(9, articleUpdate.getPathImage());
+			preparedStatement.setInt(10, articleUpdate.getNoArticle());
+			preparedStatement.executeUpdate();
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if (preparedStatement != null)
+				preparedStatement.close();
+			if (conUpdate != null)
+				conUpdate.close();
+		}
 	}
 }

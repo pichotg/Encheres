@@ -15,6 +15,7 @@ import bo.Enchere;
 import bo.Utilisateur;
 import dal.ArticleVenduDAO;
 import dal.EnchereDAO;
+import dal.UtilisateurDAO;
 
 public class ServletAjouterEnchere extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -50,9 +51,12 @@ public class ServletAjouterEnchere extends HttpServlet {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
-		int montantEnchere = Integer.parseInt(request.getParameter("enchere"));
-		Enchere enchere = new Enchere(articleVendu, utilisateur, new Date(), montantEnchere);
+		Enchere enchereMax = EnchereDAO.getEnchereMaxByNoArticle(noArticle);
+		Utilisateur utilisateurOld = enchereMax.getNoUtilisateur();
+		int montantEnchereOld = enchereMax.getMontantEnchere();
+		Utilisateur utilisateurNew = (Utilisateur) session.getAttribute("utilisateur");
+		int montantEnchereNew = Integer.parseInt(request.getParameter("enchere"));
+		Enchere enchere = new Enchere(articleVendu, utilisateurNew, new Date(), montantEnchereNew);
 
 		/**
 		 * Dans la couche BO, on ne peut pas vérifier l'enchere max car elle n'est pas dans les objets
@@ -62,7 +66,13 @@ public class ServletAjouterEnchere extends HttpServlet {
 			// On vérifie maintenant que l'enchère est bien supérieure à celle courante
 			try {
 				if (enchere.getMontantEnchere() > EnchereDAO.verifEnchereSup(enchere))
+				{
 					EnchereDAO.ajouter(enchere);
+					// On recrédite pour l'ancien enchérisseur
+					UtilisateurDAO.utpdateCredit(utilisateurOld.getCredit() + montantEnchereOld, utilisateurOld.getNoUtilisateur());
+					// On débite pour le nouvel enchérisseur
+					UtilisateurDAO.utpdateCredit(utilisateurNew.getCredit() - montantEnchereNew, utilisateurNew.getNoUtilisateur());
+				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}

@@ -28,7 +28,7 @@ public class EnchereDAO {
 	private static final String FILTRAGE_CATEGORIE = "{call liste_filtre_categorie_nom_deconnecte(?,?)}";
 	private static final String FILTRAGE_CATEGORIE_CONNECTE = "{call liste_filtre_categorie_nom_connecte(?,?)}";
 	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
-	private static final String SELECT_NO_UTILISATEUR_ENCHERE_MAX = "SELECT no_article FROM ENCHERES WHERE no_article = ? and montant_enchere = (SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?)";
+	private static final String SELECT_NO_UTILISATEUR_ENCHERE_MAX = "SELECT * FROM ENCHERES WHERE no_article = ? and montant_enchere = (SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?)";
 	/**
 	 * Ajout d'une ench�re
 	 * 

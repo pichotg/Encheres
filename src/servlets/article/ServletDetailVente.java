@@ -50,10 +50,11 @@ public class ServletDetailVente extends HttpServlet {
 		cookies = request.getCookies();
 		HttpSession session = request.getSession();
 		Utilisateur utilisateur = null;
+		Utilisateur utilisateurMax = null;
 		ArticleVendu article = null;
 		ArticleVenduDAO articleDAO = new ArticleVenduDAO();
 		Enchere enchere = null;
-		int enchereMax = -1;
+		Enchere enchereMax = null;
 		int noArticle = -1;
 
 		if (cookies == null) {
@@ -99,18 +100,28 @@ public class ServletDetailVente extends HttpServlet {
 		if (enchere != null) {
 			request.setAttribute("montantEnchere", enchere.getMontantEnchere());
 			request.setAttribute("dateEnchere", enchere.getDateEnchere());
+			
 		} else {
 			request.setAttribute("montantEnchere", 0);
 		}
 		// On récupère le montant max des encheres sur l'article
+		String utilisateurEnchereMax = "";
 		try {
-			enchereMax = EnchereDAO.getEnchereMax(article.getNoArticle());
+			enchereMax = EnchereDAO.getEnchereMaxByNoArticle(article.getNoArticle());
+			UtilisateurDAO utDAO = new UtilisateurDAO();
+			utilisateurMax = utDAO.getUtilisateurById(enchereMax.getNoUtilisateur().getNoUtilisateur());
+			if (null != utilisateurMax) {
+				utilisateurEnchereMax = utilisateurMax.getPseudo();
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 		request.setAttribute("enchere", request.getParameter("uneEnchere"));
 		request.setAttribute("enchereMax", enchereMax);
+		request.setAttribute("utilisateurMax", utilisateurEnchereMax);
+
 		this.getServletContext().getRequestDispatcher("/WEB-INF/article/affichageVente.jsp").forward(request, response);
 	}
 

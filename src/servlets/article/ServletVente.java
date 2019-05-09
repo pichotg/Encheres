@@ -1,16 +1,13 @@
 package servlets.article;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -59,68 +56,92 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		/**
+		 * Recuperation des valeurs du formulaire
+		 */
+		String nomArticle = request.getParameter("article");
+		String description = request.getParameter("description");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		int categorie = Integer.parseInt(request.getParameter("categorie"));
+		int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
+		Date debut1 = null;
+		Date fin1 = null;
+		try {
+			debut1 = sdf.parse(request.getParameter("debut"));
+			fin1 = sdf.parse(request.getParameter("fin"));
+		} catch (ParseException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+
+		int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
+		String etatVente = "VND";
+		int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
+
+		UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
+		Utilisateur utilisateur = null;
+
+		try {
+			utilisateur = utilisateurDAO.getUtilisateurById(noUtilisateur);
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
+	
+		int dernier_id = 0;
+		try {
+			dernier_id = articleVenduDao.dernier_id()+1;
+		} catch (ClassNotFoundException | SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String path = null;
+		String chemin = this.getServletConfig().getInitParameter(CHEMIN);
+	    Part part = request.getPart("photo");
+	    String nomFichier = getNomFichier(part);
+	    if (nomFichier != null && !nomFichier.isEmpty()) {
+		    if (nomFichier.lastIndexOf(".") > 0) {	        
+		        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
+		        nomFichier = Integer.toString(dernier_id) + ext;
+		        System.out.println(nomFichier);
+		    }
+	        InputStream input = part.getInputStream();
+	        path = ecrireFichier( input, nomFichier, chemin );
+	    }
 
 		if ("Enregistrer".equals(request.getParameter("action"))) {
-			/**
-			 * Recuperation des valeurs du formulaire
-			 */
-			String nomArticle = request.getParameter("article");
-			String description = request.getParameter("description");
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			int categorie = Integer.parseInt(request.getParameter("categorie"));
-			int miseAPrix = Integer.parseInt(request.getParameter("miseAPrix"));
-			Date debut1 = null;
-			Date fin1 = null;
-			try {
-				debut1 = sdf.parse(request.getParameter("debut"));
-				fin1 = sdf.parse(request.getParameter("fin"));
-			} catch (ParseException e2) {
-				// TODO Auto-generated catch block
-				e2.printStackTrace();
-			}
-
-			int prixVente = Integer.parseInt(request.getParameter("miseAPrix"));
-			String etatVente = "VND";
-			int noUtilisateur = Integer.parseInt(request.getParameter("noUtilisateur"));
-
-			UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
-			Utilisateur utilisateur = null;
-
-			try {
-				utilisateur = utilisateurDAO.getUtilisateurById(noUtilisateur);
-			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
-		
-			int dernier_id = 0;
-			try {
-				dernier_id = articleVenduDao.dernier_id()+1;
-			} catch (ClassNotFoundException | SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			String path = null;
-			String chemin = this.getServletConfig().getInitParameter(CHEMIN);
-		    Part part = request.getPart("photo");
-		    String nomFichier = getNomFichier(part);
-		    if (nomFichier != null && !nomFichier.isEmpty()) {
-			    if (nomFichier.lastIndexOf(".") > 0) {	        
-			        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
-			        nomFichier = Integer.toString(dernier_id) + ext;
-			        System.out.println(nomFichier);
-			    }
-		        InputStream input = part.getInputStream();
-		        path = ecrireFichier( input, nomFichier, chemin );
-		    }
-		    
+			
 			try {
 				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
 						prixVente, utilisateur, categorie, path);
 				ArticleVenduDAO.venteArticle(unArticle);
 
 			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+
+			Retrait unRetrait = new Retrait(dernier_id, request.getParameter("rue"), request.getParameter("codePostal"),
+					request.getParameter("ville"));
+
+			RetraitDAO retraitDao = new RetraitDAO();
+
+			try {
+				retraitDao.ajout_Retrait(unRetrait);
+			} catch (ClassNotFoundException | SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		if ("Modifier".equals(request.getParameter("action"))) {
+		
+			try {
+				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
+						prixVente, utilisateur, categorie, path);
+				ArticleVenduDAO.updateArticle(unArticle);
+
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 

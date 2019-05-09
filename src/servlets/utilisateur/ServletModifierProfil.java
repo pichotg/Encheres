@@ -54,7 +54,7 @@ public class ServletModifierProfil extends HttpServlet {
 					utAvantModif.getEtatUtilisateur());
 			try {	
 				utDAO.updateUtilisateur(utUpdate);
-				// On récupère l'utilisateur mis à jour afin de gérer l'affichage une fois le formulaire validé
+				// On rï¿½cupï¿½re l'utilisateur mis ï¿½ jour afin de gï¿½rer l'affichage une fois le formulaire validï¿½
 				Utilisateur newUtilisateur = utDAO.getUtilisateurById(utAvantModif.getNoUtilisateur());
 				session.setAttribute("user", newUtilisateur);
 				this.getServletContext().getRequestDispatcher("/WEB-INF/utilisateur/affichageProfil.jsp?id_utilisateur_recherche="+utAvantModif.getNoUtilisateur()).forward(request, response);
@@ -68,7 +68,12 @@ public class ServletModifierProfil extends HttpServlet {
 		}
 		if("supprimer".equals(request.getParameter("action")))
 		{
-			utDAO.deleteUtilisateur(utAvantModif);
+			try {
+				utDAO.deleteUtilisateur(utAvantModif);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			this.getServletContext().getRequestDispatcher("/deconnexion").forward(request, response);
 		}
 		
