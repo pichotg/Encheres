@@ -215,10 +215,10 @@
 						<div class="row no-gutters">
 							<div class="col-md-4">
 							<c:if test="${not empty f:substringAfter(enchere.noArticle.pathImage, 'imageArticle')}">
-								<img class="img-thumbnail" src="<%=request.getContextPath()%>/ressource/imageArticle/${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}">
+								<img class="img-thumbnail" src="<%=request.getContextPath()%>/imageArticle/${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}">
 							</c:if>
 							<c:if test="${empty f:substringAfter(enchere.noArticle.pathImage, 'imageArticle')}">
-								<img class="img-thumbnail" src="<%=request.getContextPath()%>/ressource/imageArticle/imageIndisponible.png">
+								<img class="img-thumbnail" src="<%=request.getContextPath()%>/imageArticle/imageIndisponible.png">
 							</c:if> 
 							</div>
 							<div class="col-md-8">

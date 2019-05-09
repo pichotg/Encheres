@@ -40,6 +40,7 @@ public class ServletVente extends HttpServlet {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -56,7 +57,7 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		/**
 		 * Recuperation des valeurs du formulaire
 		 */
@@ -89,33 +90,32 @@ public class ServletVente extends HttpServlet {
 			e1.printStackTrace();
 		}
 		ArticleVenduDAO articleVenduDao = new ArticleVenduDAO();
-	
+
 		int dernier_id = 0;
 		try {
-			dernier_id = articleVenduDao.dernier_id()+1;
+			dernier_id = articleVenduDao.dernier_id() + 1;
 		} catch (ClassNotFoundException | SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		String path = null;
 		String chemin = this.getServletConfig().getInitParameter(CHEMIN);
-	    Part part = request.getPart("photo");
-	    String nomFichier = getNomFichier(part);
-	    if (nomFichier != null && !nomFichier.isEmpty()) {
-		    if (nomFichier.lastIndexOf(".") > 0) {	        
-		        String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
-		        nomFichier = Integer.toString(dernier_id) + ext;
-		        System.out.println(nomFichier);
-		    }
-	        InputStream input = part.getInputStream();
-	        path = ecrireFichier( input, nomFichier, chemin );
-	    }
+		Part part = request.getPart("photo");
+		String nomFichier = getNomFichier(part);
+		if (nomFichier != null && !nomFichier.isEmpty()) {
+			if (nomFichier.lastIndexOf(".") > 0) {
+				String ext = nomFichier.substring(nomFichier.lastIndexOf("."));
+				nomFichier = Integer.toString(dernier_id) + ext;
+			}
+			InputStream input = part.getInputStream();
+			path = ecrireFichier(input, nomFichier, chemin);
+		}
 
 		if ("Enregistrer".equals(request.getParameter("action"))) {
-			
+
 			try {
-				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
-						prixVente, utilisateur, categorie, path);
+				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1,
+						miseAPrix, prixVente, utilisateur, categorie, path);
 				ArticleVenduDAO.venteArticle(unArticle);
 
 			} catch (ClassNotFoundException | SQLException e) {
@@ -135,10 +135,10 @@ public class ServletVente extends HttpServlet {
 			}
 		}
 		if ("Modifier".equals(request.getParameter("action"))) {
-		
+
 			try {
-				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1, miseAPrix,
-						prixVente, utilisateur, categorie, path);
+				ArticleVendu unArticle = new ArticleVendu(dernier_id, nomArticle, etatVente, description, debut1, fin1,
+						miseAPrix, prixVente, utilisateur, categorie, path);
 				ArticleVenduDAO.updateArticle(unArticle);
 
 			} catch (SQLException e) {
@@ -159,36 +159,38 @@ public class ServletVente extends HttpServlet {
 		}
 		response.sendRedirect("index.jsp");
 	}
-	
-	
-	private static String getNomFichier( Part part ) {
-	    /* Boucle sur chacun des paramètres de l'en-tête "content-disposition". */
-	    for ( String contentDisposition : part.getHeader( "content-disposition" ).split( ";" ) ) {
-	    	/* Recherche de l'éventuelle présence du paramètre "filename". */
-	        if ( contentDisposition.trim().startsWith("filename") ) {
-	            /* Si "filename" est présent, alors renvoi de sa valeur, c'est-à-dire du nom de fichier. */
-	        	String chaineASupprimer = "\"";
-	            return contentDisposition.substring(contentDisposition.indexOf( '=' ) + 1 ).replace(chaineASupprimer, "");
-	        }
-	    }
-	    return null;
+
+	private static String getNomFichier(Part part) {
+		/* Boucle sur chacun des paramètres de l'en-tête "content-disposition". */
+		for (String contentDisposition : part.getHeader("content-disposition").split(";")) {
+			/* Recherche de l'éventuelle présence du paramètre "filename". */
+			if (contentDisposition.trim().startsWith("filename")) {
+				/*
+				 * Si "filename" est présent, alors renvoi de sa valeur, c'est-à-dire du nom de
+				 * fichier.
+				 */
+				String chaineASupprimer = "\"";
+				return contentDisposition.substring(contentDisposition.indexOf('=') + 1).replace(chaineASupprimer, "");
+			}
+		}
+		return null;
 	}
-	
-	private String ecrireFichier( InputStream input, String nomFichier, String chemin ) throws IOException {
+
+	private String ecrireFichier(InputStream input, String nomFichier, String chemin) throws IOException {
 		File localFile = new File(chemin + nomFichier);
 		String newChemin = localFile.toString();
 		BufferedOutputStream output = new BufferedOutputStream(new FileOutputStream(localFile));
 		byte[] data = new byte[TAILLE_TAMPON];
- 
+
 		int count;
 		while ((count = input.read(data, 0, TAILLE_TAMPON)) != -1) {
 			output.write(data, 0, count);
 		}
- 
+
 		input.close();
 		output.flush();
 		output.close();
-		
+
 		return newChemin;
 	}
 }
