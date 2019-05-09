@@ -350,7 +350,7 @@ public class UtilisateurDAO {
 	 * @param noUtilisateur
 	 * @throws SQLException
 	 */
-	private static void utpdateCredit(int montant, int noUtilisateur) throws SQLException {
+	public static void utpdateCredit(int montant, int noUtilisateur) throws SQLException {
 		Connection conUpdate = null;
 		PreparedStatement preparedStatement = null;
 		try {
