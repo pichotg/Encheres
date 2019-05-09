@@ -79,8 +79,6 @@
 									<c:if test="${montantEnchere == 0}">
 										<li class="list-group-item">Vous n'avez pas encore
 											enchéri sur cette vente</li>
-										<li class="list-group-item">Enchère actuelle :
-											${enchereMax.montantEnchere}</li>
 										<li class="list-group-item">Ma proposition : <input type="number"
 												value="${enchereMax.montantEnchere +  1}" name="enchere"
 												min="${enchereMax.montantEnchere +  1}" style="text-align: center;">
