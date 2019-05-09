@@ -218,7 +218,7 @@
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
-									<h5 class="card-title">${enchere.noArticle.description}</h5>
+									<h5 class="card-title">${enchere.noArticle.nomArticle}</h5>
 									<div class="form-group input-group">
 										<div class="input-group-prepend">
 											<span class="input-group-text">Mise à prix</span>
