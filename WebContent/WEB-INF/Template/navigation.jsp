@@ -33,5 +33,10 @@
 				</li>
 			</c:if>
 		</ul>
+		<c:if test="${utilisateur != null && cookie.connexion.value != '-1'}">
+				<span class="navbar-text">
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateur.noUtilisateur}">${utilisateur.pseudo}</a>
+				</span>
+		</c:if>	
 	</div>
 </nav>

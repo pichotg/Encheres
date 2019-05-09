@@ -30,12 +30,22 @@
 
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
-	<jsp:include page="/WEB-INF/Template/utilisateurConnecte.jsp" />
+	
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 		<h1 class="display-6">Détail de la vente</h1>
+		<c:if test="${article.getEtatVente() == 'vet'}">
+			<c:if test="${utilisateurMax.noUtilisateur == utilisateur.noUtilisateur}">
+				Vous avez remporté l'enchère
+			</c:if>
+			<c:if test="${utilisateurMax.noUtilisateur != utilisateur.noUtilisateur}">
+				Enchères remporter par
+				<a target="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateurMax.noUtilisateur}">
+				${utilisateurMax.getPseudo()} </a>
+			</c:if>
+		</c:if>
 	</div>
 	<div class="card-deck px-3 py-3 mb-3">
-
+		
 		<div class="card mb-4" style="min-width: 400px;">
 			<div class="row no-gutters">
 				<div class="col-md-4">
@@ -57,7 +67,10 @@
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${Categorie.getNameByNo(article.categorie)}</li>
 								<li class="list-group-item">Meilleure offre : ${enchereMax.montantEnchere}
-									${utilisateurMax}</li>
+									<c:if test="${article.getEtatVente() != 'vet'}">
+			 							pts par ${utilisateurMax.getPseudo()}
+			 						</c:if>
+								</li>
 								<li class="list-group-item">Mise à prix : ${article.miseAPrix}</li>
 								<li class="list-group-item">Fin de l'enchère : ${article.affichageDateFin()}</li>
 								<li class="list-group-item">Retrait : <a
@@ -67,8 +80,11 @@
 										href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${article.utilisateur.noUtilisateur}">
 										${article.utilisateur.pseudo} </a>
 								</li>
-								<c:if
-									test="${utilisateur != null && cookie.connexion.value != '-1' && utilisateur.noUtilisateur != article.utilisateur.noUtilisateur}">
+								<c:if test="${article.getEtatVente() == 'vet' && utilisateurMax.noUtilisateur == utilisateur.noUtilisateur}">
+									<li class="list-group-item">Tel : ${article.utilisateur.telephone}</li>
+								</c:if>
+								
+								<c:if test="${utilisateur != null && cookie.connexion.value != '-1' && utilisateur.noUtilisateur != article.utilisateur.noUtilisateur && article.getEtatVente() != 'vet'}">
 									<c:if test="${montantEnchere != 0 && montantEnchere < enchereMax.montantEnchere}">
 										<li class="list-group-item">Enchère actuelle :
 											${enchereMax.montantEnchere}</li>
@@ -76,6 +92,7 @@
 												value="${enchereMax.montantEnchere + 1}" name="enchere"
 												style="text-align: center;"></li>
 									</c:if>
+									
 									<c:if test="${montantEnchere == 0}">
 										<li class="list-group-item">Vous n'avez pas encore
 											enchéri sur cette vente</li>
@@ -86,6 +103,7 @@
 												min="${enchereMax.montantEnchere +  1}" style="text-align: center;">
 										</li>
 									</c:if>
+									
 									<c:if test="${montantEnchere == enchereMax.montantEnchere}">
 										<li class="list-group-item">Enchère actuelle :
 											${enchereMax.montantEnchere}</li>

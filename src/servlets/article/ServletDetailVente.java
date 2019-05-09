@@ -105,13 +105,11 @@ public class ServletDetailVente extends HttpServlet {
 			request.setAttribute("montantEnchere", 0);
 		}
 		// On récupère le montant max des encheres sur l'article
-		String utilisateurEnchereMax = "pas encore d'enchère";
 		try {
 			enchereMax = EnchereDAO.getEnchereMaxByNoArticle(article.getNoArticle());
 			if (null != enchereMax) {
 				UtilisateurDAO utDAO = new UtilisateurDAO();
 				utilisateurMax = utDAO.getUtilisateurById(enchereMax.getNoUtilisateur().getNoUtilisateur());
-				utilisateurEnchereMax = "pts par "+utilisateurMax.getPseudo();
 			}
 			
 			
@@ -119,11 +117,11 @@ public class ServletDetailVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
 		request.setAttribute("enchere", request.getParameter("uneEnchere"));
 		request.setAttribute("cheminEnchere", request.getParameter("cheminEnchere"));
 		request.setAttribute("enchereMax", enchereMax);
-		request.setAttribute("utilisateurMax", utilisateurEnchereMax);
+		request.setAttribute("utilisateurMax", utilisateurMax);
 
 		this.getServletContext().getRequestDispatcher("/WEB-INF/article/affichageVente.jsp").forward(request, response);
 	}
