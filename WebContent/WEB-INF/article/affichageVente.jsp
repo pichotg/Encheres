@@ -40,10 +40,10 @@
 			<div class="card mb-4" style="min-width: 400px;">
 				<div class="row no-gutters">
 					<div class="col-md-4">
-					<c:if test="${not empty enchere}">
-						<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/imageArticle/${enchere}">
+					<c:if test="${not empty cheminEnchere}">
+						<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/imageArticle/${cheminEnchere}">
 					</c:if>
-					<c:if test="${empty enchere}">
+					<c:if test="${empty cheminEnchere}">
 						<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/imageArticle/imageIndisponible.png">
 					</c:if> 
 					</div>
@@ -92,6 +92,7 @@
 											<button class="btn btn-lg btn-primary btn-block"
 												type="submit">Enchérir</button>
 										</c:if>
+										
 									</c:if>
 								</ul>
 
