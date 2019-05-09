@@ -105,14 +105,16 @@ public class ServletDetailVente extends HttpServlet {
 			request.setAttribute("montantEnchere", 0);
 		}
 		// On récupère le montant max des encheres sur l'article
-		String utilisateurEnchereMax = "";
+		String utilisateurEnchereMax = "pas encore d'enchère";
 		try {
 			enchereMax = EnchereDAO.getEnchereMaxByNoArticle(article.getNoArticle());
-			UtilisateurDAO utDAO = new UtilisateurDAO();
-			utilisateurMax = utDAO.getUtilisateurById(enchereMax.getNoUtilisateur().getNoUtilisateur());
-			if (null != utilisateurMax) {
-				utilisateurEnchereMax = utilisateurMax.getPseudo();
+			if (null != enchereMax) {
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				utilisateurMax = utDAO.getUtilisateurById(enchereMax.getNoUtilisateur().getNoUtilisateur());
+				utilisateurEnchereMax = "pts par "+utilisateurMax.getPseudo();
 			}
+			
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

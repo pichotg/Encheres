@@ -55,8 +55,8 @@
 								<h5 class="card-title">${article.description}</h5>
 								<input type="hidden" name="noArticle"value="${article.noArticle}">
 								<ul class="list-group list-group-flush">
-									<li class="list-group-item">Catégorie :	${Categorie.getNameByNo(article.categorie)}</li>
-									<li class="list-group-item">Meilleure offre : ${enchereMax.montantEnchere} pts par ${utilisateurMax}</li>
+									<li class="list-group-item">Catégorie : ${Categorie.getNameByNo(article.categorie)}</li>
+									<li class="list-group-item">Meilleure offre : ${enchereMax.montantEnchere} ${utilisateurMax}</li>
 									<li class="list-group-item">Mise à prix : ${article.miseAPrix}</li>
 									<li class="list-group-item">Fin de l'enchère : ${article.affichageDateFin()}</li>
 									<li class="list-group-item">Retrait : <a href="http://maps.google.com/?q=${article.utilisateur.getAdresse()}"
