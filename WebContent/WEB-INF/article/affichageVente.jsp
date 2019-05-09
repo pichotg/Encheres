@@ -88,6 +88,9 @@
 												${enchereMax.montantEnchere}</li>
 											<li class="list-group-item">Votre enchère est la plus
 												haute actuellement</li>
+											<li class="list-group-item">Ma proposition : <input
+												type="number" value="${enchereMax.montantEnchere +  1}" name="enchere" min="${enchereMax.montantEnchere +  1}"
+												style="text-align: center;"></li>
 										</c:if>
 										
 											<button class="btn btn-lg btn-primary btn-block"
