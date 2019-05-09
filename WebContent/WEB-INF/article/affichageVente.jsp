@@ -49,13 +49,14 @@
 		<div class="card mb-4" style="min-width: 400px;">
 			<div class="row no-gutters">
 				<div class="col-md-4">
+				C:/temp/imageArticle/${cheminEnchere}
 					<c:if test="${not empty cheminEnchere}">
 						<img class="img-fluid"
-							src="<%=request.getContextPath()%>/ressource/imageArticle/${cheminEnchere}">
+							src="file:///C:/temp/imageArticle/${cheminEnchere}">
 					</c:if>
 					<c:if test="${empty cheminEnchere}">
 						<img class="img-fluid"
-							src="<%=request.getContextPath()%>/ressource/imageArticle/imageIndisponible.png">
+							src="file:///C:/temp/imageArticle/imageIndisponible.png">
 					</c:if>
 				</div>
 				<div class="col-md-8">
