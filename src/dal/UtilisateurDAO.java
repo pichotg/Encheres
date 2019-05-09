@@ -20,6 +20,7 @@ public class UtilisateurDAO {
 	private static final String VERIF_ALREADY_EXIST_UTILISATEUR = "SELECT * FROM UTILISATEURS where pseudo = ? OR email = ?";
 	private static final String INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,etat_utilisateur) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
 	private static final String MAJ_ALL = "UPDATE UTILISATEURS SET pseudo = ?,nom = ?,prenom = ?, email = ?, telephone = ?,rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ?, administrateur = ?, etat_utilisateur = ? WHERE no_utilisateur = ?";
+	private static final String MAJ_CREDITS = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
 
 	public UtilisateurDAO() {
 		super();
@@ -317,27 +318,54 @@ public class UtilisateurDAO {
 	/**
 	 * Delete Utilisateur TODO: delete FK
 	 * @param Utilisateur user
+	 * @throws SQLException 
 	 */
-	public void deleteUtilisateur(Utilisateur user) {
-
+	public void deleteUtilisateur(Utilisateur user) throws SQLException {
+		Connection conDelete = null;
+		PreparedStatement preparedStatement = null;
 		try {
-			Connection conDelete = JDBCTools.getConnection();
-
-			PreparedStatement preparedStatement = conDelete.prepareStatement(DELETE_UTILISATEUR);
+			conDelete = JDBCTools.getConnection();
+			preparedStatement = conDelete.prepareStatement(DELETE_UTILISATEUR);
 
 			preparedStatement.setInt(1, user.getNoUtilisateur());
 
 			if (preparedStatement.executeUpdate() == 0) {
-				System.err.println("Suppression impossible : Cette utilisateur n'est pas pr�sent en base.");
+				System.err.println("Suppression impossible : Cette utilisateur n'est pas présent en base.");
 			}
-			preparedStatement.close();
-			conDelete.close();
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-
+			if(preparedStatement != null)
+				preparedStatement.close();
+			if(conDelete != null)
+				conDelete.close();
 		}
 	}
-
+	
+	/**
+	 * Méthode permettant de mettre à jour les crédits d'un utilisateur lors d'une enchère
+	 * @param montant
+	 * @param noUtilisateur
+	 * @throws SQLException
+	 */
+	private static void utpdateCredit(int montant, int noUtilisateur) throws SQLException {
+		Connection conUpdate = null;
+		PreparedStatement preparedStatement = null;
+		try {
+			conUpdate = JDBCTools.getConnection();
+			preparedStatement = conUpdate.prepareStatement(MAJ_CREDITS);
+			preparedStatement.setInt(1, montant);
+			preparedStatement.setInt(2, noUtilisateur);
+			preparedStatement.executeUpdate();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(preparedStatement != null)
+				preparedStatement.close();
+			if(conUpdate != null)
+				conUpdate.close();
+		}
+	}
 }
