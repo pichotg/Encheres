@@ -21,3 +21,8 @@ body{
 .card-deck .card {
   min-width: 220px;
 }
+
+#hoverinput:hover{
+	color: blue;
+	text-decoration: underline;
+}

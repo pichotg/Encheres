@@ -16,19 +16,25 @@
 <head>
 	<meta charset="utf-8">
 	<title>Liste des enchères</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<script
-	  src="https://code.jquery.com/jquery-3.4.1.min.js"
-	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	  crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-
+	<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="./themes/basique/style.css">
 	<META HTTP-EQUIV="Refresh" CONTENT="TRUE">
 </head>
@@ -148,13 +154,47 @@
 			</c:if>
 		</div>
 		<div class="col-6">
-			<button type="submit" id="rechercher" value="rechercher" class="btn btn-primary btn-lg">Rechercher</button>
+			<button type="submit" id="rechercher" value="rechercher"
+				class="btn btn-primary btn-lg">Rechercher</button>
+			<div class="float-right d-none d-sm-block d-sm-none d-md-block">
+				<button id="liste" class="btn btn-outline-dark btn-lg" type="button"
+					data-toggle="popover" data-placement="top" data-trigger="hover"
+					data-content="Vue en liste">
+					<span> <i class="fas fa-align-justify"></i>
+					</span>
+				</button>
+				<button id="grille" class="btn btn-outline-dark btn-lg" type="button"
+					data-toggle="popover" data-placement="top" data-trigger="hover"
+					data-content="Vue en grille">
+					<span> <i class="fas fa-grip-horizontal"></i>
+					</span>
+				</button>
+			</div>
+			<script>
+				$(document).ready(function() {
+					$('[data-toggle="popover"]').popover();
+				});
+
+				$("#liste").click(function() {
+					$("#listEncheres").addClass("container");
+					$(".maCard").css({
+						"min-width" : "100%"
+					});
+				});
+
+				$("#grille").click(function() {
+					$("#listEncheres").removeClass("container");
+					$(".maCard").css({
+						"min-width" : "450px"
+					});
+				});
+			</script>
 		</div>
 	</form>
-	<div>
-		<div class="card-deck px-3 py-3 mb-3">
+	<div id="listEncheres">
+		<div class="card-deck p-3 m-3">
 			<c:forEach var="enchere" items="${listeEncheres}">
-				<div class="card mb-4" style="min-width: 400px;">
+				<div class="card mb-4" style="min-width: 480px;">
 					<form action="<%=request.getContextPath()%>/detailVente?uneEnchere=${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}" method="post">
 						<div class="row no-gutters">
 							<div class="col-md-4">
@@ -168,29 +208,64 @@
 							<div class="col-md-8">
 								<div class="card-body">
 									<h5 class="card-title">${enchere.noArticle.description}</h5>
-									<ul class="list-group list-group-flush">
-									<li class="list-group-item">Mise à prix :
-											${enchere.noArticle.miseAPrix}</li>
-										<li class="list-group-item">Enchère actuelle :
-											${enchere.montantEnchere}</li>
-										<li class="list-group-item">Fin de l'enchère :
-											${enchere.noArticle.affichageDateFin()}</li>
-										<li class="list-group-item">Retrait :
-											${enchere.noUtilisateur.getAdresse()}</li>
-										<li class="list-group-item">Vendeur : <a target="_blank"
-												href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-												${enchere.noArticle.utilisateur.pseudo} </a>
-										</li>
-										<li class="list-group-item">
-											<button class="btn btn-lg btn-primary btn-block" type="submit">Détail de la
-												vente</button>
-										</li>
-									</ul>
-									<input type="hidden" value="${enchere.noArticle.noArticle}" id="noArticle"
-										name="noArticle">
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Mise à prix</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noArticle.miseAPrix}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-euro-sign"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Enchère actuelle</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.montantEnchere}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-euro-sign"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Fin de l'enchère</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noArticle.affichageDateFin()}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-clock"></i></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Retrait</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noUtilisateur.getAdresse()}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-shipping-fast"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group"  onclick="location.href='<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}';">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Vendeur</span>
+										</div>
+										<input id="hoverinput" type="text" class="form-control" value="${enchere.noArticle.utilisateur.pseudo}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-user-tie"></i>
+											</span>
+  										</div>
+									</div>
+									<button class="btn btn-primary" type="submit">
+										Détail de la vente
+									</button>
 								</div>
 							</div>
 						</div>
+						<input type="hidden" value="${enchere.noArticle.noArticle}"
+							id="noArticle" name="noArticle">
 					</form>
 				</div>
 			</c:forEach>
