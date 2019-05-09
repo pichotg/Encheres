@@ -10,6 +10,10 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dal.ArticleVenduDAO;
 
@@ -18,7 +22,8 @@ import dal.ArticleVenduDAO;
  */
 @WebFilter("/ServletFilter")
 public class ServletFilter implements Filter {
-
+	
+	private static final int CINQ_MINUTES = 5 * 60;
     /**
      * Default constructor. 
      */
@@ -38,6 +43,26 @@ public class ServletFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+		
+		HttpServletResponse responseHttp = (HttpServletResponse) response;
+		HttpServletRequest requestHttp = (HttpServletRequest) request;
+		Cookie[] cookies;
+		cookies = requestHttp.getCookies();
+		
+		if (cookies == null) {
+			Cookie[] cook = new Cookie[1];
+			Cookie ck = new Cookie("connexion", "-1");
+			cook[0] = ck;
+			cookies = cook;
+			responseHttp.addCookie(ck);
+		}
+		for (Cookie ck : cookies) {
+			if ("connexion".equals(ck.getName())) {
+				ck.setMaxAge(CINQ_MINUTES);
+				responseHttp.addCookie(ck);
+			}
+		}
+		
 		try {
 			ArticleVenduDAO.refreshArticles();
 		} catch (SQLException e) {
