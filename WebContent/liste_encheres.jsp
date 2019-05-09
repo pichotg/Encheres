@@ -195,7 +195,7 @@
 		<div class="card-deck p-3 m-3">
 			<c:forEach var="enchere" items="${listeEncheres}">
 				<div class="card mb-4" style="min-width: 480px;">
-					<form action="<%=request.getContextPath()%>/detailVente?uneEnchere=${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}" method="post">
+					<form action="<%=request.getContextPath()%>/detailVente?cheminEnchere=${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}" method="post">
 						<div class="row no-gutters">
 							<div class="col-md-4">
 							<c:if test="${not empty f:substringAfter(enchere.noArticle.pathImage, 'imageArticle')}">
