@@ -119,6 +119,7 @@ public class ServletDetailVente extends HttpServlet {
 		}
 
 		request.setAttribute("enchere", request.getParameter("uneEnchere"));
+		request.setAttribute("cheminEnchere", request.getParameter("cheminEnchere"));
 		request.setAttribute("enchereMax", enchereMax);
 		request.setAttribute("utilisateurMax", utilisateurEnchereMax);
 

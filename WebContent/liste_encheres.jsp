@@ -129,7 +129,18 @@
 				</div>
 				<script type="text/javascript">
 					var RadioAchat = document.getElementById("achatsRadio");
-					var RadioVentes = document.getElementById("ventesRadio")
+					var RadioVentes = document.getElementById("ventesRadio");
+					var RadioAchatEtat = $('input[id="achatsRadio"]').is(':checked');
+					var RadioVentesEtat = $('input[id="ventesRadio"]').is(':checked');
+					    
+						if(!RadioAchatEtat && !RadioVentesEtat){
+					    	$("#checkBoxAchats1").attr("disabled", true);
+							$("#checkBoxAchats2").attr("disabled", true);
+							$("#checkBoxAchats3").attr("disabled", true);
+							$("#checkBoxVentes1").attr("disabled", true);
+							$("#checkBoxVentes2").attr("disabled", true);
+							$("#checkBoxVentes3").attr("disabled", true);
+					    }
 
 					RadioAchat.onclick = function () {
 						$("#checkBoxAchats1").attr("disabled", false);
