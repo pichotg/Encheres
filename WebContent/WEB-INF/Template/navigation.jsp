@@ -2,8 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename ="multilingue.Langue_en"/>
-<fmt:setBundle basename ="multilingue.Langue_fr"/>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${langue == 'fr'}">
+<fmt:setLocale value ="fr"/>
+</c:if> 
+<c:if test="${langue == 'en'}">
+<fmt:setLocale value ="en"/>
+</c:if> 
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
 	<a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp"><fmt:message key="ENI.Encheres" /></a>
@@ -20,10 +28,10 @@
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/deconnexion"><fmt:message key="Deconnexion" /></a>
 				</li>
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}">Vendre Article</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}"><fmt:message key="Vendre.un.article" /></a>
 				</li>
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateur.noUtilisateur}">Mon profil</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateur.noUtilisateur}"><fmt:message key="Mon.profil" /></a>
 				</li>
 			</c:if>
 		<!-- Le menu lorsqu'on est déconnecté, à savoir lorsque l'utilisateur connecté est null ou que le cookie vaut -1 -->
@@ -42,4 +50,6 @@
 				</span>
 		</c:if>	
 	</div>
+	<form action="<%=request.getContextPath()%>/langue" method ="get"><button type="submit" name="Langue" title="Envoyer"  style = "background-color : rgb(33, 37, 41)" value="fr"><img src="/TrocEncheres/ressource/imageArticle/fr.png" alt="" /></button></form>
+	<form action="<%=request.getContextPath()%>/langue" method ="get"><button type="submit" name="Langue" title="Envoyer" style = "background-color : rgb(33, 37, 41)" value="en"><img src="/TrocEncheres/ressource/imageArticle/uk.png" alt="" /></button></form>
 </nav>
