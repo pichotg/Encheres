@@ -68,7 +68,7 @@
 
 					<div class="row align-items-center">
 						<label for="photo">Photo de l'article</label>
-						<div class="col"><input class="form-control" type="file" id="photo" name="photo" /></div>
+						<div class="col"><input class="form-control" type="file" id="photo" name="photo" accept=".png,.jpeg,.gif,.svg"/></div>
 					</div><br />
 
 					<div class="row align-items-center">
