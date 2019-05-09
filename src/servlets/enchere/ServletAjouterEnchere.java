@@ -81,13 +81,14 @@ public class ServletAjouterEnchere extends HttpServlet {
 				{
 					EnchereDAO.ajouter(enchere);
 					// On recrédite pour l'ancien enchérisseur
-					if (utilisateurOld != null) {
+					if (utilisateurOld != null && utilisateurNew.getNoUtilisateur() != utilisateurOld.getNoUtilisateur()) {
 						UtilisateurDAO.utpdateCredit(utilisateurOld.getCredit() + montantEnchereOld, utilisateurOld.getNoUtilisateur());
 						// On débite pour le nouvel enchérisseur
 						UtilisateurDAO.utpdateCredit(utilisateurNew.getCredit() - montantEnchereNew, utilisateurNew.getNoUtilisateur());
 					}
-					
-					
+					else if(utilisateurOld != null && utilisateurNew.getNoUtilisateur() == utilisateurOld.getNoUtilisateur()) {
+						UtilisateurDAO.utpdateCredit(utilisateurNew.getCredit()-(montantEnchereNew-montantEnchereOld), utilisateurNew.getNoUtilisateur());
+					}
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
