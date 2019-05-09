@@ -269,7 +269,7 @@
 											</span>
   										</div>
 									</div>
-									<button class="btn btn-primary" type="submit">
+									<button class="btn btn-outline-dark btn-block" type="submit">
 										Détail de la vente
 									</button>
 								</div>
