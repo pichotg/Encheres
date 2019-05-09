@@ -67,36 +67,33 @@
 									<c:if
 										test="${utilisateur != null && cookie.connexion.value != '-1' && utilisateur.noUtilisateur != article.utilisateur.noUtilisateur}">
 										<c:if
-											test="${montantEnchere != 0 && montantEnchere < enchereMax}">
+											test="${montantEnchere != 0 && montantEnchere < enchereMax.montantEnchere}">
 											<li class="list-group-item">Enchère actuelle :
-												${enchereMax}</li>
+												${enchereMax.montantEnchere}</li>
 											<li class="list-group-item">Ma proposition : <input
-												type="number" value="${enchereMax + 1}" name="enchere"
+												type="number" value="${enchereMax.montantEnchere + 1}" name="enchere"
 												style="text-align: center;"></li>
 										</c:if>
 										<c:if test="${montantEnchere == 0}">
 											<li class="list-group-item">Vous n'avez pas encore
 												enchéri sur cette vente</li>
 											<li class="list-group-item">Enchère actuelle :
-												${enchereMax}</li>
+												${enchereMax.montantEnchere}</li>
 											<li class="list-group-item">Ma proposition : <input
-												type="number" value="${enchereMax +  1}" name="enchere"
+												type="number" value="${enchereMax.montantEnchere +  1}" name="enchere" min="${enchereMax.montantEnchere +  1}"
 												style="text-align: center;"></li>
 										</c:if>
-										<c:if test="${montantEnchere == enchereMax}">
+										<c:if test="${montantEnchere == enchereMax.montantEnchere}">
 											<li class="list-group-item">Enchère actuelle :
-												${enchereMax}</li>
+												${enchereMax.montantEnchere}</li>
 											<li class="list-group-item">Votre enchère est la plus
 												haute actuellement</li>
 										</c:if>
-										<c:if test="${montantEnchere != enchereMax}">
-											<button class="btn btn-lg btn-primary btn-block"
-												type="submit">Enchérir</button>
-										</c:if>
 										
+											<button class="btn btn-lg btn-primary btn-block"
+												type="submit">Enchérir</button>										
 									</c:if>
 								</ul>
-
 							</form>
 						</div>
 					</div>

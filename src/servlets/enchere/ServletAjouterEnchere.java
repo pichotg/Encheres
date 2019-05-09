@@ -51,9 +51,21 @@ public class ServletAjouterEnchere extends HttpServlet {
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		Enchere enchereMax = EnchereDAO.getEnchereMaxByNoArticle(noArticle);
-		Utilisateur utilisateurOld = enchereMax.getNoUtilisateur();
-		int montantEnchereOld = enchereMax.getMontantEnchere();
+		Enchere enchereMax = null;
+		
+			try {
+				enchereMax = EnchereDAO.getEnchereMaxByNoArticle(noArticle);
+			} catch (ClassNotFoundException | SQLException e1) {
+				
+				e1.printStackTrace();
+			}
+			Utilisateur utilisateurOld = null;
+			int montantEnchereOld = 0;
+		if(enchereMax != null) {
+			utilisateurOld = enchereMax.getNoUtilisateur();
+			montantEnchereOld = enchereMax.getMontantEnchere();
+		}
+		
 		Utilisateur utilisateurNew = (Utilisateur) session.getAttribute("utilisateur");
 		int montantEnchereNew = Integer.parseInt(request.getParameter("enchere"));
 		Enchere enchere = new Enchere(articleVendu, utilisateurNew, new Date(), montantEnchereNew);
@@ -69,14 +81,18 @@ public class ServletAjouterEnchere extends HttpServlet {
 				{
 					EnchereDAO.ajouter(enchere);
 					// On recrédite pour l'ancien enchérisseur
-					UtilisateurDAO.utpdateCredit(utilisateurOld.getCredit() + montantEnchereOld, utilisateurOld.getNoUtilisateur());
-					// On débite pour le nouvel enchérisseur
-					UtilisateurDAO.utpdateCredit(utilisateurNew.getCredit() - montantEnchereNew, utilisateurNew.getNoUtilisateur());
+					if (utilisateurOld != null) {
+						UtilisateurDAO.utpdateCredit(utilisateurOld.getCredit() + montantEnchereOld, utilisateurOld.getNoUtilisateur());
+						// On débite pour le nouvel enchérisseur
+						UtilisateurDAO.utpdateCredit(utilisateurNew.getCredit() - montantEnchereNew, utilisateurNew.getNoUtilisateur());
+					}
+					
+					
 				}
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			}
 			response.sendRedirect(request.getContextPath()+"/index.jsp");
-		}
+		} 
 	}
 }
