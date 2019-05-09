@@ -66,11 +66,15 @@
 							<input type="hidden" name="noArticle" value="${article.noArticle}">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${Categorie.getNameByNo(article.categorie)}</li>
+								<c:if test="${montantEnchere != 0}">
 								<li class="list-group-item">Meilleure offre : ${enchereMax.montantEnchere}
+								
 									<c:if test="${article.getEtatVente() != 'vet'}">
-			 							pts par ${utilisateurMax.getPseudo()}
+			 							pts par <a target="_blank" href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${utilisateurMax.noUtilisateur}">
+										${utilisateurMax.getPseudo()} </a>
 			 						</c:if>
 								</li>
+								</c:if>
 								<li class="list-group-item">Mise à prix : ${article.miseAPrix}</li>
 								<li class="list-group-item">Fin de l'enchère : ${article.affichageDateFin()}</li>
 								<li class="list-group-item">Retrait : <a
@@ -103,10 +107,15 @@
 									</c:if>
 									
 									<c:if test="${montantEnchere == enchereMax.montantEnchere}">
-										<li class="list-group-item">Enchère actuelle :
-											${enchereMax.montantEnchere}</li>
-										<li class="list-group-item">Votre enchère est la plus
+											<li class="list-group-item">Votre enchère est la plus
 											haute actuellement</li>
+											<li class="list-group-item">Enchère actuelle :
+											${enchereMax.montantEnchere}</li>
+									
+											<li class="list-group-item">Ma proposition : <input type="number"
+												value="${enchereMax.montantEnchere +  1}" name="enchere"
+												min="${enchereMax.montantEnchere +  1}" style="text-align: center;">
+										</li>
 									</c:if>
 									<button class="btn btn-primary" type="submit">Enchérir</button>
 								</c:if>
