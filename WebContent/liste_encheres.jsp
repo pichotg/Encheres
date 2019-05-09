@@ -176,42 +176,42 @@
 			<button type="submit" id="rechercher" value="rechercher"
 				class="btn btn-primary btn-lg">Rechercher</button>
 			<div class="float-right d-none d-sm-block d-sm-none d-md-block">
-			<button id="liste" class="btn btn-lg" type="button"
-				data-toggle="popover" data-placement="top" data-trigger="hover"
-				data-content="Vue en liste">
-				<span> <i class="fas fa-align-justify"></i>
-				</span>
-			</button>
-			<button id="grille" class="btn btn-lg" type="button"
-				data-toggle="popover" data-placement="top" data-trigger="hover"
-				data-content="Vue en grille">
-				<span> <i class="fas fa-grip-horizontal"></i>
-				</span>
-			</button>
-		</div>
-		<script>
-			$(document).ready(function() {
-				$('[data-toggle="popover"]').popover();
-			});
-
-			$("#liste").click(function() {
-				$("#listEncheres").addClass("container");
-				$(".maCard").css({
-					"min-width" : "100%"
+				<button id="liste" class="btn btn-outline-dark btn-lg" type="button"
+					data-toggle="popover" data-placement="top" data-trigger="hover"
+					data-content="Vue en liste">
+					<span> <i class="fas fa-align-justify"></i>
+					</span>
+				</button>
+				<button id="grille" class="btn btn-outline-dark btn-lg" type="button"
+					data-toggle="popover" data-placement="top" data-trigger="hover"
+					data-content="Vue en grille">
+					<span> <i class="fas fa-grip-horizontal"></i>
+					</span>
+				</button>
+			</div>
+			<script>
+				$(document).ready(function() {
+					$('[data-toggle="popover"]').popover();
 				});
-			});
 
-			$("#grille").click(function() {
-				$("#listEncheres").removeClass("container");
-				$(".maCard").css({
-					"min-width" : "450px"
+				$("#liste").click(function() {
+					$("#listEncheres").addClass("container");
+					$(".maCard").css({
+						"min-width" : "100%"
+					});
 				});
-			});
-		</script>
+
+				$("#grille").click(function() {
+					$("#listEncheres").removeClass("container");
+					$(".maCard").css({
+						"min-width" : "450px"
+					});
+				});
+			</script>
 		</div>
 	</form>
 	<div id="listEncheres">
-		<div class="card-deck px-3 py-3 mb-3">
+		<div class="card-deck p-3 m-3">
 			<c:forEach var="enchere" items="${listeEncheres}">
 				<div class="maCard card mb-4" style="min-width: 450px;">
 					<form action="<%=request.getContextPath()%>/detailVente"
@@ -224,29 +224,64 @@
 							<div class="col-md-8">
 								<div class="card-body">
 									<h5 class="card-title">${enchere.noArticle.description}</h5>
-									<ul class="list-group list-group-flush">
-										<li class="list-group-item">Mise à prix :
-											${enchere.noArticle.miseAPrix}</li>
-										<li class="list-group-item">Enchère actuelle :
-											${enchere.montantEnchere}</li>
-										<li class="list-group-item">Fin de l'enchère :
-											${enchere.noArticle.affichageDateFin()}</li>
-										<li class="list-group-item">Retrait :
-											${enchere.noUtilisateur.getAdresse()}</li>
-										<li class="list-group-item">Vendeur : <a target="_blank"
-											href="<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}">
-												${enchere.noArticle.utilisateur.pseudo} </a>
-										</li>
-										<li class="list-group-item">
-											<button class="btn btn-lg btn-primary btn-block"
-												type="submit">Détail de la vente</button>
-										</li>
-									</ul>
-									<input type="hidden" value="${enchere.noArticle.noArticle}"
-										id="noArticle" name="noArticle">
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Mise à prix</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noArticle.miseAPrix}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-euro-sign"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Enchère actuelle</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.montantEnchere}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-euro-sign"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Fin de l'enchère</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noArticle.affichageDateFin()}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-clock"></i></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Retrait</span>
+										</div>
+										<input type="text" class="form-control" value="${enchere.noUtilisateur.getAdresse()}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-shipping-fast"></i>
+											</span>
+  										</div>
+									</div>
+									<div class="form-group input-group"  onclick="location.href='<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}';">
+										<div class="input-group-prepend">
+											<span class="input-group-text">Vendeur</span>
+										</div>
+										<input id="hoverinput" type="text" class="form-control" value="${enchere.noArticle.utilisateur.pseudo}" disabled>
+										<div class="input-group-append">
+    										<span class="input-group-text"><i class="fas fa-user-tie"></i>
+											</span>
+  										</div>
+									</div>
+									<button class="btn btn-primary" type="submit">
+										Détail de la vente
+									</button>
 								</div>
 							</div>
 						</div>
+						<input type="hidden" value="${enchere.noArticle.noArticle}"
+							id="noArticle" name="noArticle">
 					</form>
 				</div>
 			</c:forEach>
