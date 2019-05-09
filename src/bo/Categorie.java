@@ -62,6 +62,30 @@ public enum Categorie {
 		return noCat;
 	}
 	
+	public static String getNameByNo(int no) {
+		String name = "Toutes";
+
+		switch (no) {
+		case 1:
+			name = "Informatique";
+			break;
+		case 2:
+			name = "Ameublement";
+			break;
+		case 3:
+			name = "Vêtement";
+			break;
+		case 4:
+			name = "Sport&Loisirs";
+			break;
+		case 5:
+			name = "Toutes";
+			break;	
+		default:
+			break;
+		}
+		return name;
+	}
 	
 
 }

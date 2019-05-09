@@ -28,7 +28,7 @@ public class EnchereDAO {
 	private static final String FILTRAGE_CATEGORIE = "{call liste_filtre_categorie_nom_deconnecte(?,?)}";
 	private static final String FILTRAGE_CATEGORIE_CONNECTE = "{call liste_filtre_categorie_nom_connecte(?,?)}";
 	private static final String SELECT_ENCHERE_MAX = "SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?";
-
+	private static final String SELECT_NO_UTILISATEUR_ENCHERE_MAX = "SELECT no_article FROM ENCHERES WHERE no_article = ? and montant_enchere = (SELECT MAX(montant_enchere) AS enchereMax FROM ENCHERES WHERE no_article = ?)";
 	/**
 	 * Ajout d'une ench�re
 	 * 
@@ -441,6 +441,42 @@ public class EnchereDAO {
 				cnx.close();
 		}
 		return enchereMax;
+	}
+	
+	/**
+	 * get encheres max by article
+	 * @param noArticle
+	 * @return
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public static Enchere getEnchereMaxByNoArticle(int noArticle) throws SQLException, ClassNotFoundException {
+		Connection cnx = null;
+		PreparedStatement rqt = null;
+		ResultSet rs = null;
+		Enchere enchere = null;
+		try {
+			cnx = JDBCTools.getConnection();
+			rqt = cnx.prepareStatement(SELECT_NO_UTILISATEUR_ENCHERE_MAX);
+			rqt.setInt(1, noArticle);
+			rqt.setInt(2, noArticle);
+			rs = rqt.executeQuery();
+			if (rs.next()) {
+				UtilisateurDAO utDAO = new UtilisateurDAO();
+				Utilisateur ut = utDAO.getUtilisateurById(rs.getInt("no_utilisateur"));
+				ArticleVenduDAO avDAO = new ArticleVenduDAO();
+				ArticleVendu av = avDAO.getArticleById(rs.getInt("no_article"));
+				enchere = new Enchere(av, ut, rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
+			}
+		} finally {
+			if (rs != null)
+				rs.close();
+			if (rqt != null)
+				rqt.close();
+			if (cnx != null)
+				cnx.close();
+		}
+		return enchere;
 	}
 
 	public static ArrayList<Enchere> listerAchatEnCours(int noUtilisateur, String checkbox1, String checkbox2,
