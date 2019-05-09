@@ -67,6 +67,13 @@ body{
 							placeholder="Code postal" type="text" disabled>
 					</div>
 				</div>
+				<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
+					<div class="for-row form-group">
+						<label for="inputCity">Vos crédits disponibles</label>
+						<input value="${user.credit}" id="credit" name="credit" class="form-control"
+							placeholder="credit" type="text" disabled>
+					</div>
+				</c:if>
 				<input type="hidden" value="${user.noUtilisateur}" id="noUtilisateur" name="noUtilisateur">
 				<c:if test="${user.noUtilisateur == utilisateur.noUtilisateur}">
 					<button type="submit" value="modifier" name="modifier" class="btn btn-primary">Modifier</button>
