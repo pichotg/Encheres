@@ -35,6 +35,7 @@
 
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
+	<jsp:include page="/WEB-INF/Template/utilisateurConnecte.jsp" />
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 		<h2>Nouvelle vente</h2>
 	</div>
@@ -42,7 +43,7 @@
 		<article class="card-body mx-auto" style="max-width: 500px;">
 			<div class="form-group input-group">
 				<form class="vente" action="<%=request.getContextPath()%>/vente?noUtilisateur=${utilisateur.noUtilisateur}"
-					method="post">
+					method="post" enctype='multipart/form-data'>
 
 					<div class="row align-items-center">
 						<label for="article">Article</label>

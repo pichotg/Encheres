@@ -98,6 +98,7 @@ public class ServletDetailVente extends HttpServlet {
 
 		if (enchere != null) {
 			request.setAttribute("montantEnchere", enchere.getMontantEnchere());
+			request.setAttribute("dateEnchere", enchere.getDateEnchere());
 		} else {
 			request.setAttribute("montantEnchere", 0);
 		}
@@ -108,6 +109,7 @@ public class ServletDetailVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		request.setAttribute("enchere", request.getParameter("uneEnchere"));
 		request.setAttribute("enchereMax", enchereMax);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/article/affichageVente.jsp").forward(request, response);
 	}

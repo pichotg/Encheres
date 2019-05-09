@@ -9,38 +9,33 @@
 <%@page import="bo.Enchere"%>
 <%@page import="bo.ArticleVendu"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!doctype html>
 <html>
 
 <head>
-<meta charset="utf-8">
-<title>Liste des enchères</title>
-<link rel="stylesheet"
-	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
-	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
-	crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"
-	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
+	<meta charset="utf-8">
+	<title>Liste des enchères</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<script
+	  src="https://code.jquery.com/jquery-3.4.1.min.js"
+	  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+	  crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
 
-<link rel="stylesheet" href="./themes/basique/style.css">
-<META HTTP-EQUIV="Refresh" CONTENT="TRUE">
+	<link rel="stylesheet" href="./themes/basique/style.css">
+	<META HTTP-EQUIV="Refresh" CONTENT="TRUE">
 </head>
 
 <body>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
+	<jsp:include page="/WEB-INF/Template/utilisateurConnecte.jsp" />
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
 		<h1 class="display-6">Liste des enchères</h1>
 	</div>
@@ -49,27 +44,22 @@
 			<div class="form-group">
 				<label for="categorie">Le nom contient :</label>
 				<c:if test="${param.contient == null}">
-					<input type="text" class="form-control" id="contient"
-						name="contient" placeholder="Le nom de l'article contient">
+					<input type="text" class="form-control" id="contient" name="contient"
+						placeholder="Le nom de l'article contient">
 				</c:if>
 				<c:if test="${param.contient != null}">
-					<input type="text" class="form-control" id="contient"
-						name="contient" value="${param.contient}">
+					<input type="text" class="form-control" id="contient" name="contient" value="${param.contient}">
 				</c:if>
 			</div>
 			<div class="form-group">
-				<label for="categorie">Catégorie :</label> <select
-					class="custom-select" name="categorie" id="categorie">
-					<option
-						<c:if test="${param.categorie == null or param.categorie == 'Toutes'}">selected</c:if>>Toutes</option>
-					<option
-						<c:if test="${param.categorie == 'Informatique'}">selected</c:if>>Informatique</option>
-					<option
-						<c:if test="${param.categorie == 'Ameublement'}">selected</c:if>>Ameublement</option>
-					<option
-						<c:if test="${param.categorie == 'Vêtement'}">selected</c:if>>Vêtement</option>
-					<option
-						<c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
+				<label for="categorie">Catégorie :</label> <select class="custom-select" name="categorie"
+					id="categorie">
+					<option <c:if test="${param.categorie == null or param.categorie == 'Toutes'}">selected</c:if>
+						>Toutes</option>
+					<option <c:if test="${param.categorie == 'Informatique'}">selected</c:if>>Informatique</option>
+					<option <c:if test="${param.categorie == 'Ameublement'}">selected</c:if>>Ameublement</option>
+					<option <c:if test="${param.categorie == 'Vêtement'}">selected</c:if>>Vêtement</option>
+					<option <c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
 				</select>
 			</div>
 			<c:if test="${utilisateur != null && cookie.connexion.value != '-1'}">
@@ -77,31 +67,27 @@
 				<div class="row">
 					<div class="form-group col">
 						<div class="custom-control custom-radio">
-							<input type="radio" id="achatsRadio" name="achatsVentesRadio"
-								class="custom-control-input" value="achatsRadio"
-								<c:if test="${param.achatsVentesRadio == 'achatsRadio'}">checked</c:if>>
-							<label class="custom-control-label" for="achatsRadio">Achats</label>
+							<input type="radio" id="achatsRadio" name="achatsVentesRadio" class="custom-control-input"
+								value="achatsRadio" <c:if test="${param.achatsVentesRadio == 'achatsRadio'}">checked</c:if>> <label class="custom-control-label"
+								for="achatsRadio">Achats</label>
 						</div>
 						<div class="ml-3">
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxAchats1" name="checkBoxAchats1"
-									<c:if test="${param.checkBoxAchats1 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxAchats1">enchères
+								<input type="checkbox" class="custom-control-input" id="checkBoxAchats1"
+									name="checkBoxAchats1" <c:if test="${param.checkBoxAchats1 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxAchats1">Enchères
 									ouvertes</label>
 							</div>
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxAchats2" name="checkBoxAchats2"
-									<c:if test="${param.checkBoxAchats2 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxAchats2">mes
+								<input type="checkbox" class="custom-control-input" id="checkBoxAchats2"
+									name="checkBoxAchats2" <c:if test="${param.checkBoxAchats2 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxAchats2">Mes
 									enchères en cours</label>
 							</div>
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxAchats3" name="checkBoxAchats3"
-									<c:if test="${param.checkBoxAchats3 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxAchats3">mes
+								<input type="checkbox" class="custom-control-input" id="checkBoxAchats3"
+									name="checkBoxAchats3" <c:if test="${param.checkBoxAchats3 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxAchats3">Mes
 									enchères remportées</label>
 							</div>
 						</div>
@@ -109,32 +95,27 @@
 					<!--Mes Ventes-->
 					<div class="form-group col">
 						<div class="custom-control custom-radio">
-							<input type="radio" id="ventesRadio" name="achatsVentesRadio"
-								class="custom-control-input" value="ventesRadio"
-								<c:if test="${param.achatsVentesRadio == 'ventesRadio'}">checked</c:if>>
-							<label class="custom-control-label" for="ventesRadio">Mes
+							<input type="radio" id="ventesRadio" name="achatsVentesRadio" class="custom-control-input"
+								value="ventesRadio" <c:if test="${param.achatsVentesRadio == 'ventesRadio'}">checked</c:if>> <label class="custom-control-label" for="ventesRadio">Mes
 								ventes</label>
 						</div>
 						<div class="ventes ml-3">
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxVentes1" name="checkBoxVentes1"
-									<c:if test="${param.checkBoxVentes1 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxVentes1">mes
+								<input type="checkbox" class="custom-control-input" id="checkBoxVentes1"
+									name="checkBoxVentes1" <c:if test="${param.checkBoxVentes1 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxVentes1">Mes
 									ventes en cours</label>
 							</div>
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxVentes2" name="checkBoxVentes2"
-									<c:if test="${param.checkBoxVentes2 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxVentes2">ventes
+								<input type="checkbox" class="custom-control-input" id="checkBoxVentes2"
+									name="checkBoxVentes2" <c:if test="${param.checkBoxVentes2 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxVentes2">Ventes
 									non débutées</label>
 							</div>
 							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input"
-									id="checkBoxVentes3" name="checkBoxVentes3"
-									<c:if test="${param.checkBoxVentes3 == 'on'}">checked</c:if>>
-								<label class="custom-control-label" for="checkBoxVentes3">ventes
+								<input type="checkbox" class="custom-control-input" id="checkBoxVentes3"
+									name="checkBoxVentes3" <c:if test="${param.checkBoxVentes3 == 'on'}">checked</c:if>> <label class="custom-control-label"
+									for="checkBoxVentes3">Ventes
 									terminées</label>
 							</div>
 						</div>
@@ -144,30 +125,24 @@
 					var RadioAchat = document.getElementById("achatsRadio");
 					var RadioVentes = document.getElementById("ventesRadio")
 
-					RadioAchat.onclick = function() {
+					RadioAchat.onclick = function () {
 						$("#checkBoxAchats1").attr("disabled", false);
 						$("#checkBoxAchats2").attr("disabled", false);
 						$("#checkBoxAchats3").attr("disabled", false);
 
-						$("#checkBoxVentes1").attr("disabled", true).prop(
-								"checked", false);
-						$("#checkBoxVentes2").attr("disabled", true).prop(
-								"checked", false);
-						$("#checkBoxVentes3").attr("disabled", true).prop(
-								"checked", false);
+						$("#checkBoxVentes1").attr("disabled", true).prop("checked", false);
+						$("#checkBoxVentes2").attr("disabled", true).prop("checked", false);
+						$("#checkBoxVentes3").attr("disabled", true).prop("checked", false);
 					}
 
-					RadioVentes.onclick = function() {
+					RadioVentes.onclick = function () {
 						$("#checkBoxVentes1").attr("disabled", false);
 						$("#checkBoxVentes2").attr("disabled", false);
 						$("#checkBoxVentes3").attr("disabled", false);
 
-						$("#checkBoxAchats1").attr("disabled", true).prop(
-								"checked", false);
-						$("#checkBoxAchats2").attr("disabled", true).prop(
-								"checked", false);
-						$("#checkBoxAchats3").attr("disabled", true).prop(
-								"checked", false);
+						$("#checkBoxAchats1").attr("disabled", true).prop("checked", false);
+						$("#checkBoxAchats2").attr("disabled", true).prop("checked", false);
+						$("#checkBoxAchats3").attr("disabled", true).prop("checked", false);
 					}
 				</script>
 			</c:if>
@@ -213,13 +188,16 @@
 	<div id="listEncheres">
 		<div class="card-deck p-3 m-3">
 			<c:forEach var="enchere" items="${listeEncheres}">
-				<div class="maCard card mb-4" style="min-width: 450px;">
-					<form action="<%=request.getContextPath()%>/detailVente"
-						method="post">
+				<div class="card mb-4" style="min-width: 400px;">
+					<form action="<%=request.getContextPath()%>/detailVente?uneEnchere=${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}" method="post">
 						<div class="row no-gutters">
 							<div class="col-md-4">
-								<img class="img-thumbnail"
-									src="<%=request.getContextPath()%>/ressource/userlogin.jpg">
+							<c:if test="${not empty f:substringAfter(enchere.noArticle.pathImage, 'imageArticle')}">
+								<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/imageArticle/${f:substringAfter(enchere.noArticle.pathImage, 'imageArticle\\')}">
+							</c:if>
+							<c:if test="${empty f:substringAfter(enchere.noArticle.pathImage, 'imageArticle')}">
+								<img class="img-fluid" src="<%=request.getContextPath()%>/ressource/imageArticle/imageIndisponible.png">
+							</c:if> 
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">

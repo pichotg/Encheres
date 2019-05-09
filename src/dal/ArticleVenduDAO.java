@@ -121,7 +121,9 @@ public class ArticleVenduDAO {
 				for (ArticleVendu article : listeArticlesAll) {
 					for (ArticleVendu article2 : listeArticlesNonDebut) {
 						if (article.getNoArticle() == article2.getNoArticle()) {
-							listeArticlesAll.remove(article);
+							listeArticlesNonDebut.remove(article2);
+							// On force le break car si on enlève l'objet, il ne faut pas réitérer dessus
+							break;
 						}
 					}
 				}
@@ -153,7 +155,9 @@ public class ArticleVenduDAO {
 				for (ArticleVendu article : listeArticlesAll) {
 					for (ArticleVendu article2 : listeArticlesTermi) {
 						if (article.getNoArticle() == article2.getNoArticle()) {
-							listeArticlesAll.remove(article);
+							listeArticlesTermi.remove(article2);
+							// On force le break car si on enlève l'objet, il ne faut pas réitérer dessus
+							break;
 						}
 					}
 				}
@@ -246,7 +250,7 @@ public class ArticleVenduDAO {
 		}
 		return dernier_id;
 	}
-	
+
 	public static void refreshArticles() throws SQLException {
 		Connection cnx = null;
 		CallableStatement rqt = null;
@@ -265,6 +269,6 @@ public class ArticleVenduDAO {
 			if (cnx != null)
 				cnx.close();
 		}
-		
+
 	}
 }
