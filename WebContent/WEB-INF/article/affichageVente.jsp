@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="bo.Utilisateur"%>
 <%@page import="bo.ArticleVendu"%>
 <%@page import="bo.Enchere"%>
@@ -79,23 +78,25 @@
 											<li class="list-group-item">Enchère actuelle :
 												${enchereMax}</li>
 											<li class="list-group-item">Ma proposition : <input
-												type="number" value="${enchereMax +  1}" name="enchere"
+												type="number" value="${enchereMax +  1}" name="enchere" min="${enchereMax +  1}"
 												style="text-align: center;"></li>
 										</c:if>
-										<c:if test="${montantEnchere == enchereMax}">
+										<c:if test="${montantEnchere == enchereMax && enchereMax != 0}">
+										<li class="list-group-item">Votre enchère est la plus
+												haute actuellement</li>
 											<li class="list-group-item">Enchère actuelle :
 												${enchereMax}</li>
-											<li class="list-group-item">Votre enchère est la plus
-												haute actuellement</li>
+
+												<li class="list-group-item">Ma proposition : <input
+												type="number" value="${enchereMax +  1}" name="enchere" min="${enchereMax +  1}"
+												style="text-align: center;"></li>
 										</c:if>
-										<c:if test="${montantEnchere != enchereMax}">
+										
 											<button class="btn btn-lg btn-primary btn-block"
 												type="submit">Enchérir</button>
-										</c:if>
 										
 									</c:if>
 								</ul>
-
 							</form>
 						</div>
 					</div>
