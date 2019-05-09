@@ -9,6 +9,15 @@
 <%@page import="bo.Enchere"%>
 <%@page import="bo.ArticleVendu"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:if test="${langue == 'fr'}">
+<fmt:setLocale value ="fr"/>
+</c:if> 
+<c:if test="${langue == 'en'}">
+<fmt:setLocale value ="en"/>
+</c:if> 
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
 <!doctype html>
 <html>
 <head>

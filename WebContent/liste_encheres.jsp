@@ -11,8 +11,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename ="multilingue.Langue_en"/>
-<fmt:setBundle basename ="multilingue.Langue_fr"/>
+<c:if test="${langue == 'fr'}">
+<fmt:setLocale value ="fr"/>
+</c:if> 
+<c:if test="${langue == 'en'}">
+<fmt:setLocale value ="en"/>
+</c:if> 
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+
+
 <!doctype html>
 <html>
 
@@ -43,8 +51,6 @@
 </head>
 
 <body>
-<fmt:setLocale value="fr" scope="session"/>
-<p>Locale = <%= request.getHeader("Accept-language") %></p>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
