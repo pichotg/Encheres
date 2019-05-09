@@ -10,12 +10,15 @@
 <%@page import="bo.ArticleVendu"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename ="multilingue.Langue_en"/>
+<fmt:setBundle basename ="multilingue.Langue_fr"/>
 <!doctype html>
 <html>
 
 <head>
 	<meta charset="utf-8">
-	<title>Liste des enchères</title>
+	<title><fmt:message key="Liste.des.encheres" /></title>
 	<link rel="stylesheet"
 	href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
 	integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
@@ -40,32 +43,34 @@
 </head>
 
 <body>
+<fmt:setLocale value="fr" scope="session"/>
+<p>Locale = <%= request.getHeader("Accept-language") %></p>
 	<jsp:include page="/WEB-INF/Template/navigation.jsp" />
 	
 	<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-		<h1 class="display-6">Liste des enchères</h1>
+		<h1 class="display-6"><fmt:message key="Liste.des.encheres"/></h1>
 	</div>
 	<form class="row col-12" action="filtre" method="post">
 		<div class="col-6" style="min-width: 230px;">
 			<div class="form-group">
-				<label for="categorie">Le nom contient :</label>
+				<label for="categorie"><fmt:message key="Le.nom.contient"/> :</label>
 				<c:if test="${param.contient == null}">
 					<input type="text" class="form-control" id="contient" name="contient"
-						placeholder="Le nom de l'article contient">
+						placeholder="<fmt:message key="Le.nom.de.l'article.contient" />">
 				</c:if>
 				<c:if test="${param.contient != null}">
 					<input type="text" class="form-control" id="contient" name="contient" value="${param.contient}">
 				</c:if>
 			</div>
 			<div class="form-group">
-				<label for="categorie">Catégorie :</label> <select class="custom-select" name="categorie"
+				<label for="categorie"><fmt:message key= "Categorie" /> :</label> <select class="custom-select" name="categorie"
 					id="categorie">
 					<option <c:if test="${param.categorie == null or param.categorie == 'Toutes'}">selected</c:if>
-						>Toutes</option>
-					<option <c:if test="${param.categorie == 'Informatique'}">selected</c:if>>Informatique</option>
-					<option <c:if test="${param.categorie == 'Ameublement'}">selected</c:if>>Ameublement</option>
-					<option <c:if test="${param.categorie == 'Vêtement'}">selected</c:if>>Vêtement</option>
-					<option <c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>>Sport&Loisirs</option>
+						><fmt:message key="Toutes" /></option>
+					<option <c:if test="${param.categorie == 'Informatique'}">selected</c:if>><fmt:message key="Informatique" /></option>
+					<option <c:if test="${param.categorie == 'Ameublement'}">selected</c:if>><fmt:message key="Ameublement" /></option>
+					<option <c:if test="${param.categorie == 'Vêtement'}">selected</c:if>><fmt:message key="Vetement" /></option>
+					<option <c:if test="${param.categorie == 'Sport&Loisirs'}">selected</c:if>><fmt:message key="Sport.et.loisirs" /></option>
 				</select>
 			</div>
 			<c:if test="${utilisateur != null && cookie.connexion.value != '-1'}">
@@ -166,7 +171,7 @@
 		</div>
 		<div class="col-6">
 			<button type="submit" id="rechercher" value="rechercher"
-				class="btn btn-primary btn-lg">Rechercher</button>
+				class="btn btn-primary btn-lg"><fmt:message key="Rechercher" /></button>
 			<div class="float-right d-none d-sm-block d-sm-none d-md-block">
 				<button id="liste" class="btn btn-outline-dark btn-lg" type="button"
 					data-toggle="popover" data-placement="top" data-trigger="hover"
@@ -221,7 +226,7 @@
 									<h5 class="card-title">${enchere.noArticle.nomArticle}</h5>
 									<div class="form-group input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Mise à prix</span>
+											<span class="input-group-text"><fmt:message key="Mise.a.prix" /></span>
 										</div>
 										<input type="text" class="form-control" value="${enchere.noArticle.miseAPrix}" disabled>
 										<div class="input-group-append">
@@ -231,7 +236,7 @@
 									</div>
 									<div class="form-group input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Enchère actuelle</span>
+											<span class="input-group-text"><fmt:message key="Enchere.actuelle" /></span>
 										</div>
 										<input type="text" class="form-control" value="${enchere.montantEnchere}" disabled>
 										<div class="input-group-append">
@@ -241,7 +246,7 @@
 									</div>
 									<div class="form-group input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Fin de l'enchère</span>
+											<span class="input-group-text"><fmt:message key="Fin.de.l.enchere" /></span>
 										</div>
 										<input type="text" class="form-control" value="${enchere.noArticle.affichageDateFin()}" disabled>
 										<div class="input-group-append">
@@ -251,7 +256,7 @@
 									</div>
 									<div class="form-group input-group">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Retrait</span>
+											<span class="input-group-text"><fmt:message key="Retrait" /></span>
 										</div>
 										<input type="text" class="form-control" value="${enchere.noUtilisateur.getAdresse()}" disabled>
 										<div class="input-group-append">
@@ -261,7 +266,7 @@
 									</div>
 									<div class="form-group input-group"  onclick="location.href='<%=request.getContextPath()%>/profil?id_utilisateur_recherche=${enchere.noArticle.utilisateur.noUtilisateur}';">
 										<div class="input-group-prepend">
-											<span class="input-group-text">Vendeur</span>
+											<span class="input-group-text"><fmt:message key="Vendeur" /></span>
 										</div>
 										<input id="hoverinput" type="text" class="form-control" value="${enchere.noArticle.utilisateur.pseudo}" disabled>
 										<div class="input-group-append">
@@ -270,7 +275,7 @@
   										</div>
 									</div>
 									<button class="btn btn-outline-dark btn-block" type="submit">
-										Détail de la vente
+										<fmt:message key="Detail.de.la.vente" />
 									</button>
 								</div>
 							</div>

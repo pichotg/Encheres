@@ -1,9 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename ="multilingue.Langue_en"/>
+<fmt:setBundle basename ="multilingue.Langue_fr"/>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">
-	<a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp">ENI - Encheres</a>
+	<a class="navbar-brand" href="<%=request.getContextPath()%>/index.jsp"><fmt:message key="ENI.Encheres" /></a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01"
 		aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -14,7 +17,7 @@
 		<!-- Le menu lorsqu'on est connecté, à savoir lorsque l'utilisateur connecté n'est pas null et que le cookie ne vaut pas -1 -->
 			<c:if test="${utilisateur != null && cookie.connexion.value != '-1'}">
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/deconnexion">Déconnexion</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/deconnexion"><fmt:message key="Deconnexion" /></a>
 				</li>
 				<li class="nav-item">
 					<a class="p-2 text-light" href="<%=request.getContextPath()%>/accesVente?noUtilisateur=${utilisateur.noUtilisateur}">Vendre Article</a>
@@ -26,10 +29,10 @@
 		<!-- Le menu lorsqu'on est déconnecté, à savoir lorsque l'utilisateur connecté est null ou que le cookie vaut -1 -->
 			<c:if test="${utilisateur == null || cookie.connexion.value == '-1'}">
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/connexion.jsp">Connexion</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/connexion.jsp"><fmt:message key="Connexion" /></a>
 				</li>
 				<li class="nav-item">
-					<a class="p-2 text-light" href="<%=request.getContextPath()%>/creerCompte.jsp">Inscription</a>
+					<a class="p-2 text-light" href="<%=request.getContextPath()%>/creerCompte.jsp"><fmt:message key="Inscription" /></a>
 				</li>
 			</c:if>
 		</ul>
