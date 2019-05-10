@@ -51,11 +51,11 @@
 				<div class="col-md-4">
 					<c:if test="${not empty cheminEnchere}">
 						<img class="img-fluid"
-							src="<%=request.getContextPath()%>/ressource/imageArticle/${cheminEnchere}">
+							src="<%=request.getContextPath()%>/imageArticle/${cheminEnchere}">
 					</c:if>
 					<c:if test="${empty cheminEnchere}">
 						<img class="img-fluid"
-							src="<%=request.getContextPath()%>/ressource/imageArticle/imageIndisponible.png">
+							src="<%=request.getContextPath()%>/imageArticle/imageIndisponible.png">
 					</c:if>
 				</div>
 				<div class="col-md-8">
