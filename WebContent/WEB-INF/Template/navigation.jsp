@@ -9,7 +9,7 @@
 <fmt:setLocale value ="en"/>
 </c:if> 
 <fmt:setBundle basename ="servlets.multilingue.Langue"/>
-<fmt:setBundle basename ="servlets.multilingue.Langue"/>
+
 
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm">

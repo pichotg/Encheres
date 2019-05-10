@@ -43,16 +43,30 @@ public enum Categorie {
 		case "Informatique":
 			noCat = 1;
 			break;
+		case "Computer":
+			noCat = 1;
+			break;
 		case "Ameublement":
 			noCat = 2;
 			break;
+		case "Furniture":
+			noCat = 2;
+			break;
 		case "Vêtement":
+			noCat = 3;
+		case "Clothes":
 			noCat = 3;
 			break;
 		case "Sport&Loisirs":
 			noCat = 4;
 			break;
+		case "Sport&Leisure":
+			noCat = 4;
+			break;
 		case "Toutes":
+			noCat = 5;
+			break;
+		case "All":
 			noCat = 5;
 			break;	
 		default:
