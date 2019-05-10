@@ -86,26 +86,24 @@
 						<div class="custom-control custom-radio">
 							<input type="radio" id="achatsRadio" name="achatsVentesRadio" class="custom-control-input"
 								value="achatsRadio" <c:if test="${param.achatsVentesRadio == 'achatsRadio'}">checked</c:if>> <label class="custom-control-label"
-								for="achatsRadio">Achats</label>
+								for="achatsRadio"><fmt:message key="Achats" /></label>
 						</div>
 						<div class="ml-3">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats1"
 									name="checkBoxAchats1" <c:if test="${param.checkBoxAchats1 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats1">Enchères
-									ouvertes</label>
+									for="checkBoxAchats1"><fmt:message key="Encheres.ouvertes" /></label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats2"
 									name="checkBoxAchats2" <c:if test="${param.checkBoxAchats2 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats2">Mes
-									enchères en cours</label>
+									for="checkBoxAchats2"><fmt:message key="Mes.encheres.en.cours"
+									 /></label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxAchats3"
 									name="checkBoxAchats3" <c:if test="${param.checkBoxAchats3 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxAchats3">Mes
-									enchères remportées</label>
+									for="checkBoxAchats3"><fmt:message key="Mes.encheres.remportees" /></label>
 							</div>
 						</div>
 					</div>
@@ -113,27 +111,24 @@
 					<div class="form-group col">
 						<div class="custom-control custom-radio">
 							<input type="radio" id="ventesRadio" name="achatsVentesRadio" class="custom-control-input"
-								value="ventesRadio" <c:if test="${param.achatsVentesRadio == 'ventesRadio'}">checked</c:if>> <label class="custom-control-label" for="ventesRadio">Mes
-								ventes</label>
+								value="ventesRadio" <c:if test="${param.achatsVentesRadio == 'ventesRadio'}">checked</c:if>> <label class="custom-control-label" for="ventesRadio"><fmt:message key="Ventes" /></label>
 						</div>
 						<div class="ventes ml-3">
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes1"
 									name="checkBoxVentes1" <c:if test="${param.checkBoxVentes1 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes1">Mes
-									ventes en cours</label>
+									for="checkBoxVentes1"><fmt:message key="Mes.ventes.en.cours" /></label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes2"
 									name="checkBoxVentes2" <c:if test="${param.checkBoxVentes2 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes2">Ventes
-									non débutées</label>
+									for="checkBoxVentes2"><fmt:message key="Ventes.non.debutees" /></label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" class="custom-control-input" id="checkBoxVentes3"
 									name="checkBoxVentes3" <c:if test="${param.checkBoxVentes3 == 'on'}">checked</c:if>> <label class="custom-control-label"
-									for="checkBoxVentes3">Ventes
-									terminées</label>
+									for="checkBoxVentes3"><fmt:message key="Ventes.terminees" />
+									</label>
 							</div>
 						</div>
 					</div>
