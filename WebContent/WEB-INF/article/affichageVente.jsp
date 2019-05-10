@@ -66,7 +66,7 @@
 							<input type="hidden" name="noArticle" value="${article.noArticle}">
 							<ul class="list-group list-group-flush">
 								<li class="list-group-item">Catégorie : ${Categorie.getNameByNo(article.categorie)}</li>
-								<c:if test="${montantEnchere != 0}">
+								<c:if test="${enchereMax.montantEnchere != 0}">
 								<li class="list-group-item">Meilleure offre : ${enchereMax.montantEnchere}
 								
 									<c:if test="${article.getEtatVente() != 'vet'}">
