@@ -65,10 +65,10 @@
     <servlet-class>servlets.article.ServletVente</servlet-class>
 	<init-param>
 		<param-name>chemin</param-name> 
-		<param-value>E:\Encheres\WebContent\ressource\imageArticle\</param-value> 
+		<param-value>C:\Users\gpichot2018\eclipse-workspace\Encheres\WebContent\ressource\imageArticle\</param-value> 
 	</init-param>
     <multipart-config>
-		<location>E:\Encheres\WebContent\ressource\imageArticle\</location>
+		<location>C:\Users\gpichot2018\eclipse-workspace\Encheres\WebContent\ressource\imageArticle\</location>
 		<max-file-size>10485760</max-file-size> <!-- 10 Mo -->
 		<max-request-size>52428800</max-request-size> <!-- 5 x 10 Mo -->
 		<file-size-threshold>1048576</file-size-threshold> <!-- 1 Mo -->
